@@ -1,0 +1,18 @@
+@import "~font-awesome/css/font-awesome.css";
+@import "~bootstrap/dist/css/bootstrap.css";
+
+body {
+	position: relative;
+	color: white;
+	height: 100vh;
+	background-color: #232c39;
+	font-family: Arial, Helvetica, Helvetica Neue, serif;
+	overflow-y: hidden;
+	display: flex;
+}
+
+#root,
+#app {
+	flex: 1;
+	display: flex;
+}
