@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import type { Children } from 'react';
 
-export default class App extends Component {
+class App extends Component {
 	props: {
 		children: Children
 	};
@@ -15,3 +15,5 @@ export default class App extends Component {
 		);
 	}
 }
+
+export default App;

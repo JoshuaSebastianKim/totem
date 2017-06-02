@@ -9,10 +9,16 @@ body {
 	font-family: Arial, Helvetica, Helvetica Neue, serif;
 	overflow-y: hidden;
 	display: flex;
+	margin: 0;
 }
 
 #root,
 #app {
 	flex: 1;
 	display: flex;
+}
+
+a {
+	color: #fff;
+	text-decoration: none;
 }

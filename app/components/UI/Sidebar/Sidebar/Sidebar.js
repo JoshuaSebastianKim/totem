@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Sidebar.scss';
 
-console.log(styles);
-
 const Sidebar = ({ children, className, style }) => (
 	<div className={`${styles.container} ${className}`} style={style}>
 		{children}
@@ -20,6 +18,7 @@ Sidebar.propTypes = {
 };
 
 Sidebar.defaultProps = {
+	style: {},
 	className: ''
 };
 

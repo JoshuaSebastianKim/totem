@@ -1,12 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import styles from './Search.scss';
+import styles from './Cart.scss';
 
-export default class Search extends Component {
+export default class Cart extends Component {
 	render() {
 		return (
 			<div className={styles.container}>
-				Search
+				Cart
 			</div>
 		);
 	}

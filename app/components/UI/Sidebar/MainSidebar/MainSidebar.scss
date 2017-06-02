@@ -1,0 +1,47 @@
+@import '../../../../styles/variables';
+
+.sidebar {
+	width: 116px;
+	background-color: $color-blue;
+
+	.logo {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 124px;
+	}
+
+	.nav {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		border-top: 1px solid $color-blue2;
+		border-bottom: 1px solid $color-blue2;
+		padding: 23px 0;
+
+		button {
+			margin: 9px 0;
+			height: 86px;
+			width: 86px;
+			border-radius: 100%;
+			background-color: $color-blue2;
+			border: 0;
+			transition: background $transition-duration, color $transition-duration;
+		}
+
+		.activeButton {
+			button {
+				background-color: $color-black;
+				color: $color-yellow;
+			}
+		}
+	}
+
+	.goback {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 120px;
+	}
+}
