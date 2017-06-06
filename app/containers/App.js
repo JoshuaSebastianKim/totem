@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 import type { Children } from 'react';
-import Keyboard from './KeyboardContainer';
 
 class App extends Component {
 	props: {
@@ -12,8 +11,6 @@ class App extends Component {
 		return (
 			<div id="app">
 				{this.props.children}
-
-				<Keyboard />
 			</div>
 		);
 	}

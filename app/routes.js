@@ -6,20 +6,27 @@ import SearchPage from './containers/SearchPage';
 import CartPage from './containers/CartPage';
 import CategoriesPage from './containers/CategoriesPage';
 import { MainSidebar } from './components/UI/Sidebar';
+import Keyboard from './containers/KeyboardContainer';
 
 export default() => (
 	<App>
 		{/* SIDEBAR */}
-		<Route path="/cart" component={MainSidebar} />
-		<Route path="/category" component={MainSidebar} />
-		<Route path="/search" component={MainSidebar} />
+		<div id="sidebar">
+			<Route path="/cart" component={MainSidebar} />
+			<Route path="/category" component={MainSidebar} />
+			<Route path="/search" component={MainSidebar} />
+		</div>
 
 		{/* CONTENT */}
-		<Switch>
-			<Route path="/cart" component={CartPage} />
-			<Route path="/category" component={CategoriesPage} />
-			<Route path="/search" component={SearchPage} />
-			<Route path="/" component={HomePage} />
-		</Switch>
+		<div id="content">
+			<Switch>
+				<Route path="/cart" component={CartPage} />
+				<Route path="/category" component={CategoriesPage} />
+				<Route path="/search" component={SearchPage} />
+				<Route path="/" component={HomePage} />
+			</Switch>
+
+			<Keyboard />
+		</div>
 	</App>
 );

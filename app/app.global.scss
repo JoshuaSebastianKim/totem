@@ -24,12 +24,27 @@ body {
 	position: relative;
 }
 
+#content {
+	flex: 1;
+	display: flex;
+	position: relative;
+}
+
+#sidebar {
+	display: flex;
+}
+
 a {
 	color: #fff;
 	text-decoration: none;
 }
 
 button {
+	border: 0;
+	outline: 0;
+}
+
+input {
 	border: 0;
 	outline: 0;
 }
