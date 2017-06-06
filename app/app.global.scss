@@ -1,15 +1,17 @@
 @import "~font-awesome/css/font-awesome.css";
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "../resources/fonts/MyriadPro/MyriadPro.css";
+
+@import "styles/keyboard";
 
 body {
 	position: relative;
-	color: white;
+	font-family: "Myriad Pro";
 	height: 100vh;
-	background-color: #232c39;
-	font-family: Arial, Helvetica, Helvetica Neue, serif;
 	overflow-y: hidden;
 	display: flex;
 	margin: 0;
+	background-color: gray;
 }
 
 #root,
@@ -18,7 +20,16 @@ body {
 	display: flex;
 }
 
+#app {
+	position: relative;
+}
+
 a {
 	color: #fff;
 	text-decoration: none;
+}
+
+button {
+	border: 0;
+	outline: 0;
 }

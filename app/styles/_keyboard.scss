@@ -1,0 +1,57 @@
+@import 'variables';
+
+.keyboard {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	padding: 32px 28px 46px;
+	background-color: $color-black;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+
+	&-row {
+		display: flex;
+		justify-content: center;
+		margin: 5px 0;
+
+		&:nth-child(4) {
+			.keyboard-button {
+				width: 94px;
+			}
+		}
+	}
+
+	&-button {
+		width: 87px;
+		height: 57px;
+		margin: 0 6px;
+		color: $color-blue;
+		font-weight: 600;
+		font-size: 19px;
+		border-radius: 5px;
+		background-color: #fff;
+
+		svg {
+			fill: $color-blue;
+		}
+	}
+
+	&-numberButton {
+		width: 80px;
+		margin: 0 5px;
+	}
+
+	&-back-button {
+		width: 124px;
+	}
+
+	&-space {
+		flex: 1;
+	}
+
+	&-submit-button {
+		width: 140px;
+		background-color: $color-yellow;
+		color: $color-black;
+	}
+}

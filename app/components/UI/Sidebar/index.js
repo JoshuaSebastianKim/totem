@@ -1,2 +1,2 @@
 export MainSidebar from './MainSidebar/MainSidebar';
-export Sidebar from './Sidebar/Sidebar';
+export Sidebar from './Sidebar';

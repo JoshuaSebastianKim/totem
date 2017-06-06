@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Logo, GoBack, Sidebar } from '../../';
-import { CartButton, SearchButton, CategoryButton, LocationButton } from '../../Button';
+import { Logo, Sidebar } from '../../';
+import { CartButton, SearchButton, CategoryButton, LocationButton, GoBackButton } from '../../Buttons';
 import styles from './MainSidebar.scss';
 
 const MainSidebar = () => (
@@ -24,7 +24,7 @@ const MainSidebar = () => (
 			<LocationButton style={{ marginTop: 'auto' }} />
 		</div>
 		<div className={styles.goback}>
-			<GoBack />
+			<GoBackButton />
 		</div>
 	</Sidebar>
 );

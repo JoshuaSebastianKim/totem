@@ -1,0 +1,35 @@
+@import '../../styles/variables';
+
+.container {
+	position: absolute;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	width: 1040px;
+	margin: auto;
+	transition: transform $transition-duration;
+
+	.toggle {
+		$height: 56px;
+		position: absolute;
+		top: -$height;
+		right: 0;
+		z-index: -1;
+		height: $height + 10;
+		border-top-left-radius: 15px;
+		border-top-right-radius: 15px;
+		color: #fff;
+		font-size: 20px;
+		padding: 0 20px 10px 20px;
+		transition: background-color $transition-duration, padding $transition-duration;
+	}
+
+	.toggleHide {
+		background-color: $color-gray3;
+	}
+
+	.toggleShow {
+		background-color: $color-black;
+		padding-bottom: 15px;
+	}
+}

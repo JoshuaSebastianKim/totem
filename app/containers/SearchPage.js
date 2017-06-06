@@ -1,9 +1,11 @@
 // @flow
-import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Search from '../components/Search/Search';
+import { onFocusInput } from '../redux/modules/keyboard';
 
-export default class SearchPage extends Component {
-	render() {
-		return (<Search />);
-	}
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ onFocusInput }, dispatch);
 }
+
+export default connect(null, mapDispatchToProps)(Search);

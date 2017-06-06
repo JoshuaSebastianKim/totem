@@ -10,8 +10,9 @@ import { MainSidebar } from './components/UI/Sidebar';
 export default() => (
 	<App>
 		{/* SIDEBAR */}
-		{/* <Route path={/(\/cart|\/category|\/search)/} component={MainSidebar} /> */}
-		<Route path={['/cart', '/category', '/search']} component={MainSidebar} />
+		<Route path="/cart" component={MainSidebar} />
+		<Route path="/category" component={MainSidebar} />
+		<Route path="/search" component={MainSidebar} />
 
 		{/* CONTENT */}
 		<Switch>

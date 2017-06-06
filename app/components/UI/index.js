@@ -1,3 +1,5 @@
 export Logo from './Logo/Logo';
-export GoBack from './GoBack/GoBack';
-export Sidebar from './Sidebar/Sidebar/Sidebar';
+export Sidebar from './Sidebar/Sidebar';
+export Input from './Input/Input';
+export Icons from './Icons';
+export Buttons from './Buttons';
