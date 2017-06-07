@@ -9,6 +9,10 @@
 	margin: auto;
 	transition: transform $transition-duration;
 
+	svg {
+		margin: auto;
+	}
+
 	.toggle {
 		$height: 56px;
 		position: absolute;

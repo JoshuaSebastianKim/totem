@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 const SEARCH_START = 'catalog/SEARCH_START';
 const SEARCH_FULFILLED = 'catalog/SEARCH_FULFILLED';
@@ -69,13 +70,20 @@ function searchRejected(error) {
 
 export function searchTerm(term) {
 	return (dispatch) => {
+		dispatch(showLoading());
 		dispatch(searchStart());
 
 		return search(`ft=${term}`)
-			.then(
-				res => dispatch(searchFulfilled(res.data)),
-				err => dispatch(searchRejected(err))
-			);
+			.then((res) => {
+				dispatch(hideLoading());
+				dispatch(searchFulfilled(res.data));
+
+				return res.data;
+			}, (err) => {
+				dispatch(searchRejected(err));
+
+				return err;
+			});
 	};
 }
 

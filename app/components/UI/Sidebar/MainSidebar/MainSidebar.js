@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Logo, Sidebar } from '../../';
+import { Sidebar } from '../../';
+import { LogoIcon } from '../../Icons';
 import { CartButton, SearchButton, CategoryButton, LocationButton, GoBackButton } from '../../Buttons';
 import styles from './MainSidebar.scss';
 
@@ -8,7 +9,7 @@ const MainSidebar = () => (
 	<Sidebar className={styles.sidebar}>
 		<div className={styles.logo}>
 			<Link to="/">
-				<Logo />
+				<LogoIcon className={styles.logoIcon} />
 			</Link>
 		</div>
 		<div className={styles.nav}>
@@ -21,10 +22,13 @@ const MainSidebar = () => (
 			<NavLink to="/category" activeClassName={styles.activeButton}>
 				<CategoryButton />
 			</NavLink>
-			<LocationButton style={{ marginTop: 'auto' }} />
+			<LocationButton className={styles.locationButton} />
 		</div>
 		<div className={styles.goback}>
-			<GoBackButton />
+			<GoBackButton className={styles.goBackButton} />
+			<div className={styles.goBackLabel}>
+				INICIO
+			</div>
 		</div>
 	</Sidebar>
 );

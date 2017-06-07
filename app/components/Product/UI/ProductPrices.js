@@ -7,7 +7,10 @@ const ProductPrices = ({ className, style, prices }) => (
 	<div className={className} style={style}>
 		{prices.length ?
 			prices.map(price => (
-				<div key={price.type}>
+				<div
+					key={price.type}
+					className={price.className}
+				>
 					<Price price={price.value} />
 				</div>
 			)) :

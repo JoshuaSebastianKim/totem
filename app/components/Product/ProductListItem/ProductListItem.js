@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import {
 	ProductBrand,
+	ProductCompareButton,
 	ProductImage,
 	ProductName,
 	ProductPrices
@@ -16,17 +17,23 @@ class ProductListItem extends PureComponent {
 
 	render() {
 		const { product } = this.props;
-
-		console.log(fetchProductPrices(product));
+		const prices = fetchProductPrices(product).map(
+			price => Object.assign({}, price, { className: styles[price.type] })
+		);
 
 		return (
 			<div className={styles.container}>
-				{/* <ProductImage src={product.items[0].images[0].imageUrl} /> */}
+				<ProductImage
+					className={styles.image}
+					src={product.items[0].images[0].imageUrl}
+				/>
 
 				<div className={styles.info}>
-					<ProductBrand brand={product.brand} />
-					<ProductName name={product.productName} />
-					<ProductPrices prices={fetchProductPrices(product)} />
+					<ProductBrand className={styles.brand} brand={product.brand} />
+					<ProductName className={styles.name} name={product.productName} />
+					<div className={styles.divider} />
+					<ProductPrices className={styles.prices} prices={prices} />
+					<ProductCompareButton className={styles.compare} />
 				</div>
 			</div>
 		);

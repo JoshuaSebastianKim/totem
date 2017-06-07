@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import InlineSVG from './InlineSVG';
+import Search from './svg/icn_search.svg';
 
 const SearchIcon = ({ className, style }) => (
 	<div className={className} style={style}>
-		SearchIcon
+		<InlineSVG src={Search} />
 	</div>
 );
 

@@ -18,11 +18,14 @@
 		.input {
 			width: 1038px;
 			padding-bottom: 42px;
+			border-bottom: 2px solid $color-gray3;
+			transition: border $transition-duration, padding $transition-duration;
 		}
 	}
 
 	.productsContainer {
 		flex: 1;
+		background-color: $color-gray;
 	}
 }
 
@@ -30,5 +33,10 @@
 	.inputContainer {
 		height: 124px;
 		padding-bottom: 0;
+
+		.input {
+			border-color: $color-black;
+			padding-bottom: 27px;
+		}
 	}
 }

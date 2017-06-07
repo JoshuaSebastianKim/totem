@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import LoadingBar from 'react-redux-loading-bar'
 import { SearchIcon } from '../../Icons';
 import { Input } from '../';
 import styles from './SearchInput.scss';
@@ -12,7 +13,7 @@ class SearchInput extends PureComponent {
 		className: PropTypes.string,
 		debounceTime: PropTypes.number,
 		onSearch: PropTypes.func,
-		clearSearch: PropTypes.func
+		onClear: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -21,7 +22,7 @@ class SearchInput extends PureComponent {
 		className: '',
 		debounceTime: 1000,
 		onSearch: () => null,
-		clearSearch: () => null
+		onClear: () => null
 	}
 
 	state = {
@@ -38,6 +39,8 @@ class SearchInput extends PureComponent {
 
 		if (value.length > 3) {
 			this.search(value);
+		} else {
+			this.props.onClear();
 		}
 	}
 
@@ -49,7 +52,7 @@ class SearchInput extends PureComponent {
 			inputValue: ''
 		});
 
-		this.props.clearSearch();
+		this.props.onClear();
 	}
 
 	render() {
@@ -58,9 +61,7 @@ class SearchInput extends PureComponent {
 
 		return (
 			<div className={`${styles.container} ${className}`} style={style}>
-				<SearchIcon
-					className={styles.icon}
-				/>
+				<SearchIcon className={styles.icon} />
 
 				<Input
 					className={styles.input}
@@ -78,6 +79,8 @@ class SearchInput extends PureComponent {
 						Nueva búsqueda
 					</button>
 				}
+
+				<LoadingBar className={styles.loader} />
 			</div>
 		);
 	}

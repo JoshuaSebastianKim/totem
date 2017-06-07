@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { LocationIcon } from '../Icons';
 
 const LocationButton = ({ className, style, onClick }) => (
 	<button className={className} style={style} onClick={onClick}>
-		Location
+		<LocationIcon style={{ width: 25, margin: 'auto' }} />
 	</button>
 );
 

@@ -1,9 +1,9 @@
 @import '../../../../styles/variables';
 
 .container {
+	position: relative;
 	display: flex;
 	align-items: center;
-	border-bottom: 2px solid $color-gray3;
 
 	.icon {
 		width: 38px;
@@ -29,5 +29,14 @@
 		border-radius: 25px;
 		background-color: #fff;
 		padding: 0 20px;
+	}
+
+	.loader {
+		position: absolute;
+		bottom: -2px;
+		left: 0;
+		right: 0;
+		height: 2px;
+		background-color: $color-black;
 	}
 }

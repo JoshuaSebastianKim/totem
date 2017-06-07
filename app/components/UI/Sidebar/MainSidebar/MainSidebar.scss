@@ -9,6 +9,11 @@
 		align-items: center;
 		justify-content: center;
 		height: 124px;
+
+		.logoIcon {
+			width: 55px;
+			fill: #f9b730;
+		}
 	}
 
 	.nav {
@@ -27,20 +32,59 @@
 			border-radius: 100%;
 			background-color: $color-blue2;
 			transition: background $transition-duration, color $transition-duration;
+
+			svg {
+				fill: #fff;
+			}
 		}
 
 		.activeButton {
 			button {
 				background-color: $color-black;
-				color: $color-yellow;
+
+				svg {
+					fill: $color-yellow;
+				}
+			}
+		}
+
+		.locationButton {
+			width: 55px;
+			height: 55px;
+			margin-top: auto;
+
+			svg {
+				fill: $color-green;
 			}
 		}
 	}
 
 	.goback {
 		display: flex;
+		flex-direction: column;
 		align-items: center;
-		justify-content: center;
-		height: 120px;
+		height: 180px;
+		padding-top: 24px;
+
+		.goBackButton {
+			height: 87px;
+			width: 87px;
+			border: 2px solid #fff;
+			border-radius: 100%;
+			background-color: $color-blue;
+
+			svg {
+				fill: #fff;
+			}
+		}
+
+		.goBackLabel {
+			font-size: 16px;
+			font-weight: 700;
+			line-height: 1;
+			color: #fff;
+			letter-spacing: 0.05em;
+			margin-top: 12px;
+		}
 	}
 }

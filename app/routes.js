@@ -12,9 +12,11 @@ export default() => (
 	<App>
 		{/* SIDEBAR */}
 		<div id="sidebar">
-			<Route path="/cart" component={MainSidebar} />
-			<Route path="/category" component={MainSidebar} />
-			<Route path="/search" component={MainSidebar} />
+			<Switch>
+				<Route path="/cart" component={MainSidebar} />
+				<Route path="/category" component={MainSidebar} />
+				<Route path="/search" component={MainSidebar} />
+			</Switch>
 		</div>
 
 		{/* CONTENT */}

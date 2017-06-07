@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { SearchIcon } from '../Icons';
 
 const SearchButton = ({ className, style, onClick }) => (
 	<button className={className} style={style} onClick={onClick}>
-		Search
+		<SearchIcon style={{ width: 40, margin: 'auto' }} />
 	</button>
 );
 
