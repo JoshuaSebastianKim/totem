@@ -1,0 +1,60 @@
+@import '../../../styles/variables';
+
+.container {
+	display: flex;
+	flex-direction: column;
+	padding: 0 48px;
+
+	.productsContainer {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+
+	.controlsContainer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: auto;
+		padding: 0 20px;
+
+		.listPageControl {
+			width: 88px;
+			height: 88px;
+			border-radius: 100%;
+			background-color: $color-black;
+			transition: opacity $transition-duration;
+			opacity: .8;
+
+			&:disabled {
+				opacity: .3;
+			}
+
+			.listPageControlIcon {
+				width: 18px;
+				margin: auto;
+
+				svg {
+					fill: #fff;
+				}
+			}
+		}
+
+		.listPager {
+			position: relative;
+			width: 1010px;
+			height: 6px;
+			border-radius: 10px;
+			overflow: hidden;
+			background-color: $color-gray2;
+
+			.listPagerThumb {
+				position: absolute;
+				top: 0;
+				height: 100%;
+				background-color: $color-yellow;
+				transition: left $transition-duration $easing-easeOutQuart;
+			}
+		}
+	}
+}

@@ -1,54 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Motion, spring } from 'react-motion';
 import { ScreenKeyboard, KeyboardButton, LatinLayout } from './ScreenKeyboard';
+import { ArrowDownSmallIcon } from '../UI/Icons';
 import styles from './Keyboard.scss';
 
 const Keyboard = ({ input, open, toggleKeyboard }) => (
-	<Motion
-		defaultStyle={{ translate: 100 }}
-		style={open ?
-			{ translate: spring(0) } :
-			{ translate: spring(100) }
-		}
+	<div
+		className={`${styles.container}`}
+		style={{
+			transform: `translateY(${open ? 0 : 100}%)`
+		}}
 	>
-		{interpolated => (
-			<div
-				className={styles.container}
-				style={{
-					transform: `translateY(${interpolated.translate}%)`
-				}}
-			>
-				<button
-					className={`${styles.toggle} ${open ? styles.toggleHide : styles.toggleShow}`}
-					onClick={toggleKeyboard}
-				>
-					{open ? 'Ocultar teclado' : 'Mostrar teclado'}
-				</button>
+		<button
+			className={`${styles.toggle} ${open ? styles.toggleHide : styles.toggleShow}`}
+			onClick={toggleKeyboard}
+		>
+			<span className={styles.toggleLabel}>
+				{open ? 'Ocultar teclado' : 'Mostrar teclado'}
+			</span>
 
-				<ScreenKeyboard
-					inputNode={input}
-					layouts={[LatinLayout]}
-					leftButtons={[
-						<KeyboardButton
-							key="back"
-							onClick={() => null}
-							classes="keyboard-back-button"
-							value="< Back"
-						/>
-					]}
-					rightButtons={[
-						<KeyboardButton
-							key="submit"
-							onClick={() => null}
-							value="Submit"
-							classes="keyboard-submit-button"
-						/>
-					]}
+			<ArrowDownSmallIcon className={styles.toggleIcon} />
+		</button>
+
+		<ScreenKeyboard
+			inputNode={input}
+			layouts={[LatinLayout]}
+			leftButtons={[
+				<KeyboardButton
+					key="back"
+					onClick={() => null}
+					classes="keyboard-back-button"
+					value="< Back"
 				/>
-			</div>
-		)}
-	</Motion>
+			]}
+			rightButtons={[
+				<KeyboardButton
+					key="submit"
+					onClick={() => null}
+					value="Submit"
+					classes="keyboard-submit-button"
+				/>
+			]}
+		/>
+	</div>
 );
 
 Keyboard.propTypes = {

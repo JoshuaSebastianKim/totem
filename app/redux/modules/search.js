@@ -1,5 +1,9 @@
+// @flow
 import axios from 'axios';
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import { showLoading, hideLoading } from 'react-redux-loading-bar';
+
+const { CancelToken } = axios;
+let cancelToken;
 
 const SEARCH_START = 'catalog/SEARCH_START';
 const SEARCH_FULFILLED = 'catalog/SEARCH_FULFILLED';
@@ -16,20 +20,24 @@ export default function reducer(state = initialState, action) {
 	switch (action.type) {
 		case SEARCH_START:
 			return {
+				...state,
 				loading: true
 			};
 		case SEARCH_FULFILLED:
 			return {
+				...state,
 				loading: false,
 				searchResult: action.payload
 			};
 		case SEARCH_REJECTED:
 			return {
+				...state,
 				loading: false,
 				error: action.payload
 			};
 		case SEARCH_CLEAR:
 			return {
+				...state,
 				searchResult: [],
 				error: ''
 			};
@@ -38,14 +46,21 @@ export default function reducer(state = initialState, action) {
 	}
 }
 
-async function search(params) {
-	const endpoint = 'http://walmartar.vtexcommercestable.com.br/api/catalog_system/pub/products/search/';
+async function search(query: string) {
+	const url = 'http://walmartar.vtexcommercestable.com.br/api/catalog_system/pub/products/search/';
 
-	return axios.get(`${endpoint}?${params}`)
-		.then(
-			res => res,
-			err => err
-		);
+	if (cancelToken) {
+		cancelToken();
+	}
+
+	return axios.get(`${url}?${query}`, {
+		cancelToken: new CancelToken((token) => {
+			cancelToken = token;
+		})
+	}).then(
+		res => res,
+		err => err
+	);
 }
 
 function searchStart() {
@@ -68,17 +83,39 @@ function searchRejected(error) {
 	};
 }
 
-export function searchTerm(term) {
-	return (dispatch) => {
+function queryToString(query) {
+	const keys = Object.keys(query);
+	const queryString = keys.map((key) => {
+		const value = query[key];
+
+		switch (key) {
+			case 'text':
+				return `ft=${value}`;
+			case 'range':
+				return `_from=${value.from}&_to=${value.to}`;
+			default:
+				return '';
+		}
+	}).join('&');
+
+	return queryString;
+}
+
+export function searchQuery(query, clear = true) {
+	const queryString = queryToString(query);
+
+	return (dispatch, getState) => {
 		dispatch(showLoading());
 		dispatch(searchStart());
 
-		return search(`ft=${term}`)
+		return search(queryString)
 			.then((res) => {
-				dispatch(hideLoading());
-				dispatch(searchFulfilled(res.data));
+				const products = clear ? res.data : getState().search.searchResult.concat(res.data);
 
-				return res.data;
+				dispatch(hideLoading());
+				dispatch(searchFulfilled(products));
+
+				return res;
 			}, (err) => {
 				dispatch(searchRejected(err));
 
@@ -88,6 +125,10 @@ export function searchTerm(term) {
 }
 
 export function clearSearch() {
+	if (cancelToken) {
+		cancelToken();
+	}
+
 	return {
 		type: SEARCH_CLEAR
 	};

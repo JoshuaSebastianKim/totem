@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-import LoadingBar from 'react-redux-loading-bar'
+import LoadingBar from 'react-redux-loading-bar';
 import { SearchIcon } from '../../Icons';
 import { Input } from '../';
 import styles from './SearchInput.scss';
@@ -9,55 +8,30 @@ import styles from './SearchInput.scss';
 class SearchInput extends PureComponent {
 	static propTypes = {
 		onFocus: PropTypes.func,
+		onChange: PropTypes.func,
+		onClear: PropTypes.func,
 		style: PropTypes.object,
 		className: PropTypes.string,
-		debounceTime: PropTypes.number,
-		onSearch: PropTypes.func,
-		onClear: PropTypes.func
+		value: PropTypes.string
 	}
 
 	static defaultProps = {
 		onFocus: () => null,
+		onChange: () => null,
+		onClear: () => null,
 		style: {},
 		className: '',
-		debounceTime: 1000,
-		onSearch: () => null,
-		onClear: () => null
+		value: ''
 	}
 
-	state = {
-		inputValue: ''
-	}
-
-	search = _.debounce((term) => this.props.onSearch(term), this.props.debounceTime)
-
-	handleInputChange = (value) => {
-		// Set internat state
-		this.setState({
-			inputValue: value
-		});
-
-		if (value.length > 3) {
-			this.search(value);
-		} else {
-			this.props.onClear();
-		}
-	}
+	handleInputChange = (value) => this.props.onChange(value)
 
 	handleInputFocus = (inputDOM) => this.props.onFocus(inputDOM)
 
-	clearSearch = () => {
-		// Reset state
-		this.setState({
-			inputValue: ''
-		});
-
-		this.props.onClear();
-	}
+	handleClearSearch = () => this.props.onClear()
 
 	render() {
-		const { inputValue } = this.state;
-		const { style, className } = this.props;
+		const { style, className, value } = this.props;
 
 		return (
 			<div className={`${styles.container} ${className}`} style={style}>
@@ -65,16 +39,16 @@ class SearchInput extends PureComponent {
 
 				<Input
 					className={styles.input}
-					value={this.state.inputValue}
+					value={value}
 					placeholder="Escribe aquí tu búsqueda"
 					onChange={this.handleInputChange}
 					onFocus={this.handleInputFocus}
 				/>
 
-				{inputValue !== '' &&
+				{value !== '' &&
 					<button
 						className={styles.clear}
-						onClick={this.clearSearch}
+						onClick={this.handleClearSearch}
 					>
 						Nueva búsqueda
 					</button>

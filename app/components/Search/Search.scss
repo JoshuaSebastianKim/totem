@@ -25,7 +25,21 @@
 
 	.productsContainer {
 		flex: 1;
+		padding: 68px 0 56px;
 		background-color: $color-gray;
+
+		.productList {
+			padding: 0 100px;
+			transition: height 1000ms $easing-easeOutQuart;
+		}
+
+		.productListHalf {
+			height: 50%;
+		}
+
+		.productListFull {
+			height: 100%;
+		}
 	}
 }
 
