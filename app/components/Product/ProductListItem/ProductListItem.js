@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
 	ProductBrand,
 	ProductCompareButton,
@@ -23,14 +24,18 @@ class ProductListItem extends PureComponent {
 
 		return (
 			<div className={styles.container}>
-				<ProductImage
-					className={styles.image}
-					src={product.items[0].images[0].imageUrl}
-				/>
+				<Link to={`/product/${product.productId}`}>
+					<ProductImage
+						className={styles.image}
+						src={product.items[0].images[0].imageUrl}
+					/>
+				</Link>
 
 				<div className={styles.info}>
 					<ProductBrand className={styles.brand} brand={product.brand} />
-					<ProductName className={styles.name} name={product.productName} />
+					<Link to={`/product/${product.productId}`}>
+						<ProductName className={styles.name} name={product.productName} />
+					</Link>
 					<div className={styles.divider} />
 					<ProductPrices className={styles.prices} prices={prices} />
 					<ProductCompareButton className={styles.compare} />

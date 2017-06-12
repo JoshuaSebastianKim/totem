@@ -27,7 +27,6 @@ class ProductList extends PureComponent {
 
 	state = {
 		total: 0,
-		pages: 0,
 		currentPage: 1,
 		loading: false,
 		products: [],
@@ -39,8 +38,24 @@ class ProductList extends PureComponent {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		// Call search if query changes
 		if (nextProps.query !== this.props.query) {
 			this.search(nextProps.query);
+		}
+
+		// Check if config has changed
+		if (nextProps.config !== this.props.config) {
+			// Check if the productsPerPage property has changed
+			if (nextProps.config.productsPerPage !== this.props.config.productsPerPage) {
+				const pages = Math.ceil(this.state.total / this.props.config.productsPerPage);
+				const newPages = Math.ceil(this.state.total / nextProps.config.productsPerPage);
+				const newCurrentPageFloat = (newPages / pages) * this.state.currentPage;
+				const newCurrentPage = Math.round(newCurrentPageFloat);
+
+				this.setState({
+					currentPage: newCurrentPage
+				});
+			}
 		}
 	}
 
@@ -91,15 +106,18 @@ class ProductList extends PureComponent {
 	}
 
 	handleNextControlClick = () => {
-		const { currentPage, lastPageFetched } = this.state;
+		const fetchProductLength = 6;
+		const { currentPage, lastPageFetched, total } = this.state;
 		const { query } = this.props;
+		const pages = Math.ceil(total / fetchProductLength);
 		const nextPage = currentPage + 1;
+		const nextFetchPage = lastPageFetched + 1;
 
-		if (nextPage > lastPageFetched) {
+		if (pages > lastPageFetched) {
 			const newQueries = Object.assign({}, query, {
 				range: {
-					from: currentPage * 6,
-					to: (nextPage * 6) - 1
+					from: lastPageFetched * fetchProductLength,
+					to: (nextFetchPage * fetchProductLength) - 1
 				}
 			});
 
@@ -134,33 +152,35 @@ class ProductList extends PureComponent {
 					))}
 				</div>
 
-				<div className={styles.controlsContainer}>
-					<button
-						className={styles.listPageControl}
-						disabled={loading || currentPage === 1}
-						onClick={this.handlePrevControlClick}
-					>
-						<ChevronLeftIcon className={styles.listPageControlIcon} />
-					</button>
+				{products.length > 0 &&
+					<div className={styles.controlsContainer}>
+						<button
+							className={styles.listPageControl}
+							disabled={loading || currentPage === 1}
+							onClick={this.handlePrevControlClick}
+						>
+							<ChevronLeftIcon className={styles.listPageControlIcon} />
+						</button>
 
-					<div className={styles.listPager}>
-						<div
-							className={styles.listPagerThumb}
-							style={{
-								width: `${Math.floor(100 / pages)}%`,
-								left: `${((currentPage - 1) * 100) / pages}%`
-							}}
-						/>
+						<div className={styles.listPager}>
+							<div
+								className={styles.listPagerThumb}
+								style={{
+									width: `${Math.floor(100 / pages)}%`,
+									left: `${((currentPage - 1) * 100) / pages}%`
+								}}
+							/>
+						</div>
+
+						<button
+							className={styles.listPageControl}
+							disabled={loading || currentPage === pages}
+							onClick={this.handleNextControlClick}
+						>
+							<ChevronRightIcon className={styles.listPageControlIcon} />
+						</button>
 					</div>
-
-					<button
-						className={styles.listPageControl}
-						disabled={loading || currentPage === pages}
-						onClick={this.handleNextControlClick}
-					>
-						<ChevronRightIcon className={styles.listPageControlIcon} />
-					</button>
-				</div>
+				}
 			</div>
 		);
 	}

@@ -1,9 +1,13 @@
 // @flow
-import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Categories from '../components/Categories/Categories';
+import { getDepartmentTree } from '../redux/selectors/catalogSelectors';
 
-export default class CategoriesPage extends Component {
-	render() {
-		return (<Categories />);
-	}
+function mapStateToProps(state, props) {
+	console.log(getDepartmentTree(state, props));
+	return {
+		categoryTree: getDepartmentTree(state, props)
+	};
 }
+
+export default connect(mapStateToProps)(Categories);

@@ -1,4 +1,3 @@
-// @flow
 import axios from 'axios';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 
@@ -6,7 +5,7 @@ const { CancelToken } = axios;
 let cancelToken;
 
 const SEARCH_START = 'catalog/SEARCH_START';
-const SEARCH_FULFILLED = 'catalog/SEARCH_FULFILLED';
+export const SEARCH_FULFILLED = 'catalog/SEARCH_FULFILLED';
 const SEARCH_REJECTED = 'catalog/SEARCH_REJECTED';
 const SEARCH_CLEAR = 'catalog/SEARCH_CLEAR';
 

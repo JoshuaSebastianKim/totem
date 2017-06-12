@@ -1,4 +1,3 @@
-// @flow
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -23,7 +22,24 @@ export default class Search extends PureComponent {
 
 	state = {
 		searchTerm: '',
-		query: {}
+		query: {},
+		config: {
+			productsPerPage: 3
+		}
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.isKeyboardOpen !== this.props.isKeyboardOpen) {
+			this.setState({
+				config: {
+					productsPerPage: nextProps.isKeyboardOpen ? 3 : 6
+				}
+			});
+		}
+	}
+
+	componentWillUnmount() {
+		this.props.clearSearch();
 	}
 
 	search = _.debounce((term) => this.handleInputSearch(term), 1000)
@@ -71,13 +87,10 @@ export default class Search extends PureComponent {
 	}
 
 	render() {
-		const { searchTerm, query } = this.state;
+		const { searchTerm, query, config } = this.state;
 		const { onFocusInput, searchResult, isKeyboardOpen } = this.props;
 		const activeSearchClassName = searchResult.length ? styles.activeSearchContainer : '';
 		const productListClassName = isKeyboardOpen ? styles.productListHalf : styles.productListFull;
-		const config = {
-			productsPerPage: isKeyboardOpen ? 3 : 6
-		};
 
 		return (
 			<div className={`${styles.container} ${activeSearchClassName}`}>
