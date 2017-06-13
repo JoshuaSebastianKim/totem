@@ -12,6 +12,7 @@ const MainSidebar = () => (
 				<LogoIcon className={styles.logoIcon} />
 			</Link>
 		</div>
+
 		<div className={styles.nav}>
 			<NavLink to="/cart" activeClassName={styles.activeButton}>
 				<CartButton />
@@ -24,6 +25,7 @@ const MainSidebar = () => (
 			</NavLink>
 			<LocationButton className={styles.locationButton} />
 		</div>
+
 		<div className={styles.goback}>
 			<GoBackButton className={styles.goBackButton} />
 			<div className={styles.goBackLabel}>

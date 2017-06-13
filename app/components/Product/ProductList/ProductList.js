@@ -107,13 +107,12 @@ class ProductList extends PureComponent {
 
 	handleNextControlClick = () => {
 		const fetchProductLength = 6;
-		const { currentPage, lastPageFetched, total } = this.state;
+		const { currentPage, lastPageFetched } = this.state;
 		const { query } = this.props;
-		const pages = Math.ceil(total / fetchProductLength);
 		const nextPage = currentPage + 1;
 		const nextFetchPage = lastPageFetched + 1;
 
-		if (pages > lastPageFetched) {
+		if (currentPage >= lastPageFetched) {
 			const newQueries = Object.assign({}, query, {
 				range: {
 					from: lastPageFetched * fetchProductLength,
@@ -123,7 +122,7 @@ class ProductList extends PureComponent {
 
 			this.setState({
 				loading: true,
-				lastPageFetched: nextPage
+				lastPageFetched: nextFetchPage
 			});
 
 			this.search(newQueries, false)

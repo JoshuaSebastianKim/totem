@@ -8,20 +8,25 @@ import CategoriesPage from './containers/CategoriesPage';
 import CategoryPage from './containers/CategoryPage';
 import DepartmentsPage from './containers/DepartmentsPage';
 import ProductPage from './containers/ProductPage';
-import { MainSidebar } from './components/UI/Sidebar';
+import { MainSidebar, CategorySidebar } from './components/UI/Sidebar';
 import Keyboard from './containers/KeyboardContainer';
 
 export default() => (
 	<App>
 		{/* SIDEBAR */}
 		<div id="sidebar">
+			{/* MAIN SIDEBAR */}
 			<Switch>
 				<Route path="/cart" component={MainSidebar} />
 				<Route path="/category" component={MainSidebar} />
-				<Route path="/department" component={MainSidebar} />
 				<Route path="/departments" component={MainSidebar} />
 				<Route path="/search" component={MainSidebar} />
 				<Route path="/product" component={MainSidebar} />
+			</Switch>
+
+			{/* DEPARTMENTS SIDEBAR */}
+			<Switch>
+				<Route path="/category/:departmentId" component={CategorySidebar} />
 			</Switch>
 		</div>
 
@@ -29,9 +34,9 @@ export default() => (
 		<div id="content">
 			<Switch>
 				<Route path="/cart" component={CartPage} />
-				<Route path="/category/:departmentId" component={CategoriesPage} />
 				<Route path="/category/:departmentId/:categoryId" component={CategoryPage} />
-				<Route path="/departments" component={DepartmentsPage} />
+				<Route path="/category/:departmentId" component={CategoriesPage} />
+				<Route path="/category" component={DepartmentsPage} />
 				<Route path="/search" component={SearchPage} />
 				<Route path="/product/:id" component={ProductPage} />
 				<Route path="/" component={HomePage} />

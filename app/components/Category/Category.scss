@@ -1,0 +1,13 @@
+@import '../../styles/variables';
+
+.container {
+	flex: 1;
+	padding: 0 48px;
+
+	.categoryName {
+		margin-top: 54px;
+		font-size: 48px;
+		font-weight: 700;
+		color: $color-blue;
+	}
+}

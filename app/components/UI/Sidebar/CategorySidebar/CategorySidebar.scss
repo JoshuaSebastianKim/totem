@@ -1,0 +1,25 @@
+@import '../../../../styles/variables';
+
+.sidebar {
+	background-color: #fff;
+
+	.divider {
+		margin: 124px auto 0;
+		width: 50px;
+		height: 1px;
+		background-color: $color-gray2;
+	}
+
+	.title {
+		text-align: center;
+	}
+
+	.categoryLink {
+		text-align: center;
+		color: $color-black;
+	}
+
+	.activeCategoryLink {
+		color: $color-blue;
+	}
+}
