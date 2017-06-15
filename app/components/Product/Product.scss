@@ -1,0 +1,82 @@
+@import '../../styles/variables';
+
+.container {
+	flex: 1;
+	display: flex;
+
+	.imageContainer {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 678px;
+		background-color: $color-gray;
+
+		.discount {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 90px;
+			height: 50px;
+			background-color: $color-red;
+			border-radius: 5px;
+			font-size: 20px;
+			font-weight: 800;
+			letter-spacing: .1em;
+			color: #fff;
+		}
+
+		.image {
+			width: 618px;
+			height: 618px;
+			margin-top: 30px;
+
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+
+		.thumbnails {
+			display: flex;
+			margin-top: 36px;
+
+			.thumbnail {
+				width: 96px;
+				height: 96px;
+				padding: 0;
+				margin: 0 16px;
+
+				.thumbnailImage {
+					width: 100%;
+					height: 100%;
+
+					img {
+						width: 100%;
+						height: 100%;
+					}
+				}
+
+				.thumbnailActiveIndicator {
+					height: 6px;
+					width: 48px;
+					margin: 8px auto 0;
+					background-color: $color-yellow;
+				}
+			}
+		}
+	}
+
+	.infoContaner {
+		flex: 1;
+		background-color: #fff;
+
+		.description {
+			.descriptionHead {
+				.descriptionHeadIcon {
+					width: 25px;
+				}
+			}
+		}
+	}
+}

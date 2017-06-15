@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.45 25.75"><title>icn_details</title><g id="icn_details"><g id="icon_information"><path d="M30.45,9.92H1a1,1,0,0,1,0-2H30.45a1,1,0,0,1,0,2Z"/><path d="M30.45,2H1A1,1,0,0,1,1,0H30.45a1,1,0,0,1,0,2Z"/><path d="M30.45,17.83H1a1,1,0,0,1,0-2H30.45a1,1,0,0,1,0,2Z"/><path d="M23.38,25.75H1a1,1,0,0,1,0-2H23.38a1,1,0,1,1,0,2Z"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31.45 25.75">
+	<title>icn_details</title>
+	<g id="icn_details">
+		<path d="M30.45,9.92H1a1,1,0,0,1,0-2H30.45a1,1,0,0,1,0,2Z"/>
+		<path d="M30.45,2H1A1,1,0,0,1,1,0H30.45a1,1,0,0,1,0,2Z"/>
+		<path d="M30.45,17.83H1a1,1,0,0,1,0-2H30.45a1,1,0,0,1,0,2Z"/>
+		<path d="M23.38,25.75H1a1,1,0,0,1,0-2H23.38a1,1,0,1,1,0,2Z"/>
+	</g>
+</svg>

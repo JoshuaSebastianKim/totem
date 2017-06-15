@@ -13,17 +13,24 @@ import styles from './ProductListItem.scss';
 
 class ProductListItem extends PureComponent {
 	static propTypes = {
-		product: PropTypes.object.isRequired
+		product: PropTypes.object.isRequired,
+		style: PropTypes.object,
+		className: PropTypes.string
+	}
+
+	static defaultProps = {
+		style: {},
+		className: ''
 	}
 
 	render() {
-		const { product } = this.props;
+		const { style, className, product } = this.props;
 		const prices = fetchProductPrices(product).map(
 			price => Object.assign({}, price, { className: styles[price.type] })
 		);
 
 		return (
-			<div className={styles.container}>
+			<div className={`${styles.container} ${className}`} style={style}>
 				<Link to={`/product/${product.productId}`}>
 					<ProductImage
 						className={styles.image}

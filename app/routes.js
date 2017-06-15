@@ -26,6 +26,7 @@ export default() => (
 
 			{/* DEPARTMENTS SIDEBAR */}
 			<Switch>
+				<Route path="/product" component={CategorySidebar} />
 				<Route path="/category/:departmentId" component={CategorySidebar} />
 			</Switch>
 		</div>
@@ -38,11 +39,14 @@ export default() => (
 				<Route path="/category/:departmentId" component={CategoriesPage} />
 				<Route path="/category" component={DepartmentsPage} />
 				<Route path="/search" component={SearchPage} />
-				<Route path="/product/:id" component={ProductPage} />
+				<Route path="/product/:productId" component={ProductPage} />
 				<Route path="/" component={HomePage} />
 			</Switch>
 
-			<Keyboard />
+			{/* KEYBOARD */}
+			<Switch>
+				<Route path="/search" component={Keyboard} />
+			</Switch>
 		</div>
 	</App>
 );

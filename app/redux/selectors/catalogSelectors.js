@@ -3,6 +3,8 @@ import { createSelector } from 'reselect';
 const getTree = state => state.catalog.categoryTree;
 const getDepartmentId = (_, props) => parseInt(props.match.params.departmentId, 10);
 const getCategoryId = (_, props) => parseInt(props.match.params.categoryId, 10);
+const getProducts = state => state.catalog.products;
+const getProductId = (_, props) => props.match.params.productId;
 
 export const getDepartmentTree = createSelector(
 	[getTree, getDepartmentId],
@@ -17,4 +19,9 @@ export const getCategoryTree = createSelector(
 
 		return categoryTree;
 	}
+);
+
+export const getProduct = createSelector(
+	[getProducts, getProductId],
+	(products, productId) => products[productId]
 );

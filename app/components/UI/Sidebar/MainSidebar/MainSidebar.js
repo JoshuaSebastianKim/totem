@@ -1,11 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Link, NavLink } from 'react-router-dom';
+import { goBack } from 'react-router-redux'
 import { Sidebar } from '../../';
 import { LogoIcon } from '../../Icons';
 import { CartButton, SearchButton, CategoryButton, LocationButton, GoBackButton } from '../../Buttons';
 import styles from './MainSidebar.scss';
 
-const MainSidebar = () => (
+const MainSidebar = ({ onGoBack }) => (
 	<Sidebar className={styles.sidebar}>
 		<div className={styles.logo}>
 			<Link to="/">
@@ -27,7 +31,7 @@ const MainSidebar = () => (
 		</div>
 
 		<div className={styles.goback}>
-			<GoBackButton className={styles.goBackButton} />
+			<GoBackButton className={styles.goBackButton} onClick={onGoBack} />
 			<div className={styles.goBackLabel}>
 				INICIO
 			</div>
@@ -35,4 +39,16 @@ const MainSidebar = () => (
 	</Sidebar>
 );
 
-export default MainSidebar;
+MainSidebar.propTypes = {
+	onGoBack: PropTypes.func
+};
+
+MainSidebar.defaultProps = {
+	onGoBack: () => null
+};
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ onGoBack: goBack }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(MainSidebar);

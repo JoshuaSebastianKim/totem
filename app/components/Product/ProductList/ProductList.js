@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { TransitionMotion, spring } from 'react-motion';
 import { ProductListItem } from '../';
 import { searchQuery } from '../../../redux/modules/search';
 import { ChevronLeftIcon, ChevronRightIcon } from '../../UI/Icons';
@@ -135,6 +136,34 @@ class ProductList extends PureComponent {
 		}
 	}
 
+	willLeaveStyles = () => ({
+		scale: spring(0),
+		heihht: spring(0),
+		width: spring(0),
+		opacity: spring(0),
+		translateY: spring(-15)
+	})
+
+	willEnterStyles = () => ({
+		scale: 1.05,
+		opacity: 0,
+		width: 510,
+		heihht: 302,
+		translateY: -15
+	})
+
+	itemStyles = (products) => products.map(product => ({
+		data: product,
+		key: product.productId,
+		style: {
+			scale: spring(1),
+			opacity: spring(1),
+			width: 510,
+			heihht: 302,
+			translateY: spring(0)
+		}
+	}))
+
 	render() {
 		const { total, currentPage, loading, products } = this.state;
 		const { className, style, config } = this.props;
@@ -145,11 +174,27 @@ class ProductList extends PureComponent {
 
 		return (
 			<div className={`${styles.container} ${className}`} style={style}>
-				<div className={styles.productsContainer}>
-					{pageProducts.map((product) => (
-						<ProductListItem key={product.productId} product={product} />
-					))}
-				</div>
+				<TransitionMotion
+					willEnter={this.willEnterStyles}
+					styles={this.itemStyles(pageProducts)}
+				>
+					{interpolatedStyles => (
+						<div className={styles.productsContainer}>
+							{interpolatedStyles.map(item => (
+								<ProductListItem
+									key={item.key}
+									product={item.data}
+									style={{
+										opacity: item.style.opacity,
+										height: item.style.height,
+										width: item.style.width,
+										transform: `translateY(${item.style.translateY}px)`
+									}}
+								/>
+							))}
+						</div>
+					)}
+				</TransitionMotion>
 
 				{products.length > 0 &&
 					<div className={styles.controlsContainer}>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import axiosRetry from 'axios-retry';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import { hashCode, SHA256 } from '../../utils';
+import { SHA256 } from '../../utils';
 
 axiosRetry(axios, { retries: 3 });
 
@@ -69,7 +69,7 @@ async function search(query: string, cache) {
 
 	// Cache layer
 	if (hash in cache) {
-		return Promise.resolve({ data: cache[hash] });
+		return Promise.resolve(cache[hash]);
 	}
 
 	return axios.get(`${url}?${query}`, {
@@ -148,7 +148,7 @@ export function searchQuery(query, clear = true) {
 
 				dispatch(hideLoading());
 				dispatch(searchFulfilled(products));
-				dispatch(cacheQuery(queryString, res.data));
+				dispatch(cacheQuery(queryString, res));
 
 				return res;
 			}, (err) => {

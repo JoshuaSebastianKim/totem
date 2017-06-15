@@ -28,6 +28,10 @@ export default class Search extends PureComponent {
 		}
 	}
 
+	componentWillMount() {
+		this.props.clearSearch();
+	}
+
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.isKeyboardOpen !== this.props.isKeyboardOpen) {
 			this.setState({
