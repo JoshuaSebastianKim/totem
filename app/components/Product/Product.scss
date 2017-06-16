@@ -1,5 +1,32 @@
 @import '../../styles/variables';
 
+@keyframes bounce {
+	0% {
+		transform: translateY(0%);
+	}
+	50% {
+		transform: translateY(15%);
+	}
+	100% {
+		transform: translateY(0%);
+	}
+}
+
+@keyframes fadeInUp {
+	0% {
+		opacity: 0;
+		transform: translateY(5%);
+	}
+
+	80% {
+		transform: translateY(0);
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
 .container {
 	flex: 1;
 	display: flex;
@@ -11,6 +38,17 @@
 		justify-content: center;
 		width: 678px;
 		background-color: $color-gray;
+
+		@for $i from 1 through 3 {
+			> *:nth-child(#{$i}) {
+				opacity: 0;
+				animation-name: fadeInUp;
+				animation-duration: .5s;
+				animation-timing-function: $transition-easing;
+				animation-fill-mode: forwards;
+				animation-delay: 0.1s * $i;
+			}
+		}
 
 		.discount {
 			display: flex;
@@ -69,14 +107,313 @@
 
 	.infoContaner {
 		flex: 1;
+		display: flex;
+		flex-direction: column;
 		background-color: #fff;
+		padding: 122px 58px 84px;
+		transition: padding $transition-duration;
 
-		.description {
-			.descriptionHead {
-				.descriptionHeadIcon {
-					width: 25px;
+		@for $i from 1 through 5 {
+			> *:nth-child(#{$i}) {
+				opacity: 0;
+				animation-name: fadeInUp;
+				animation-duration: .5s;
+				animation-timing-function: $transition-easing;
+				animation-fill-mode: forwards;
+			}
+		}
+
+		.info {
+			animation-delay: 0.2s;
+
+			.brand {
+				font-size: 19px;
+				color: $color-black;
+				letter-spacing: 1px;
+				line-height: 1;
+			}
+
+			.name {
+				font-size: 41px;
+				color: $color-black;
+				font-weight: 800;
+				letter-spacing: .5px;
+				line-height: 48px;
+				margin-top: 20px;
+			}
+
+			.prices {
+				margin-top: 40px;
+				line-height: 1;
+
+				.list-price {
+					font-size: 22px;
+					color: $color-gray3;
+					margin-bottom: 9px;
+				}
+
+				.price {
+					font-size: 44px;
+					color: $color-blue;
+					font-weight: 800;
+				}
+			}
+
+			.actionsContainer {
+				margin-top: 34px;
+				display: flex;
+				justify-content: space-between;
+
+				button {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					width: 277px;
+					height: 76px;
+					border-radius: 5px;
+
+					span {
+						margin-left: 13px;
+						font-size: 20px;
+						font-weight: 800;
+						letter-spacing: 1px;
+					}
+				}
+
+				.addToCart {
+					background-color: #fff;
+					border: 2px solid $color-blue;
+					color: $color-blue;
+
+					svg {
+						width: 36px;
+						fill: $color-blue;
+					}
+				}
+
+				.buy {
+					background-color: $color-blue;
+					color: #fff;
+
+					svg {
+						width: 33px;
+						fill: #fff;
+					}
+				}
+
+				.printTicket {
+					background-color: $color-black;
+					color: #fff;
+
+					svg {
+						width: 32px;
+						fill: #fff;
+					}
 				}
 			}
 		}
+
+		.infoInline {
+			animation-delay: 0.2s;
+
+			.infoInlineContent {
+				display: flex;
+				align-items: center;
+			}
+
+			.name {
+				font-size: 24px;
+				color: $color-black;
+				font-weight: 800;
+				letter-spacing: .5px;
+				line-height: 31px;
+				flex: 1;
+			}
+
+			.prices {
+				width: 194px;
+				margin-left: 47px;
+				line-height: 1;
+
+				.list-price {
+					font-size: 20px;
+					color: $color-gray3;
+				}
+
+				.price {
+					margin-top: 5px;
+					font-size: 30px;
+					color: $color-blue;
+					font-weight: 800;
+				}
+			}
+
+			.actionsContainer {
+				display: flex;
+
+				button {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					width: 85px;
+					height: 85px;
+					border-radius: 100%;
+					margin: 0 8px;
+					padding: 0;
+
+					span {
+						display: none;
+					}
+				}
+
+				.addToCart {
+					background-color: #fff;
+					border: 2px solid $color-blue;
+
+					svg {
+						width: 41px;
+						fill: $color-blue;
+					}
+				}
+
+				.buy {
+					background-color: $color-blue;
+
+					svg {
+						width: 41px;
+						fill: #fff;
+					}
+				}
+
+				.printTicket {
+					background-color: $color-black;
+
+					svg {
+						width: 43px;
+						fill: #fff;
+					}
+				}
+			}
+		}
+
+		.divider {
+			border-top: 2px solid $color-gray2;
+			margin-top: 40px;
+			animation-delay: 0.4s;
+		}
+
+		.dataContainer {
+			flex: 1;
+			animation-delay: 0.4s;
+		}
+
+		.description {
+			.descriptionContent {
+				display: flex;
+				flex-direction: column;
+				padding-top: 64px;
+				height: 100%;
+
+				.descriptionHead {
+					display: flex;
+					align-items: center;
+
+					.descriptionHeadIcon {
+						width: 30px;
+						margin-right: 28px;
+					}
+
+					.descriptionHeadText {
+						font-size: 20px;
+						font-weight: 800;
+						color: $color-black;
+						letter-spacing: 1px;
+						line-height: 1;
+					}
+				}
+
+				.descriptionBody {
+					flex: 1;
+					overflow: auto;
+					margin-top: 32px;
+					font-size: 19px;
+					color: #808080;
+					letter-spacing: .5px;
+					line-height: 32px;
+				}
+			}
+		}
+
+		.specifications {
+			.specificationsContent {
+				display: flex;
+				flex-direction: column;
+				padding-top: 62px;
+
+				.specificationsHead {
+					display: flex;
+					align-items: center;
+
+					.specificationsHeadIcon {
+						width: 33px;
+						margin-right: 28px;
+					}
+
+					.specificationsHeadText {
+						font-size: 20px;
+						font-weight: 800;
+						color: $color-black;
+						letter-spacing: 1px;
+						line-height: 1;
+					}
+
+					.specificationsClose {
+						width: 21px;
+						padding: 0;
+						background-color: #fff;
+						margin-left: auto;
+
+						svg {
+							fill: $color-yellow;
+						}
+					}
+				}
+			}
+		}
+
+		.showSpecifications {
+			margin-top: auto;
+			animation-delay: 0.6s;
+
+			.showSpecificationsButton {
+				width: 100%;
+				padding: 0;
+				background-color: #fff;
+
+				.showSpecificationsButtonLabel {
+					font-size: 22px;
+					font-weight: 800;
+					letter-spacing: 1px;
+					color: $color-yellow;
+					line-height: 1;
+				}
+
+				.showSpecificationsButtonIcon {
+					width: 18px;
+					margin: 17px auto 0;
+					animation-name: bounce;
+					animation-duration: 1s;
+					animation-iteration-count: infinite;
+
+					svg {
+						fill: $color-yellow;
+					}
+				}
+			}
+		}
+	}
+
+	.activeSpecsInfoContainer {
+		padding: 50px 58px 62px;
 	}
 }

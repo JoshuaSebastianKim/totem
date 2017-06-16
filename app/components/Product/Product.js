@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { Collapse, UnmountClosed } from 'react-collapse';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
 import { Motion, spring } from 'react-motion';
@@ -13,7 +14,7 @@ import {
 	ProductPrintTicketButton
 } from './UI';
 import { fetchDefaultItem, fetchProductPrices } from './Utils';
-import { DetailsIcon } from '../UI/Icons';
+import { ArrowDownSmallIcon, CloseIcon, DetailIcon, SpecificationIcon } from '../UI/Icons';
 import styles from './Product.scss';
 
 class Product extends PureComponent {
@@ -22,7 +23,8 @@ class Product extends PureComponent {
 	}
 
 	state = {
-		activeImageIndex: 0
+		activeImageIndex: 0,
+		activeSpecifications: false
 	}
 
 	setImageIndex = index => {
@@ -33,8 +35,14 @@ class Product extends PureComponent {
 
 	calculateDiscountPercent = (listPrice, bestPrice) => Math.round(((listPrice - bestPrice) * 100) / listPrice)
 
+	toggleSpecifications = () => {
+		this.setState({
+			activeSpecifications: !this.state.activeSpecifications
+		});
+	}
+
 	render() {
-		const { activeImageIndex } = this.state;
+		const { activeImageIndex, activeSpecifications } = this.state;
 		const { product } = this.props;
 		console.log(product);
 
@@ -102,35 +110,111 @@ class Product extends PureComponent {
 					</div>
 				</div>
 
-				<div className={styles.infoContaner}>
-					<ProductBrand className={styles.brand} brand={product.brand} />
-					<ProductName className={styles.name} name={product.productName} />
-					<ProductPrices className={styles.prices} prices={prices} />
+				<div className={`${styles.infoContaner} ${activeSpecifications ? styles.activeSpecsInfoContainer : ''}`}>
+					{/* DEFAULT INFO CONTAINER */}
+					<UnmountClosed theme={{ collapse: styles.info }} isOpened={!activeSpecifications}>
+						<ProductBrand className={styles.brand} brand={product.brand} />
+						<ProductName className={styles.name} name={product.productName} />
+						<ProductPrices className={styles.prices} prices={prices} />
 
-					<div className={styles.actionsContainer}>
-						<ProductAddToCartButton />
-						<ProductBuyButton />
-						<ProductPrintTicketButton />
+						<div className={styles.actionsContainer}>
+							<ProductAddToCartButton className={styles.addToCart} />
+							<ProductBuyButton className={styles.buy} />
+							<ProductPrintTicketButton className={styles.printTicket} />
+						</div>
+					</UnmountClosed>
+
+					{/* INLINE INFO CONTAINER */}
+					<UnmountClosed
+						theme={{
+							collapse: styles.infoInline,
+							content: styles.infoInlineContent
+						}}
+						isOpened={activeSpecifications}
+					>
+						<ProductName className={styles.name} name={product.productName} />
+						<ProductPrices className={styles.prices} prices={prices} />
+
+						<div className={styles.actionsContainer}>
+							<ProductAddToCartButton className={styles.addToCart} />
+							<ProductBuyButton className={styles.buy} />
+							<ProductPrintTicketButton className={styles.printTicket} />
+						</div>
+					</UnmountClosed>
+
+					<div className={styles.divider} />
+
+					<div className={styles.dataContainer}>
+						{/* PRODUCT DESCRIPTION */}
+						<UnmountClosed
+							theme={{
+								collapse: styles.description,
+								content: styles.descriptionContent
+							}}
+							fixedHeight={400}
+							isOpened={!activeSpecifications}
+						>
+							<div className={styles.descriptionHead}>
+								<DetailIcon className={styles.descriptionHeadIcon} />
+
+								<span className={styles.descriptionHeadText}>
+									Sobre el producto
+								</span>
+							</div>
+
+							<div
+								className={styles.descriptionBody}
+								dangerouslySetInnerHTML={{ __html: product.description }}
+							/>
+						</UnmountClosed>
+
+						{/* PRODUCT SPECIFICATIONS */}
+						<UnmountClosed
+							theme={{
+								collapse: styles.specifications,
+								content: styles.specificationsContent
+							}}
+							isOpened={activeSpecifications}
+						>
+							<div className={styles.specificationsHead}>
+								<SpecificationIcon className={styles.specificationsHeadIcon} />
+
+								<span className={styles.specificationsHeadText}>
+									Especificaciones
+								</span>
+
+								<button
+									className={styles.specificationsClose}
+									onClick={this.toggleSpecifications}
+								>
+									<CloseIcon />
+								</button>
+							</div>
+
+							<div className={styles.specificationsBody}>
+								SPECS
+							</div>
+						</UnmountClosed>
 					</div>
 
-					<div className={styles.description}>
-						<div className={styles.descriptionHead}>
-							<DetailsIcon className={styles.descriptionHeadIcon} />
-
-							<span className={styles.descriptionHeadText}>
-								Sobre el producto
+					<Collapse
+						theme={{
+							collapse: styles.showSpecifications
+						}}
+						isOpened={!activeSpecifications}
+					>
+						<button className={styles.showSpecificationsButton} onClick={this.toggleSpecifications}>
+							<span className={styles.showSpecificationsButtonLabel}>
+								VER DATOS TÉCNICOS
 							</span>
-						</div>
 
-						<div className={styles.descriptionBody}>
-							{product.description}
-						</div>
-					</div>
+							<ArrowDownSmallIcon className={styles.showSpecificationsButtonIcon} />
+						</button>
+					</Collapse>
 				</div>
 			</div>
 		);
 	}
-
 }
 
 export default Product;

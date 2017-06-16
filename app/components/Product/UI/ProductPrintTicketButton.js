@@ -4,7 +4,7 @@ import { PrinterIcon } from '../../UI/Icons';
 
 const ProductPrintTicketButton = ({ className, style, onClick }) => (
 	<button className={className} style={style} onClick={onClick}>
-		<PrinterIcon style={{ width: 32, margin: 'auto' }} />
+		<PrinterIcon />
 
 		<span>
 			IMPRIMIR TICKET

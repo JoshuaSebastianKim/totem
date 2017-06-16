@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import InlineSVG from './InlineSVG';
-import Details from './svg/icn_details.svg';
+import Detail from './svg/icn_details.svg';
 
-const DetailsIcon = ({ className, style }) => (
+const DetailIcon = ({ className, style }) => (
 	<div className={className} style={style}>
-		<InlineSVG src={Details} />
+		<InlineSVG src={Detail} />
 	</div>
 );
 
-DetailsIcon.propTypes = {
+DetailIcon.propTypes = {
 	style: PropTypes.object,
 	className: PropTypes.string
 };
 
-DetailsIcon.defaultProps = {
+DetailIcon.defaultProps = {
 	style: {},
 	className: ''
 };
 
-export default DetailsIcon;
+export default DetailIcon;

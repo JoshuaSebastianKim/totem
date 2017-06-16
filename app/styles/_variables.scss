@@ -1,5 +1,6 @@
 @import 'colors';
 
 $transition-duration: .25s;
+$transition-easing: cubic-bezier(0.4, 0.0, 0.2, 1);
 
 $easing-easeOutQuart: cubic-bezier(0.165, 0.84, 0.44, 1);

@@ -4,7 +4,7 @@ import { CartIcon } from '../../UI/Icons';
 
 const ProductAddToCartButton = ({ className, style, onClick }) => (
 	<button className={className} style={style} onClick={onClick}>
-		<CartIcon style={{ width: 33, margin: 'auto' }} />
+		<CartIcon />
 
 		<span>
 			COMPRAR AHORA

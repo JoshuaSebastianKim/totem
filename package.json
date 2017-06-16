@@ -187,6 +187,7 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "axios": "^0.16.2",
     "axios-retry": "^1.2.0",
     "bootstrap": "^3.3.7",
@@ -196,6 +197,7 @@
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
+    "react-collapse": "^4.0.2",
     "react-dom": "^15.5.4",
     "react-hot-loader": "3.0.0-beta.6",
     "react-ink": "^6.2.0",
