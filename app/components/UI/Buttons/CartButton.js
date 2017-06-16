@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CartIcon } from '../Icons';
+import { Button } from './';
 
 const CartButton = ({ className, style, onClick }) => (
-	<button className={className} style={style} onClick={onClick}>
+	<Button className={className} style={style} onClick={onClick}>
 		<CartIcon style={{ width: 40, margin: 'auto' }} />
-	</button>
+	</Button>
 );
 
 CartButton.propTypes = {

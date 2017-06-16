@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Ink from 'react-ink'
+import Ink from 'react-ink';
 
 export default class KeyboardButton extends PureComponent {
 	static propTypes = {

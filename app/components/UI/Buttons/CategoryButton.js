@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CategoryIcon } from '../Icons';
+import { Button } from './';
 
 const CategoryButton = ({ className, style, onClick }) => (
-	<button className={className} style={style} onClick={onClick}>
+	<Button className={className} style={style} onClick={onClick}>
 		<CategoryIcon style={{ width: 40, margin: 'auto' }} />
-	</button>
+	</Button>
 );
 
 CategoryButton.propTypes = {

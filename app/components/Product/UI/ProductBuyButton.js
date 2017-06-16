@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CartIcon } from '../../UI/Icons';
+import { Button } from '../../UI/Buttons';
 
 const ProductAddToCartButton = ({ className, style, onClick }) => (
-	<button className={className} style={style} onClick={onClick}>
+	<Button className={className} style={style} onClick={onClick}>
 		<CartIcon />
 
 		<span>
 			COMPRAR AHORA
 		</span>
-	</button>
+	</Button>
 );
 
 ProductAddToCartButton.propTypes = {

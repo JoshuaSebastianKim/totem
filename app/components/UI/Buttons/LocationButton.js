@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { LocationIcon } from '../Icons';
+import { Button } from './';
 
 const LocationButton = ({ className, style, onClick }) => (
-	<button className={className} style={style} onClick={onClick}>
+	<Button className={className} style={style} onClick={onClick}>
 		<LocationIcon style={{ width: 25, margin: 'auto' }} />
-	</button>
+	</Button>
 );
 
 LocationButton.propTypes = {
