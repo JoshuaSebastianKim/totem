@@ -1,31 +1,5 @@
 @import '../../styles/variables';
-
-@keyframes bounce {
-	0% {
-		transform: translateY(0%);
-	}
-	50% {
-		transform: translateY(15%);
-	}
-	100% {
-		transform: translateY(0%);
-	}
-}
-
-@keyframes fadeInUp {
-	0% {
-		opacity: 0;
-		transform: translateY(5%);
-	}
-
-	80% {
-		transform: translateY(0);
-	}
-
-	100% {
-		opacity: 1;
-	}
-}
+@import '../../styles/animations';
 
 .container {
 	flex: 1;

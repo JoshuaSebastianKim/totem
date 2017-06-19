@@ -1,8 +1,6 @@
 import categoryTree from '../../utils/categoryTree.json';
 import { SEARCH_FULFILLED } from './search';
 
-console.log(SEARCH_FULFILLED);
-
 const initialState = {
 	categoryTree,
 	products: {}

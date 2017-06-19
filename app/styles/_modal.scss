@@ -1,0 +1,14 @@
+@import 'variables';
+@import 'animations';
+
+.ReactModal {
+	&__Overlay {
+		&--after-open {
+			animation: fadeIn $transition-duration $transition-easing;
+		}
+
+		&--before-close {
+			animation: fadeOut $transition-duration $transition-easing forwards;
+		}
+	}
+}
