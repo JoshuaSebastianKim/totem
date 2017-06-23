@@ -1,0 +1,36 @@
+@import '../../../styles/variables';
+
+.container {
+	display: flex;
+	flex-direction: column;
+	padding-top: 64px;
+	height: 400px;
+
+	.descriptionHead {
+		display: flex;
+		align-items: center;
+
+		.descriptionHeadIcon {
+			width: 30px;
+			margin-right: 28px;
+		}
+
+		.descriptionHeadText {
+			font-size: 20px;
+			font-weight: 800;
+			color: $color-black;
+			letter-spacing: 1px;
+			line-height: 1;
+		}
+	}
+
+	.descriptionBody {
+		flex: 1;
+		overflow: auto;
+		margin-top: 32px;
+		font-size: 19px;
+		color: #808080;
+		letter-spacing: .5px;
+		line-height: 32px;
+	}
+}

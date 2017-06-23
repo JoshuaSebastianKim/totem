@@ -1,0 +1,18 @@
+@import '../../../styles/variables';
+@import '../../../styles/animations';
+
+.container {
+	flex: 1;
+	animation-delay: 0.4s;
+
+	@for $i from 1 through 2 {
+		> *:nth-child(#{$i}) {
+			opacity: 0;
+			animation-name: fadeInUp;
+			animation-duration: .5s;
+			animation-timing-function: $transition-easing;
+			animation-fill-mode: forwards;
+			animation-delay: 0.2s;
+		}
+	}
+}

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { TransitionMotion, spring } from 'react-motion';
 import { ProductListItem } from '../';
 import { searchQuery } from '../../../redux/modules/search';
+import { Spinner } from '../../UI';
 import { ChevronLeftIcon, ChevronRightIcon } from '../../UI/Icons';
 import styles from './ProductList.scss';
 
@@ -224,6 +225,10 @@ class ProductList extends PureComponent {
 							<ChevronRightIcon className={styles.listPageControlIcon} />
 						</button>
 					</div>
+				}
+
+				{loading &&
+					<Spinner className={styles.loader} />
 				}
 			</div>
 		);

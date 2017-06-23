@@ -1,0 +1,49 @@
+@import '../../../styles/variables';
+@import '../../../styles/animations';
+
+@keyframes fillColor {
+	0% {
+		fill: $color-gray;
+	}
+
+	50% {
+		fill: $color-yellow;
+	}
+
+	0% {
+		fill: $color-gray;
+	}
+}
+
+.container {
+	border: 10px solid $color-gray;
+	border-radius: 100%;
+	background-color: #fff;
+	padding: 10px;
+	animation: fadeIn $transition-duration;
+
+	.logo {
+		height: 100%;
+
+		i {
+			height: 100%;
+		}
+
+		svg {
+			height: 100%;
+			width: auto;
+			margin: auto;
+			fill: $color-gray;
+
+			@for $i from 1 through 6 {
+				path:nth-child(#{$i}) {
+					animation-name: fillColor;
+					animation-duration: 3s;
+					animation-delay: 0.20s * $i;
+					animation-iteration-count: infinite;
+					animation-timing-function: $transition-easing;
+				}
+			}
+		}
+	}
+}

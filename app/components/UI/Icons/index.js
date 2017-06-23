@@ -1,5 +1,7 @@
 export ArrowDownIcon from './ArrowDownIcon';
 export ArrowDownSmallIcon from './ArrowDownSmallIcon';
+export ArrowLeftIcon from './ArrowLeftIcon';
+export ArrowRightIcon from './ArrowRightIcon';
 export BackIcon from './BackIcon';
 export CartAddIcon from './CartAddIcon';
 export CartIcon from './CartIcon';
