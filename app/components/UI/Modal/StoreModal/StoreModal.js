@@ -11,6 +11,7 @@ const StoreModal = ({ isOpen, storeName, onRequestClose }) => (
 	<Modal
 		isOpen={isOpen}
 		contentLabel="Store Modal"
+		portalClassName="StoreModal"
 		overlayClassName={styles.overlay}
 		className={styles.content}
 		onRequestClose={onRequestClose}

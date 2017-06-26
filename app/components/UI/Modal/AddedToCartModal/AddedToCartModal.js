@@ -12,6 +12,7 @@ const AddedToCartModal = ({ isOpen, onRequestClose }) => (
 	<Modal
 		isOpen={isOpen}
 		contentLabel="Added To Cart Modal"
+		portalClassName="AddedToCartModal"
 		overlayClassName={styles.overlay}
 		className={styles.content}
 		onRequestClose={onRequestClose}
