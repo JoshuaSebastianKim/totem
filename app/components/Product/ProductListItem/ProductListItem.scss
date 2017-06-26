@@ -44,12 +44,13 @@
 		.brand {
 			font-size: 15px;
 			color: $color-black;
-			letter-spacing: .1em;
+			letter-spacing: 1px;
 			line-height: 1;
 		}
 
 		.name {
 			font-size: 19px;
+			font-weight: 800;
 			color: $color-black;
 			line-height: 26px;
 			margin-top: 6px;

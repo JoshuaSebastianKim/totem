@@ -9,7 +9,7 @@ import {
 	ProductName,
 	ProductPrices
 } from '../UI';
-import { calculateDiscountPercent, fetchProductPrices } from '../Utils';
+import { calculateDiscountPercent, getProductPrices } from '../Utils';
 import styles from './ProductListItem.scss';
 
 class ProductListItem extends PureComponent {
@@ -26,7 +26,7 @@ class ProductListItem extends PureComponent {
 
 	render() {
 		const { style, className, product } = this.props;
-		const prices = fetchProductPrices(product).map(
+		const prices = getProductPrices(product).map(
 			price => Object.assign({}, price, { className: styles[price.type] })
 		);
 		const bestPrice = prices.find(price => price.type === 'price');

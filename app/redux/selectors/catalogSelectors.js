@@ -23,5 +23,11 @@ export const getCategoryTree = createSelector(
 
 export const getProduct = createSelector(
 	[getProducts, getProductId],
-	(products, productId) => products[productId]
+	(products, productId) => {
+		if (productId in products) {
+			return Object.assign({}, products[productId]);
+		}
+
+		return null;
+	}
 );

@@ -7,11 +7,34 @@ import { goBack } from 'react-router-redux';
 import { Sidebar } from '../../';
 import { LogoIcon } from '../../Icons';
 import { CartButton, SearchButton, CategoryButton, LocationButton, GoBackButton } from '../../Buttons';
-import { toggleStoreModal } from '../../../../redux/modules/modal';
-import { StoreModal } from '../../Modal';
+import { toggleCartModal, toggleStoreModal } from '../../../../redux/modules/modal';
+import { CartModal, StoreModal } from '../../Modal';
 import styles from './MainSidebar.scss';
 
-const MainSidebar = ({ onGoBack, onToggleStoreModal }) => (
+function checkIfActive(target, match, currentLocation, lastLocation, isCartActive = false) {
+	if (isCartActive) {
+		return false;
+	}
+
+	if (match) {
+		return true;
+	}
+
+	if (/\/product\//.test(currentLocation) && lastLocation.match(target)) {
+		return true;
+	}
+
+	return false;
+}
+
+const MainSidebar = ({
+	onGoBack,
+	onToggleStoreModal,
+	onToggleCartModal,
+	currentLocation,
+	lastLocation,
+	isCartActive
+}) => (
 	<Sidebar className={styles.sidebar}>
 		<div className={styles.logo}>
 			<Link to="/">
@@ -20,15 +43,24 @@ const MainSidebar = ({ onGoBack, onToggleStoreModal }) => (
 		</div>
 
 		<div className={styles.nav}>
-			<NavLink to="/cart" activeClassName={styles.activeButton}>
-				<CartButton />
-			</NavLink>
+			<div className={isCartActive ? styles.activeButton : ''}>
+				<CartButton onClick={onToggleCartModal} />
+			</div>
+			<CartModal />
 
-			<NavLink to="/search" activeClassName={styles.activeButton}>
+			<NavLink
+				to="/search"
+				activeClassName={styles.activeButton}
+				isActive={match => checkIfActive('search', match, currentLocation, lastLocation, isCartActive)}
+			>
 				<SearchButton />
 			</NavLink>
 
-			<NavLink to="/category" activeClassName={styles.activeButton}>
+			<NavLink
+				to="/category"
+				activeClassName={styles.activeButton}
+				isActive={match => checkIfActive('category', match, currentLocation, lastLocation, isCartActive)}
+			>
 				<CategoryButton />
 			</NavLink>
 
@@ -47,19 +79,36 @@ const MainSidebar = ({ onGoBack, onToggleStoreModal }) => (
 
 MainSidebar.propTypes = {
 	onGoBack: PropTypes.func,
-	onToggleStoreModal: PropTypes.func
+	onToggleCartModal: PropTypes.func,
+	onToggleStoreModal: PropTypes.func,
+	currentLocation: PropTypes.string,
+	lastLocation: PropTypes.string,
+	isCartActive: PropTypes.bool
 };
 
 MainSidebar.defaultProps = {
 	onGoBack: () => null,
-	onToggleStoreModal: () => null
+	onToggleCartModal: () => null,
+	onToggleStoreModal: () => null,
+	currentLocation: '',
+	lastLocation: '',
+	isCartActive: false
 };
+
+function mapStateToProps(state) {
+	return {
+		currentLocation: state.history.currentLocation,
+		lastLocation: state.history.lastLocation,
+		isCartActive: state.modal.cartModalOpen
+	};
+}
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
 		onGoBack: goBack,
+		onToggleCartModal: toggleCartModal,
 		onToggleStoreModal: toggleStoreModal
 	}, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(MainSidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(MainSidebar);

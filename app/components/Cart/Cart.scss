@@ -1,3 +1,129 @@
+@import '../../styles/variables';
+
 .container {
-	
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+
+	.header {
+		display: flex;
+		align-items: center;
+		height: 160px;
+		padding: 0 25px 0 35px;
+
+		.headerIcon {
+			width: 44px;
+			margin-right: 32px;
+		}
+
+		.headerTitle {
+			font-size: 48px;
+			font-weight: 800;
+			letter-spacing: .5px;
+			margin-right: 30px;
+		}
+
+		.headerCartAmount {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 60px;
+			height: 60px;
+			background-color: $color-yellow;
+			font-size: 33px;
+			font-weight: 800;
+			color: $color-black;
+			border-radius: 100%;
+		}
+
+		.closeCart {
+			margin-left: auto;
+			width: 70px;
+			height: 70px;
+			border-radius: 100%;
+			background-color: $color-black;
+
+			svg {
+				fill: $color-gray;
+			}
+		}
+	}
+
+	.content {
+		flex: 1;
+		overflow: hidden;
+		background-color: $color-gray;
+		padding: 42px 36px 24px;
+
+		.cartItems {
+			overflow: auto;
+			height: 100%;
+			padding-right: 30px;
+
+			&::-webkit-scrollbar {
+			    -webkit-appearance: none;
+			}
+
+			&::-webkit-scrollbar:vertical {
+			    width: 10px;
+			}
+
+			&::-webkit-scrollbar:horizontal {
+			    height: 10px;
+			}
+
+			&::-webkit-scrollbar-thumb {
+			    background-color: $color-yellow;
+			    border-radius: 5px;
+			}
+
+			&::-webkit-scrollbar-track {
+				border-radius: 5px;
+			    background-color: $color-gray2;
+			}
+		}
+	}
+
+	.footer {
+		border-top: 1px solid $color-gray2;
+
+		.cartTotalizer {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 35px 0 42px;
+
+			.cartSubtotal {
+				line-height: 1;
+
+				.cartSubtotalLabel {
+					font-size: 32px;
+					letter-spacing: 0.5px;
+					color: $color-black;
+					margin-right: 24px;
+				}
+
+				.cartSubtotalValue {
+					font-size: 36px;
+					font-weight: 800;
+					color: $color-black;
+				}
+			}
+		}
+
+		.checkoutButton {
+			width: 384px;
+			height: 66px;
+			background-color: $color-yellow;
+			border-radius: 5px;
+			margin-top: 32px;
+
+			.checkoutButtonLabel {
+				font-size: 22px;
+				font-weight: 800;
+				color: #fff;
+				letter-spacing: 1px;
+			}
+		}
+	}
 }

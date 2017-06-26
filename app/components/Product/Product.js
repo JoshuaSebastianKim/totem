@@ -5,7 +5,7 @@ import { Collapse } from 'react-collapse';
 import ProductImageContainer from './ProductImage/ProductImageContainer';
 import ProductInfoContainer from './ProductInfo/ProductInfoContainer';
 import ProductDataContainer from './ProductData/ProductDataContainer';
-import { calculateDiscountPercent, fetchDefaultItem, fetchProductPrices } from './Utils';
+import { calculateDiscountPercent, getDefaultItem, getProductPrices } from './Utils';
 import { AddedToCartModal } from '../UI/Modal';
 import { ArrowDownSmallIcon } from '../UI/Icons';
 import styles from './Product.scss';
@@ -44,8 +44,8 @@ class Product extends PureComponent {
 			return <Redirect to="/" />;
 		}
 
-		const item = fetchDefaultItem(product.items);
-		const prices = fetchProductPrices(product);
+		const item = getDefaultItem(product.items);
+		const prices = getProductPrices(product);
 		const bestPrice = prices.find(price => price.type === 'price');
 		const listPrice = prices.find(price => price.type === 'list-price');
 		const discount = (bestPrice && listPrice) ? calculateDiscountPercent(listPrice.value, bestPrice.value) : 0;

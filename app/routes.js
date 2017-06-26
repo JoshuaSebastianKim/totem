@@ -3,7 +3,6 @@ import { Switch, Route } from 'react-router';
 import App from './containers/App';
 import HomePage from './containers/HomePage';
 import SearchPage from './containers/SearchPage';
-import CartPage from './containers/CartPage';
 import CategoriesPage from './containers/CategoriesPage';
 import CategoryPage from './containers/CategoryPage';
 import DepartmentsPage from './containers/DepartmentsPage';
@@ -34,7 +33,6 @@ export default() => (
 		{/* CONTENT */}
 		<div id="content">
 			<Switch>
-				<Route path="/cart" component={CartPage} />
 				<Route path="/category/:departmentId/:categoryId" component={CategoryPage} />
 				<Route path="/category/:departmentId" component={CategoriesPage} />
 				<Route path="/category" component={DepartmentsPage} />

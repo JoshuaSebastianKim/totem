@@ -15,3 +15,4 @@ export LogoIcon from './LogoIcon';
 export PrinterIcon from './PrinterIcon';
 export SearchIcon from './SearchIcon';
 export SpecificationIcon from './SpecificationIcon';
+export TrashIcon from './TrashIcon';

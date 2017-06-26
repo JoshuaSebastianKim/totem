@@ -1,3 +1,4 @@
 export calculateDiscountPercent from './calculateDiscountPercent';
-export fetchDefaultItem from './fetchDefaultItem';
-export fetchProductPrices from './fetchProductPrices';
+export getDefaultItem from './getDefaultItem';
+export getProductPrice from './getProductPrice';
+export getProductPrices from './getProductPrices';

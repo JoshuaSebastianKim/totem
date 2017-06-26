@@ -3,12 +3,15 @@ import { ADD_TO_CART } from './cart';
 
 const TOGGLE_STORE_MODAL = 'modal/TOGGLE_STORE_MODAL';
 const TOGGLE_ADDED_TO_CART_MODAL = 'modal/TOGGLE_ADDED_TO_CART_MODAL';
+const TOGGLE_CART_MODAL = 'modal/TOGGLE_CART_MODAL';
+const CLOSE_CART_MODAL = 'modal/CLOSE_CART_MODAL';
 const SET_STORE_NAME = 'modal/SET_STORE_NAME';
 
 const initialState = {
 	storeName: storage.get('storeName'),
 	storeModalOpen: false,
-	addedToCartOpen: false
+	addedToCartOpen: false,
+	cartModalOpen: false
 };
 
 export default function reducer(state = initialState, action) {
@@ -23,6 +26,17 @@ export default function reducer(state = initialState, action) {
 			return {
 				...state,
 				addedToCartOpen: !state.addedToCartOpen
+			};
+		case TOGGLE_CART_MODAL:
+			return {
+				...state,
+				cartModalOpen: !state.cartModalOpen
+			};
+		case CLOSE_CART_MODAL:
+		case '@@router/LOCATION_CHANGE':
+			return {
+				...state,
+				cartModalOpen: false
 			};
 		case SET_STORE_NAME:
 			return {
@@ -43,5 +57,17 @@ export function toggleStoreModal() {
 export function toggleAddedToCartModal() {
 	return {
 		type: TOGGLE_ADDED_TO_CART_MODAL
+	};
+}
+
+export function toggleCartModal() {
+	return {
+		type: TOGGLE_CART_MODAL
+	};
+}
+
+export function closeCartModal() {
+	return {
+		type: CLOSE_CART_MODAL
 	};
 }

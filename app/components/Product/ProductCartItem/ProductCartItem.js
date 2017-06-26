@@ -3,29 +3,37 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
 	ProductBrand,
-	ProductCompareButton,
 	ProductImage,
 	ProductName,
 	ProductPrices
 } from '../UI';
-import { fetchProductPrices } from '../Utils';
+import { getProductPrices } from '../Utils';
+import { RemoveButton } from '../../UI/Buttons';
 import styles from './ProductCartItem.scss';
 
 class ProductCartItem extends PureComponent {
 	static propTypes = {
-		product: PropTypes.object.isRequired,
 		style: PropTypes.object,
-		className: PropTypes.string
+		className: PropTypes.string,
+		product: PropTypes.object.isRequired,
+		onRemoveItem: PropTypes.func
 	}
 
 	static defaultProps = {
 		style: {},
-		className: ''
+		className: '',
+		onRemoveItem: () => null
+	}
+
+	handleItemRemove = () => {
+		const { product, onRemoveItem } = this.props;
+
+		onRemoveItem(product.productId);
 	}
 
 	render() {
 		const { style, className, product } = this.props;
-		const prices = fetchProductPrices(product).map(
+		const prices = getProductPrices(product).map(
 			price => Object.assign({}, price, { className: styles[price.type] })
 		);
 
@@ -45,8 +53,9 @@ class ProductCartItem extends PureComponent {
 					</Link>
 					<div className={styles.divider} />
 					<ProductPrices className={styles.prices} prices={prices} />
-					<ProductCompareButton className={styles.compare} />
 				</div>
+
+				<RemoveButton className={styles.removeItemButton} onClick={this.handleItemRemove} />
 			</div>
 		);
 	}

@@ -1,7 +1,7 @@
-import fetchDefaultItem from './fetchDefaultItem';
+import getDefaultItem from './getDefaultItem';
 
-export default function fetchProductPrices(product) {
-	const defaultItem = fetchDefaultItem(product.items);
+export default function getProductPrices(product) {
+	const defaultItem = getDefaultItem(product.items);
 	let prices = [];
 
 	if (defaultItem) {
