@@ -5,7 +5,7 @@ import styles from './Category.scss';
 
 class Category extends PureComponent {
 	static propTypes = {
-		categoryTree: PropTypes.object
+		categoryTree: PropTypes.object.isRequired
 	}
 
 	state = {
@@ -24,7 +24,6 @@ class Category extends PureComponent {
 				to: 5
 			}
 		};
-		console.log(categoryTree);
 
 		return (
 			<div className={styles.container}>
