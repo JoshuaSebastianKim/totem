@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { Sidebar } from '../../';
 import styles from './CategorySidebar.scss';
 
-const CategorySidebar = ({ categories }) => (
+const CategorySidebar = ({ categories, products }) => (
 	<Sidebar className={styles.sidebar}>
 		<div className={styles.divider} />
 
@@ -17,6 +17,25 @@ const CategorySidebar = ({ categories }) => (
 					key={category.id}
 					className={styles.categoryLink}
 					activeClassName={styles.activeCategoryLink}
+					isActive={(match, location) => {
+						if (match) {
+							return true;
+						}
+
+						if (/\/product\//.test(location.pathname)) {
+							try {
+								const productId = location.pathname.split('/')[2];
+								const { categoriesIds } = products[productId];
+								const parentCategoryId = Number(categoriesIds[categoriesIds.length - 1].replace(/\//g, ''));
+
+								return category.children.some(subcategory => subcategory.id === parentCategoryId);
+							} catch (e) {
+								return false;
+							}
+						}
+
+						return false;
+					}}
 					to={`/category/${category.id}`}
 				>
 					<div className={styles.categoryLinkIcon}>
@@ -32,12 +51,14 @@ const CategorySidebar = ({ categories }) => (
 );
 
 CategorySidebar.propTypes = {
-	categories: PropTypes.array.isRequired
+	categories: PropTypes.array.isRequired,
+	products: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
 	return {
-		categories: state.catalog.categoryTree
+		categories: state.catalog.categoryTree,
+		products: state.catalog.products
 	};
 }
 
