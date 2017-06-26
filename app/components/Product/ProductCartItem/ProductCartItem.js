@@ -4,15 +4,14 @@ import { Link } from 'react-router-dom';
 import {
 	ProductBrand,
 	ProductCompareButton,
-	ProductDiscountPercent,
 	ProductImage,
 	ProductName,
 	ProductPrices
 } from '../UI';
-import { calculateDiscountPercent, fetchProductPrices } from '../Utils';
-import styles from './ProductListItem.scss';
+import { fetchProductPrices } from '../Utils';
+import styles from './ProductCartItem.scss';
 
-class ProductListItem extends PureComponent {
+class ProductCartItem extends PureComponent {
 	static propTypes = {
 		product: PropTypes.object.isRequired,
 		style: PropTypes.object,
@@ -29,18 +28,9 @@ class ProductListItem extends PureComponent {
 		const prices = fetchProductPrices(product).map(
 			price => Object.assign({}, price, { className: styles[price.type] })
 		);
-		const bestPrice = prices.find(price => price.type === 'price');
-		const listPrice = prices.find(price => price.type === 'list-price');
-		const discount = (bestPrice && listPrice) ? calculateDiscountPercent(listPrice.value, bestPrice.value) : 0;
 
 		return (
 			<div className={`${styles.container} ${className}`} style={style}>
-				<ProductDiscountPercent
-					className={styles.discount}
-					style={{ visibility: discount === 0 ? 'hidden' : 'visible' }}
-					discount={discount}
-				/>
-
 				<Link to={`/product/${product.productId}`}>
 					<ProductImage
 						className={styles.image}
@@ -63,4 +53,4 @@ class ProductListItem extends PureComponent {
 
 }
 
-export default ProductListItem;
+export default ProductCartItem;

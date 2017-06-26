@@ -1,11 +1,29 @@
 @import '../../../styles/variables';
 
 .container {
+	position: relative;
 	display: flex;
 	width: 510px;
 	height: 302px;
 	background-color: #fff;
 	padding: 16px 13px;
+
+	.discount {
+		position: absolute;
+		top: -12px;
+		left: 12px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 68px;
+		height: 36px;
+		background-color: $color-red;
+		border-radius: 5px;
+		font-size: 17px;
+		font-weight: 800;
+		letter-spacing: 1px;
+		color: #fff;
+	}
 
 	.image {
 		width: 270px;
