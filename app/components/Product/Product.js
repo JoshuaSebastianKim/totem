@@ -57,6 +57,7 @@ class Product extends PureComponent {
 					discount={discount}
 					images={item.images}
 					activeImageIndex={activeImageIndex}
+					onSetActiveImageIndex={this.setImageIndex}
 				/>
 
 				{/* PRODUCT INFO */}

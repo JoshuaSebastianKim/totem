@@ -11,7 +11,7 @@ body {
 	overflow-y: hidden;
 	display: flex;
 	margin: 0;
-	background-color: gray;
+	background-color: $color-gray;
 }
 
 #root,
@@ -28,10 +28,13 @@ body {
 	flex: 1;
 	display: flex;
 	position: relative;
+	z-index: 1;
 }
 
 #sidebar {
 	display: flex;
+	position: relative;
+	z-index: 2;
 }
 
 a {

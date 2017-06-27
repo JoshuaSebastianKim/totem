@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Modal } from '..';
 import { Button } from '../../Buttons';
 import { CartAddIcon, ArrowLeftIcon, ArrowRightIcon } from '../../Icons';
-import { toggleAddedToCartModal } from '../../../../redux/modules/modal';
+import { closeAddedToCartModal } from '../../../../redux/modules/modal';
 import styles from './AddedToCartModal.scss';
 
 const AddedToCartModal = ({ isOpen, onRequestClose }) => (
@@ -72,7 +72,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
-		onRequestClose: toggleAddedToCartModal
+		onRequestClose: closeAddedToCartModal
 	}, dispatch);
 }
 

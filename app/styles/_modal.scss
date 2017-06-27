@@ -3,34 +3,14 @@
 
 .ReactModal {
 	&__Overlay {
+		z-index: 10;
+
 		&--after-open {
 			animation: fadeIn $transition-duration $transition-easing;
 		}
 
 		&--before-close {
 			animation: fadeOut $transition-duration $transition-easing forwards;
-		}
-	}
-}
-
-.CartModal {
-	.ReactModal__Overlay {
-		&--after-open {
-			animation: fadeIn 500ms $transition-easing;
-		}
-
-		&--before-close {
-			animation: fadeOut 500ms $transition-easing forwards;
-		}
-	}
-
-	.ReactModal__Content {
-		&--after-open {
-			animation: fadeInLeft 500ms $transition-easing;
-		}
-
-		&--before-close {
-			animation: fadeOutRight 500ms $transition-easing forwards;
 		}
 	}
 }

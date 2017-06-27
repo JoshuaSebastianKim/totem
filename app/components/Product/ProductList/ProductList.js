@@ -15,7 +15,8 @@ class ProductList extends PureComponent {
 		style: PropTypes.object,
 		query: PropTypes.object,
 		config: PropTypes.object,
-		onSearch: PropTypes.func.isRequired
+		onSearch: PropTypes.func.isRequired,
+		canCompare: PropTypes.bool
 	}
 
 	static defaultProps = {
@@ -24,7 +25,8 @@ class ProductList extends PureComponent {
 		config: {
 			productsPerPage: 3
 		},
-		searchQuery: () => null
+		searchQuery: () => null,
+		canCompare: false
 	}
 
 	state = {
@@ -52,7 +54,18 @@ class ProductList extends PureComponent {
 				const pages = Math.ceil(this.state.total / this.props.config.productsPerPage);
 				const newPages = Math.ceil(this.state.total / nextProps.config.productsPerPage);
 				const newCurrentPageFloat = (newPages / pages) * this.state.currentPage;
-				const newCurrentPage = Math.round(newCurrentPageFloat);
+				let newCurrentPage = 1;
+
+				switch (nextProps.config.productsPerPage) {
+					case 3:
+						newCurrentPage = Math.floor(newCurrentPageFloat);
+						break;
+					case 6:
+						newCurrentPage = Math.round(newCurrentPageFloat);
+						break;
+					default:
+						newCurrentPage = Math.round(newCurrentPageFloat);
+				}
 
 				this.setState({
 					currentPage: newCurrentPage
@@ -167,7 +180,7 @@ class ProductList extends PureComponent {
 
 	render() {
 		const { total, currentPage, loading, products } = this.state;
-		const { className, style, config } = this.props;
+		const { className, style, config, canCompare } = this.props;
 		const pages = Math.ceil(total / config.productsPerPage);
 		const pageFirstIndex = (currentPage - 1) * config.productsPerPage;
 		const pageLastIndex = currentPage * config.productsPerPage;
@@ -191,6 +204,7 @@ class ProductList extends PureComponent {
 										width: item.style.width,
 										transform: `translateY(${item.style.translateY}px)`
 									}}
+									showCompare={canCompare}
 								/>
 							))}
 						</div>

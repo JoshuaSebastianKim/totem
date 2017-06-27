@@ -16,16 +16,18 @@ class ProductListItem extends PureComponent {
 	static propTypes = {
 		product: PropTypes.object.isRequired,
 		style: PropTypes.object,
-		className: PropTypes.string
+		className: PropTypes.string,
+		showCompare: PropTypes.bool
 	}
 
 	static defaultProps = {
 		style: {},
-		className: ''
+		className: '',
+		showCompare: false
 	}
 
 	render() {
-		const { style, className, product } = this.props;
+		const { style, className, product, showCompare } = this.props;
 		const prices = getProductPrices(product).map(
 			price => Object.assign({}, price, { className: styles[price.type] })
 		);
@@ -55,7 +57,10 @@ class ProductListItem extends PureComponent {
 					</Link>
 					<div className={styles.divider} />
 					<ProductPrices className={styles.prices} prices={prices} />
-					<ProductCompareButton className={styles.compare} />
+
+					{showCompare &&
+						<ProductCompareButton className={styles.compare} />
+					}
 				</div>
 			</div>
 		);

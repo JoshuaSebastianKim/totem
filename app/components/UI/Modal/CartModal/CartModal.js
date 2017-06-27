@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Motion, spring } from 'react-motion';
 import { Modal } from '..';
 import { removeFromCart } from '../../../../redux/modules/cart';
 import { closeCartModal } from '../../../../redux/modules/modal';
@@ -19,7 +20,21 @@ const StoreModal = ({ onCloseCart, onRemoveItem, isOpen, items }) => (
 		onRequestClose={onCloseCart}
 		closeTimeoutMS={500}
 	>
-		<Cart items={items} onCloseCart={onCloseCart} onRemoveItem={onRemoveItem} />
+		<Motion
+			defaultStyle={{ translateX: 100 }}
+			style={{ translateX: isOpen ? spring(0) : spring(100) }}
+		>
+			{interpolatingStyle => (
+				<Cart
+					style={{
+						transform: `translateX(${interpolatingStyle.translateX}%)`
+					}}
+					items={items}
+					onCloseCart={onCloseCart}
+					onRemoveItem={onRemoveItem}
+				/>
+			)}
+		</Motion>
 	</Modal>
 );
 

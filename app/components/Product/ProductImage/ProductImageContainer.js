@@ -7,7 +7,7 @@ import {
 } from './../UI';
 import styles from './ProductImageContainer.scss';
 
-const ProductImageContainer = ({ discount, images, activeImageIndex }) => (
+const ProductImageContainer = ({ discount, images, activeImageIndex, onSetActiveImageIndex }) => (
 	<div className={styles.imageContainer}>
 		<ProductDiscountPercent
 			className={styles.discount}
@@ -37,7 +37,7 @@ const ProductImageContainer = ({ discount, images, activeImageIndex }) => (
 							style={{
 								opacity: interpolatedStyles.btnOpacity
 							}}
-							onClick={() => this.setImageIndex(index)}
+							onClick={() => onSetActiveImageIndex(index)}
 						>
 							<ProductImage
 								className={styles.thumbnailImage}
@@ -62,13 +62,15 @@ const ProductImageContainer = ({ discount, images, activeImageIndex }) => (
 ProductImageContainer.propTypes = {
 	discount: PropTypes.number,
 	images: PropTypes.array,
-	activeImageIndex: PropTypes.number
+	activeImageIndex: PropTypes.number,
+	onSetActiveImageIndex: PropTypes.func
 };
 
 ProductImageContainer.defaultProps = {
 	discount: 0,
 	images: [],
-	activeImageIndex: 0
+	activeImageIndex: 0,
+	onSetActiveImageIndex: () => null
 };
 
 export default ProductImageContainer;

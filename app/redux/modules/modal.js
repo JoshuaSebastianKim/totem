@@ -3,6 +3,7 @@ import { ADD_TO_CART } from './cart';
 
 const TOGGLE_STORE_MODAL = 'modal/TOGGLE_STORE_MODAL';
 const TOGGLE_ADDED_TO_CART_MODAL = 'modal/TOGGLE_ADDED_TO_CART_MODAL';
+const CLOSE_ADDED_TO_CART_MODAL = 'modal/CLOSE_ADDED_TO_CART_MODAL';
 const TOGGLE_CART_MODAL = 'modal/TOGGLE_CART_MODAL';
 const CLOSE_CART_MODAL = 'modal/CLOSE_CART_MODAL';
 const SET_STORE_NAME = 'modal/SET_STORE_NAME';
@@ -26,6 +27,11 @@ export default function reducer(state = initialState, action) {
 			return {
 				...state,
 				addedToCartOpen: !state.addedToCartOpen
+			};
+		case CLOSE_ADDED_TO_CART_MODAL:
+			return {
+				...state,
+				addedToCartOpen: false
 			};
 		case TOGGLE_CART_MODAL:
 			return {
@@ -57,6 +63,12 @@ export function toggleStoreModal() {
 export function toggleAddedToCartModal() {
 	return {
 		type: TOGGLE_ADDED_TO_CART_MODAL
+	};
+}
+
+export function closeAddedToCartModal() {
+	return {
+		type: CLOSE_ADDED_TO_CART_MODAL
 	};
 }
 

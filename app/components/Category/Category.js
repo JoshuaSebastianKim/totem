@@ -31,7 +31,7 @@ class Category extends PureComponent {
 					{categoryTree.name}
 				</div>
 
-				<ProductList query={query} config={config} />
+				<ProductList query={query} config={config} canCompare />
 			</div>
 		);
 	}

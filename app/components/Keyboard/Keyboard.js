@@ -1,48 +1,56 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Motion, spring } from 'react-motion';
 import { ScreenKeyboard, KeyboardButton, LatinLayout } from './ScreenKeyboard';
 import { ArrowDownSmallIcon } from '../UI/Icons';
 import styles from './Keyboard.scss';
 
 const Keyboard = ({ input, open, toggleKeyboard }) => (
-	<div
-		className={`${styles.container}`}
-		style={{
-			transform: `translateY(${open ? 0 : 100}%)`
-		}}
+	<Motion
+		defaultStypes={{ translateY: 0 }}
+		style={{ translateY: open ? spring(0) : spring(100) }}
 	>
-		<button
-			className={`${styles.toggle} ${open ? styles.toggleHide : styles.toggleShow}`}
-			onClick={toggleKeyboard}
-		>
-			<span className={styles.toggleLabel}>
-				{open ? 'Ocultar teclado' : 'Mostrar teclado'}
-			</span>
+		{interpolatingStyles => (
+			<div
+				className={`${styles.container}`}
+				style={{
+					transform: `translateY(${interpolatingStyles.translateY}%)`
+				}}
+			>
+				<button
+					className={`${styles.toggle} ${open ? styles.toggleHide : styles.toggleShow}`}
+					onClick={toggleKeyboard}
+				>
+					<span className={styles.toggleLabel}>
+						{open ? 'Ocultar teclado' : 'Mostrar teclado'}
+					</span>
 
-			<ArrowDownSmallIcon className={styles.toggleIcon} />
-		</button>
+					<ArrowDownSmallIcon className={styles.toggleIcon} />
+				</button>
 
-		<ScreenKeyboard
-			inputNode={input}
-			layouts={[LatinLayout]}
-			leftButtons={[
-				<KeyboardButton
-					key="back"
-					onClick={() => null}
-					classes="keyboard-back-button"
-					value="< Back"
+				<ScreenKeyboard
+					inputNode={input}
+					layouts={[LatinLayout]}
+					leftButtons={[
+						<KeyboardButton
+							key="back"
+							onClick={() => null}
+							classes="keyboard-back-button"
+							value="< Back"
+						/>
+					]}
+					rightButtons={[
+						<KeyboardButton
+							key="submit"
+							onClick={() => null}
+							value="Submit"
+							classes="keyboard-submit-button"
+						/>
+					]}
 				/>
-			]}
-			rightButtons={[
-				<KeyboardButton
-					key="submit"
-					onClick={() => null}
-					value="Submit"
-					classes="keyboard-submit-button"
-				/>
-			]}
-		/>
-	</div>
+			</div>
+		)}
+	</Motion>
 );
 
 Keyboard.propTypes = {
