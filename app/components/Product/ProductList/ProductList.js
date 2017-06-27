@@ -225,7 +225,7 @@ class ProductList extends PureComponent {
 							<div
 								className={styles.listPagerThumb}
 								style={{
-									width: `${Math.floor(100 / pages)}%`,
+									width: `${Math.floor(100 / pages) || 1}%`,
 									left: `${((currentPage - 1) * 100) / pages}%`
 								}}
 							/>

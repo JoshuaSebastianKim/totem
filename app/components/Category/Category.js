@@ -16,7 +16,7 @@ class Category extends PureComponent {
 
 	render() {
 		const { config } = this.state;
-		const { categoryTree } = this.props;
+		const { categoryTree, onCompareItem } = this.props;
 		const query = {
 			category: `/${categoryTree.id}/`,
 			range: {

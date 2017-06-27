@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
 	ProductBrand,
@@ -17,17 +19,19 @@ class ProductListItem extends PureComponent {
 		product: PropTypes.object.isRequired,
 		style: PropTypes.object,
 		className: PropTypes.string,
-		showCompare: PropTypes.bool
+		showCompare: PropTypes.bool,
+		onCompare: PropTypes.func
 	}
 
 	static defaultProps = {
 		style: {},
 		className: '',
-		showCompare: false
+		showCompare: false,
+		onCompare: () => null
 	}
 
 	render() {
-		const { style, className, product, showCompare } = this.props;
+		const { style, className, product, showCompare, onCompare } = this.props;
 		const prices = getProductPrices(product).map(
 			price => Object.assign({}, price, { className: styles[price.type] })
 		);
@@ -59,13 +63,25 @@ class ProductListItem extends PureComponent {
 					<ProductPrices className={styles.prices} prices={prices} />
 
 					{showCompare &&
-						<ProductCompareButton className={styles.compare} />
+						<ProductCompareButton
+							className={styles.compare}
+							onClick={() => onCompare(product.productId)}
+						/>
 					}
 				</div>
 			</div>
 		);
 	}
-
 }
 
-export default ProductListItem;
+// TODO Implement compare state and actions
+
+function mapStateToProps(state) {
+	return {}
+}
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({}, dispatch);
+}
+
+export default connect()(ProductListItem);
