@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TransitionMotion, spring } from 'react-motion';
+import { Link } from 'react-router-dom';
 import { ProductCartItem } from '../Product';
 import { CartIcon } from '../UI/Icons';
 import { Button, CloseButton } from '../UI/Buttons';
@@ -34,7 +35,7 @@ class Cart extends Component {
 		margin: spring(0)
 	})
 
-	itemStyles = (items) => items.map(item => ({
+	itemStyles = items => items.map(item => ({
 		data: item,
 		key: item.productId,
 		style: {
@@ -120,11 +121,13 @@ class Cart extends Component {
 								</span>
 							</div>
 
-							<Button className={styles.checkoutButton}>
-								<span className={styles.checkoutButtonLabel}>
-									REALIZAR PEDIDO
-								</span>
-							</Button>
+							<Link to="/checkout">
+								<Button className={styles.checkoutButton}>
+									<span className={styles.checkoutButtonLabel}>
+										REALIZAR PEDIDO
+									</span>
+								</Button>
+							</Link>
 						</div> :
 						<div />
 					}

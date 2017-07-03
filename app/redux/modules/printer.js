@@ -2,6 +2,7 @@ import fs from 'fs';
 import printer from 'node-thermal-printer';
 
 const PRINTER_INITIALIZED = 'printer/PRINTER_INITIALIZED';
+const PRINTER_ERROR = 'printer/PRINTER_ERROR';
 export const PRINT_TICKET_START = 'printer/PRINT_TICKET_START';
 export const PRINT_TICKET_SUCCESS = 'printer/PRINT_TICKET_SUCCESS';
 export const PRINT_TICKET_ERROR = 'printer/PRINT_TICKET_ERROR';
@@ -20,6 +21,11 @@ export default function reducer(state = initialState, action) {
 				...state,
 				initialized: true,
 				config: action.payload
+			};
+		case PRINTER_ERROR:
+			return {
+				...state,
+				error: action.payload
 			};
 		case PRINT_TICKET_START:
 			return {
@@ -50,19 +56,26 @@ function getPrinterPath() {
 }
 
 export function printerInit() {
-	const printerPath = getPrinterPath();
-	const config = {
-		type: 'epson',
-		characterSet: 'LATINA',
-		interface: printerPath
-	};
+	try {
+		const printerPath = getPrinterPath();
+		const config = {
+			type: 'epson',
+			characterSet: 'LATINA',
+			interface: printerPath
+		};
 
-	printer.init(config);
+		printer.init(config);
 
-	return {
-		type: PRINTER_INITIALIZED,
-		payload: config
-	};
+		return {
+			type: PRINTER_INITIALIZED,
+			payload: config
+		};
+	} catch (err) {
+		return {
+			type: PRINTER_ERROR,
+			payload: err
+		};
+	}
 }
 
 function printTicketStart() {
@@ -169,7 +182,7 @@ export function printTicket(product) {
 		dispatch(printTicketStart());
 
 		// TODO: Replace example ticket with the real one
-		return printExampleTicket(2000).then(
+		return printExampleTicket().then(
 			() => dispatch(printTicketSucces()),
 			(err) => dispatch(printTicketError(err))
 		);

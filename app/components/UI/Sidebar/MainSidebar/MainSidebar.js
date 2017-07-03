@@ -44,7 +44,7 @@ const MainSidebar = ({
 		</div>
 
 		<div className={styles.nav}>
-			<div className={`${styles.cartButton} ${isCartActive ? styles.activeButton : ''}`}>
+			<div className={`${styles.cartButton} ${isCartActive || currentLocation === '/checkout' ? styles.activeButton : ''}`}>
 				<div className={styles.cartItemsLength}>
 					{cartItems.length}
 				</div>
@@ -52,21 +52,25 @@ const MainSidebar = ({
 			</div>
 			<CartModal />
 
-			<NavLink
-				to="/search"
-				activeClassName={styles.activeButton}
-				isActive={match => checkIfActive('search', match, currentLocation, lastLocation, isCartActive)}
-			>
-				<SearchButton />
-			</NavLink>
+			{currentLocation !== '/checkout' &&
+				<NavLink
+					to="/search"
+					activeClassName={styles.activeButton}
+					isActive={match => checkIfActive('search', match, currentLocation, lastLocation, isCartActive)}
+				>
+					<SearchButton />
+				</NavLink>
+			}
 
-			<NavLink
-				to="/category"
-				activeClassName={styles.activeButton}
-				isActive={match => checkIfActive('category', match, currentLocation, lastLocation, isCartActive)}
-			>
-				<CategoryButton />
-			</NavLink>
+			{currentLocation !== '/checkout' &&
+				<NavLink
+					to="/category"
+					activeClassName={styles.activeButton}
+					isActive={match => checkIfActive('category', match, currentLocation, lastLocation, isCartActive)}
+				>
+					<CategoryButton />
+				</NavLink>
+			}
 
 			<LocationButton className={styles.locationButton} onClick={onToggleStoreModal} />
 			<StoreModal />
@@ -75,7 +79,7 @@ const MainSidebar = ({
 		<div className={styles.goback}>
 			<GoBackButton className={styles.goBackButton} onClick={onGoBack} />
 			<div className={styles.goBackLabel}>
-				INICIO
+				VOLVER
 			</div>
 		</div>
 	</Sidebar>
