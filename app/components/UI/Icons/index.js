@@ -6,6 +6,7 @@ export BackIcon from './BackIcon';
 export CartAddIcon from './CartAddIcon';
 export CartIcon from './CartIcon';
 export CategoryIcon from './CategoryIcon';
+export CheckIcon from './CheckIcon';
 export ChevronLeftIcon from './ChevronLeftIcon';
 export ChevronRightIcon from './ChevronRightIcon';
 export CloseIcon from './CloseIcon';

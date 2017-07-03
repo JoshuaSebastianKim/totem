@@ -12,6 +12,9 @@ import {
 	ProductPrices
 } from '../UI';
 import { calculateDiscountPercent, getProductPrices } from '../Utils';
+import { CheckIcon } from '../../UI/Icons';
+import { toggleCompareItem } from '../../../redux/modules/compare';
+import { isCompareActive } from '../../../redux/selectors/compareSelectors';
 import styles from './ProductListItem.scss';
 
 class ProductListItem extends PureComponent {
@@ -20,18 +23,26 @@ class ProductListItem extends PureComponent {
 		style: PropTypes.object,
 		className: PropTypes.string,
 		showCompare: PropTypes.bool,
-		onCompare: PropTypes.func
+		onCompare: PropTypes.func,
+		isComparing: PropTypes.bool
 	}
 
 	static defaultProps = {
 		style: {},
 		className: '',
 		showCompare: false,
-		onCompare: () => null
+		onCompare: () => null,
+		isComparing: false
+	}
+
+	handleCompareProduct = () => {
+		const { product, onCompare } = this.props;
+
+		onCompare(product.productId);
 	}
 
 	render() {
-		const { style, className, product, showCompare, onCompare } = this.props;
+		const { style, className, product, showCompare, isComparing } = this.props;
 		const prices = getProductPrices(product).map(
 			price => Object.assign({}, price, { className: styles[price.type] })
 		);
@@ -40,7 +51,10 @@ class ProductListItem extends PureComponent {
 		const discount = (bestPrice && listPrice) ? calculateDiscountPercent(listPrice.value, bestPrice.value) : 0;
 
 		return (
-			<div className={`${styles.container} ${className}`} style={style}>
+			<div
+				className={`${styles.container} ${isComparing ? styles.compareActive : ''} ${className}`}
+				style={style}
+			>
 				<ProductDiscountPercent
 					className={styles.discount}
 					style={{ visibility: discount === 0 ? 'hidden' : 'visible' }}
@@ -56,17 +70,25 @@ class ProductListItem extends PureComponent {
 
 				<div className={styles.info}>
 					<ProductBrand className={styles.brand} brand={product.brand} />
+
 					<Link to={`/product/${product.productId}`}>
 						<ProductName className={styles.name} name={product.productName} />
 					</Link>
+
 					<div className={styles.divider} />
+
 					<ProductPrices className={styles.prices} prices={prices} />
 
 					{showCompare &&
 						<ProductCompareButton
-							className={styles.compare}
-							onClick={() => onCompare(product.productId)}
-						/>
+							className={styles.compareButton}
+							onClick={this.handleCompareProduct}
+						>
+							<CheckIcon className={styles.compareButtonIcon} />
+							<span className={styles.compareButtonLabel}>
+								COMPARAR
+							</span>
+						</ProductCompareButton>
 					}
 				</div>
 			</div>
@@ -74,14 +96,14 @@ class ProductListItem extends PureComponent {
 	}
 }
 
-// TODO Implement compare state and actions
-
-function mapStateToProps(state) {
-	return {}
+function mapStateToProps(state, props) {
+	return {
+		isComparing: isCompareActive(state, props)
+	};
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({}, dispatch);
+	return bindActionCreators({ onCompare: toggleCompareItem }, dispatch);
 }
 
-export default connect()(ProductListItem);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductListItem);

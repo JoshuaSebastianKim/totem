@@ -2,10 +2,10 @@ import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { TransitionMotion, spring } from 'react-motion';
 import { ProductListItem } from '../';
-import { searchQuery } from '../../../redux/modules/search';
+import { searchQuery, searchFulfilled, storeLastCurrentPageState } from '../../../redux/modules/search';
 import { Spinner } from '../../UI';
+import { Button } from '../../UI/Buttons';
 import { ChevronLeftIcon, ChevronRightIcon } from '../../UI/Icons';
 import styles from './ProductList.scss';
 
@@ -13,10 +13,15 @@ class ProductList extends PureComponent {
 	static propTypes = {
 		className: PropTypes.string,
 		style: PropTypes.object,
-		query: PropTypes.object,
+		query: PropTypes.object.isRequired,
 		config: PropTypes.object,
 		onSearch: PropTypes.func.isRequired,
-		canCompare: PropTypes.bool
+		canCompare: PropTypes.bool,
+		lastCurrentPageState: PropTypes.object,
+		storeLastCurrentPageState: PropTypes.func,
+		lastLocation: PropTypes.string,
+		currentLocation: PropTypes.string,
+		onSearchFulfilled: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -26,7 +31,12 @@ class ProductList extends PureComponent {
 			productsPerPage: 3
 		},
 		searchQuery: () => null,
-		canCompare: false
+		canCompare: false,
+		lastCurrentPageState: {},
+		storeLastCurrentPageState: () => null,
+		lastLocation: '',
+		currentLocation: '',
+		onSearchFulfilled: () => null
 	}
 
 	state = {
@@ -38,7 +48,38 @@ class ProductList extends PureComponent {
 	}
 
 	componentWillMount() {
-		this.search(this.props.query);
+		const { lastLocation, currentLocation, lastCurrentPageState, onSearchFulfilled } = this.props;
+		const { text: queryText } = this.props.query;
+		const { text: lastQueryText } = lastCurrentPageState.props.query;
+
+		// Set currentPage and products state as the lastCurrentPageState prop if lastLocation prop
+		// matches the '/product/' regexp
+		// TODO: find a way to keep this DRY
+		if (/\/product\//.test(lastLocation)) {
+			if (/\/search\//.test(currentLocation)) {
+				if (queryText && (queryText === lastQueryText)) {
+					this.setState({
+						...lastCurrentPageState.state
+					});
+
+					if (lastCurrentPageState.state.products) {
+						onSearchFulfilled(lastCurrentPageState.state.products);
+					}
+				} else {
+					this.search(this.props.query);
+				}
+			} else {
+				this.setState({
+					...lastCurrentPageState.state
+				});
+
+				if (lastCurrentPageState.state.products) {
+					onSearchFulfilled(lastCurrentPageState.state.products);
+				}
+			}
+		} else {
+			this.search(this.props.query);
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -72,6 +113,24 @@ class ProductList extends PureComponent {
 				});
 			}
 		}
+	}
+
+	componentWillUnmount() {
+		const { query, config } = this.props;
+		const { currentPage, products, lastPageFetched, total } = this.state;
+
+		this.props.storeLastCurrentPageState({
+			props: {
+				query,
+				config
+			},
+			state: {
+				currentPage,
+				lastPageFetched,
+				products,
+				total
+			}
+		});
 	}
 
 	search = (query, clear = true) => {
@@ -150,34 +209,6 @@ class ProductList extends PureComponent {
 		}
 	}
 
-	willLeaveStyles = () => ({
-		scale: spring(0),
-		heihht: spring(0),
-		width: spring(0),
-		opacity: spring(0),
-		translateY: spring(-15)
-	})
-
-	willEnterStyles = () => ({
-		scale: 1.05,
-		opacity: 0,
-		width: 510,
-		heihht: 302,
-		translateY: -15
-	})
-
-	itemStyles = (products) => products.map(product => ({
-		data: product,
-		key: product.productId,
-		style: {
-			scale: spring(1),
-			opacity: spring(1),
-			width: 510,
-			heihht: 302,
-			translateY: spring(0)
-		}
-	}))
-
 	render() {
 		const { total, currentPage, loading, products } = this.state;
 		const { className, style, config, canCompare } = this.props;
@@ -188,38 +219,25 @@ class ProductList extends PureComponent {
 
 		return (
 			<div className={`${styles.container} ${className}`} style={style}>
-				<TransitionMotion
-					willEnter={this.willEnterStyles}
-					styles={this.itemStyles(pageProducts)}
-				>
-					{interpolatedStyles => (
-						<div className={styles.productsContainer}>
-							{interpolatedStyles.map(item => (
-								<ProductListItem
-									key={item.key}
-									product={item.data}
-									style={{
-										opacity: item.style.opacity,
-										height: item.style.height,
-										width: item.style.width,
-										transform: `translateY(${item.style.translateY}px)`
-									}}
-									showCompare={canCompare}
-								/>
-							))}
-						</div>
-					)}
-				</TransitionMotion>
+				<div className={styles.productsContainer}>
+					{pageProducts.map(product => (
+						<ProductListItem
+							key={product.productId}
+							product={product}
+							showCompare={canCompare}
+						/>
+					))}
+				</div>
 
 				{products.length > 0 &&
 					<div className={styles.controlsContainer}>
-						<button
+						<Button
 							className={styles.listPageControl}
 							disabled={loading || currentPage === 1}
 							onClick={this.handlePrevControlClick}
 						>
 							<ChevronLeftIcon className={styles.listPageControlIcon} />
-						</button>
+						</Button>
 
 						<div className={styles.listPager}>
 							<div
@@ -231,13 +249,13 @@ class ProductList extends PureComponent {
 							/>
 						</div>
 
-						<button
+						<Button
 							className={styles.listPageControl}
 							disabled={loading || currentPage === pages}
 							onClick={this.handleNextControlClick}
 						>
 							<ChevronRightIcon className={styles.listPageControlIcon} />
-						</button>
+						</Button>
 					</div>
 				}
 
@@ -252,13 +270,17 @@ class ProductList extends PureComponent {
 
 function mapStateToProps(state) {
 	return {
-		searchResult: state.search.searchResult
+		lastCurrentPageState: state.search.lastCurrentPageState,
+		lastLocation: state.history.lastLocation,
+		currentLocation: state.history.currentLocation
 	};
 }
 
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
-		onSearch: searchQuery
+		onSearch: searchQuery,
+		onSearchFulfilled: searchFulfilled,
+		storeLastCurrentPageState
 	}, dispatch);
 }
 

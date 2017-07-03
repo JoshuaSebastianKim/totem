@@ -83,6 +83,19 @@
 			    background-color: $color-gray2;
 			}
 		}
+
+		.cartEmpty {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			height: 170px;
+			padding-bottom: 28px;
+			font-size: 36px;
+			font-weight: 800;
+			color: $color-blue;
+			line-height: 47px;
+		}
 	}
 
 	.footer {

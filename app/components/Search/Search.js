@@ -1,23 +1,29 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { SearchInput } from '../UI/Input';
-import { ProductList } from '../Product';
+import ProductList from '../Product/ProductList/ProductList';
 import styles from './Search.scss';
 
 export default class Search extends PureComponent {
 	static propTypes = {
 		onFocusInput: PropTypes.func,
-		searchResult: PropTypes.array,
+		searchSuccess: PropTypes.bool,
 		clearSearch: PropTypes.func,
-		isKeyboardOpen: PropTypes.bool
+		isKeyboardOpen: PropTypes.bool,
+		lastCurrentPageState: PropTypes.object,
+		storeLastCurrentPageState: PropTypes.func,
+		lastLocation: PropTypes.string
 	}
 
 	static defaultProps = {
 		onFocusInput: () => null,
-		searchResult: [],
+		searchSuccess: false,
 		clearSearch: () => null,
-		isKeyboardOpen: true
+		isKeyboardOpen: true,
+		lastCurrentPageState: {},
+		storeLastCurrentPageState: () => null,
+		lastLocation: ''
 	}
 
 	state = {
@@ -29,7 +35,18 @@ export default class Search extends PureComponent {
 	}
 
 	componentWillMount() {
-		this.props.clearSearch();
+		const { lastLocation, lastCurrentPageState } = this.props;
+
+		// Set currentPage and products state as the lastCurrentPageState prop if lastLocation prop
+		// matches the '/product/' regexp
+		if (/\/product\//.test(lastLocation)) {
+			this.setState({
+				...lastCurrentPageState.props,
+				searchTerm: lastCurrentPageState.props.query.text
+			});
+		} else {
+			this.props.clearSearch();
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -40,10 +57,6 @@ export default class Search extends PureComponent {
 				}
 			});
 		}
-	}
-
-	componentWillUnmount() {
-		this.props.clearSearch();
 	}
 
 	search = _.debounce((term) => this.handleInputSearch(term), 1000)
@@ -92,8 +105,8 @@ export default class Search extends PureComponent {
 
 	render() {
 		const { searchTerm, query, config } = this.state;
-		const { onFocusInput, searchResult, isKeyboardOpen } = this.props;
-		const activeSearchClassName = searchResult.length ? styles.activeSearchContainer : '';
+		const { onFocusInput, searchSuccess, isKeyboardOpen } = this.props;
+		const activeSearchClassName = searchSuccess ? styles.activeSearchContainer : '';
 		const productListClassName = isKeyboardOpen ? styles.productListHalf : styles.productListFull;
 
 		return (

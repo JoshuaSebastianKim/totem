@@ -8,17 +8,26 @@ axiosRetry(axios, { retries: 3 });
 const { CancelToken } = axios;
 let cancelToken;
 
-const SEARCH_START = 'catalog/SEARCH_START';
-export const SEARCH_FULFILLED = 'catalog/SEARCH_FULFILLED';
-const SEARCH_REJECTED = 'catalog/SEARCH_REJECTED';
-const SEARCH_CLEAR = 'catalog/SEARCH_CLEAR';
-const CACHE_QUERY = 'catalog/CACHE_QUERY';
+const SEARCH_START = 'search/SEARCH_START';
+export const SEARCH_FULFILLED = 'search/SEARCH_FULFILLED';
+const SEARCH_REJECTED = 'search/SEARCH_REJECTED';
+const SEARCH_CLEAR = 'search/SEARCH_CLEAR';
+const CACHE_QUERY = 'search/CACHE_QUERY';
+const STORE_LAST_CURRENT_PAGE_STATE = 'search/STORE_LAST_CURRENT_PAGE_STATE';
 
 const initialState = {
 	loading: false,
 	searchResult: [],
 	cache: {},
-	error: null
+	lastCurrentPageState: {
+		props: {
+			query: {},
+			config: {}
+		},
+		state: {}
+	},
+	error: null,
+	success: false
 };
 
 export default function reducer(state = initialState, action) {
@@ -32,13 +41,15 @@ export default function reducer(state = initialState, action) {
 			return {
 				...state,
 				loading: false,
-				searchResult: action.payload
+				searchResult: action.payload,
+				success: true
 			};
 		case SEARCH_REJECTED:
 			return {
 				...state,
 				loading: false,
-				error: action.payload
+				error: action.payload,
+				success: false
 			};
 		case CACHE_QUERY:
 			return {
@@ -52,7 +63,13 @@ export default function reducer(state = initialState, action) {
 			return {
 				...state,
 				searchResult: [],
-				error: ''
+				error: '',
+				success: false
+			};
+		case STORE_LAST_CURRENT_PAGE_STATE:
+			return {
+				...state,
+				lastCurrentPageState: action.payload
 			};
 		default:
 			return state;
@@ -88,10 +105,10 @@ function searchStart() {
 	};
 }
 
-function searchFulfilled(response) {
+export function searchFulfilled(products) {
 	return {
 		type: SEARCH_FULFILLED,
-		payload: response
+		payload: products
 	};
 }
 
@@ -166,5 +183,12 @@ export function clearSearch() {
 
 	return {
 		type: SEARCH_CLEAR
+	};
+}
+
+export function storeLastCurrentPageState(lastCurrentPageState) {
+	return {
+		type: STORE_LAST_CURRENT_PAGE_STATE,
+		payload: lastCurrentPageState
 	};
 }

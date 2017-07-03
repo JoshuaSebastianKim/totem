@@ -34,7 +34,7 @@ class Input extends PureComponent {
 				style={style}
 				value={value}
 				placeholder={placeholder}
-				onInput={this.handleInput}
+				onChange={this.handleInput}
 				onFocus={this.handleFocus}
 				onBlur={onBlur}
 				ref={(input) => { this.inputDOM = input; }}

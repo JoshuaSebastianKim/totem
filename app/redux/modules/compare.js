@@ -1,8 +1,11 @@
+const compareItemsLengthLimit = 4;
+
 const ADD_COMPARE_ITEM = 'compare/ADD_COMPARE_ITEM';
 const REMOVE_COMPARE_ITEM = 'compare/REMOVE_COMPARE_ITEM';
 const TOGGLE_COMPARE_ITEM = 'compare/TOGGLE_COMPARE_ITEM';
 
 const initialState = {
+	reachedLimit: false,
 	items: []
 };
 
@@ -12,10 +15,16 @@ export default function reducer(state = initialState, action) {
 			const items = state.items.indexOf(action.payload) === -1 ?
 				state.items.concat([action.payload]) :
 				state.items;
+			let reachedLimit = false;
+
+			if (items.length === compareItemsLengthLimit) {
+				reachedLimit = true;
+			}
 
 			return {
 				...state,
-				items
+				items,
+				reachedLimit
 			};
 		}
 		case REMOVE_COMPARE_ITEM: {
@@ -28,22 +37,31 @@ export default function reducer(state = initialState, action) {
 
 			return {
 				...state,
-				items
+				items,
+				reachedLimit: false
 			};
 		}
 		case TOGGLE_COMPARE_ITEM: {
+			let { reachedLimit } = state;
 			const items = state.items.slice();
 			const indexOf = items.indexOf(action.payload);
 
 			if (indexOf !== -1) {
 				items.splice(indexOf, 1);
-			} else {
+			} else if (!reachedLimit) {
 				items.push(action.payload);
+			}
+
+			if (items.length === compareItemsLengthLimit) {
+				reachedLimit = true;
+			} else {
+				reachedLimit = false;
 			}
 
 			return {
 				...state,
-				items
+				items,
+				reachedLimit
 			};
 		}
 		default:
@@ -52,7 +70,6 @@ export default function reducer(state = initialState, action) {
 }
 
 export function toggleCompareItem(productId) {
-	console.log(productId);
 	return {
 		type: TOGGLE_COMPARE_ITEM,
 		payload: productId

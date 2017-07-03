@@ -1,12 +1,13 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import App from './containers/App';
-import HomePage from './containers/HomePage';
-import SearchPage from './containers/SearchPage';
 import CategoriesPage from './containers/CategoriesPage';
 import CategoryPage from './containers/CategoryPage';
+import ComparePage from './containers/ComparePage';
 import DepartmentsPage from './containers/DepartmentsPage';
+import HomePage from './containers/HomePage';
 import ProductPage from './containers/ProductPage';
+import SearchPage from './containers/SearchPage';
 import { MainSidebar, CategorySidebar } from './components/UI/Sidebar';
 import Keyboard from './containers/KeyboardContainer';
 
@@ -18,6 +19,7 @@ export default() => (
 			<Switch>
 				<Route path="/cart" component={MainSidebar} />
 				<Route path="/category" component={MainSidebar} />
+				<Route path="/compare" component={MainSidebar} />
 				<Route path="/departments" component={MainSidebar} />
 				<Route path="/search" component={MainSidebar} />
 				<Route path="/product" component={MainSidebar} />
@@ -36,8 +38,9 @@ export default() => (
 				<Route path="/category/:departmentId/:categoryId" component={CategoryPage} />
 				<Route path="/category/:departmentId" component={CategoriesPage} />
 				<Route path="/category" component={DepartmentsPage} />
-				<Route path="/search" component={SearchPage} />
+				<Route path="/compare" component={ComparePage} />
 				<Route path="/product/:productId" component={ProductPage} />
+				<Route path="/search" component={SearchPage} />
 				<Route path="/" component={HomePage} />
 			</Switch>
 

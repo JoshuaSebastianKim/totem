@@ -97,10 +97,11 @@ class Cart extends Component {
 									))}
 								</div>
 							)}
-						</TransitionMotion>
-						:
+						</TransitionMotion> :
 						<div className={styles.cartEmpty}>
-							Vacio
+							Aún no has agregado productos
+							<br />
+							a tu carrito
 						</div>
 					}
 				</div>

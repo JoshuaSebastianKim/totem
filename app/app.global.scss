@@ -40,6 +40,11 @@ body {
 a {
 	color: #fff;
 	text-decoration: none;
+
+	&:hover,
+	&:focus {
+		text-decoration: none;
+	}
 }
 
 button {

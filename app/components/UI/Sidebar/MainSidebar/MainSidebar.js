@@ -33,7 +33,8 @@ const MainSidebar = ({
 	onToggleCartModal,
 	currentLocation,
 	lastLocation,
-	isCartActive
+	isCartActive,
+	cartItems
 }) => (
 	<Sidebar className={styles.sidebar}>
 		<div className={styles.logo}>
@@ -43,7 +44,10 @@ const MainSidebar = ({
 		</div>
 
 		<div className={styles.nav}>
-			<div className={isCartActive ? styles.activeButton : ''}>
+			<div className={`${styles.cartButton} ${isCartActive ? styles.activeButton : ''}`}>
+				<div className={styles.cartItemsLength}>
+					{cartItems.length}
+				</div>
 				<CartButton onClick={onToggleCartModal} />
 			</div>
 			<CartModal />
@@ -83,7 +87,8 @@ MainSidebar.propTypes = {
 	onToggleStoreModal: PropTypes.func,
 	currentLocation: PropTypes.string,
 	lastLocation: PropTypes.string,
-	isCartActive: PropTypes.bool
+	isCartActive: PropTypes.bool,
+	cartItems: PropTypes.array
 };
 
 MainSidebar.defaultProps = {
@@ -92,14 +97,16 @@ MainSidebar.defaultProps = {
 	onToggleStoreModal: () => null,
 	currentLocation: '',
 	lastLocation: '',
-	isCartActive: false
+	isCartActive: false,
+	cartItems: 0
 };
 
 function mapStateToProps(state) {
 	return {
 		currentLocation: state.history.currentLocation,
 		lastLocation: state.history.lastLocation,
-		isCartActive: state.modal.cartModalOpen
+		isCartActive: state.modal.cartModalOpen,
+		cartItems: state.cart.items
 	};
 }
 

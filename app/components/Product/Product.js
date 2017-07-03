@@ -61,7 +61,7 @@ class Product extends PureComponent {
 				/>
 
 				{/* PRODUCT INFO */}
-				<div className={`${styles.infoContaner} ${activeSpecifications ? styles.activeSpecsInfoContainer : ''}`}>
+				<div className={`${styles.infoContainer} ${activeSpecifications ? styles.activeSpecsInfoContainer : ''}`}>
 					<ProductInfoContainer
 						product={product}
 						isSpecificationsActive={activeSpecifications}

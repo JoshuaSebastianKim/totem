@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ProductCompareButton = ({ className, style, onClick }) => (
+const ProductCompareButton = ({ children, className, style, onClick }) => (
 	<button className={className} style={style} onClick={onClick}>
-		COMPARAR
+		{children}
 	</button>
 );
 
 ProductCompareButton.propTypes = {
 	style: PropTypes.object,
 	className: PropTypes.string,
-	onClick: PropTypes.func
+	onClick: PropTypes.func,
+	children: PropTypes.node
 };
 
 ProductCompareButton.defaultProps = {

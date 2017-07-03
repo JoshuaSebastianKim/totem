@@ -1,0 +1,134 @@
+@import '../../../styles/variables';
+@import '../../../styles/animations';
+
+.containerFixed {
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
+}
+
+.container {
+	position: relative;
+	display: flex;
+	align-items: stretch;
+	padding: 20px 30px;
+	background-color: #fff;
+
+	&:before,
+	&:after {
+		content: "";
+		position: absolute;
+		top: 0;
+		width: 86px;
+		height: 200px;
+		background-color: #fff;
+		border-radius: 40px;
+		z-index: -1;
+	}
+
+	&:before {
+		right: 97%;
+		transform: skewX(-18deg);
+	}
+
+	&:after {
+		left: 97%;
+		transform: skewX(18deg);
+	}
+
+	.compareItems {
+		display: flex;
+
+		.compareItem {
+			position: relative;
+			width: 90px;
+			height: 90px;
+			margin-left: 22px;
+			animation: fadeIn $transition-duration $transition-easing;
+
+			&:first-child {
+				margin-left: 0;
+			}
+
+			.compareItemRemove {
+				position: absolute;
+				top: -4px;
+				left: -14px;
+				width: 28px;
+				height: 28px;
+
+				.compareItemRemoveButton {
+					width: 100%;
+					height: 100%;
+					border-radius: 100%;
+					background-color: $color-black;
+					opacity: .6;
+
+					svg {
+						fill: #fff;
+					}
+				}
+			}
+
+			.compareItemImage {
+				width: 100%;
+				height: 100%;
+
+				img {
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+
+		.compareItemPlaceholder {
+			display: flex;
+			align-items: center;
+			text-align: center;
+			width: 90px;
+			height: 90px;
+			margin-left: 22px;
+			border: 2px solid $color-gray2;
+			font-size: 10px;
+			color: $color-gray2;
+			letter-spacing: 2px;
+
+			&:first-child {
+				margin-left: 0;
+			}
+		}
+	}
+
+	.compareActions {
+		display: flex;
+		align-items: center;
+		margin-left: 25px;
+		padding-left: 25px;
+		border-left: 2px solid $color-gray2;
+
+		.compareButton {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 284px;
+			height: 66px;
+			background-color: $color-yellow;
+			border-radius: 3px;
+			transition: background $transition-duration $transition-easing;
+
+			.compareButtonLabel {
+				font-size: 18px;
+				font-weight: 800;
+				color: #fff;
+				letter-spacing: 1px;
+			}
+		}
+
+		.compareButtonDisabled {
+			background-color: $color-gray2;
+		}
+	}
+}
