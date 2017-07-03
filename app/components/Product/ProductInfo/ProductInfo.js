@@ -11,6 +11,7 @@ import {
 	ProductPrintTicketButton
 } from './../UI';
 import { addToCart } from '../../../redux/modules/cart';
+import { printTicket } from '../../../redux/modules/printer';
 
 class ProductInfo extends PureComponent {
 	static propTypes = {
@@ -19,18 +20,26 @@ class ProductInfo extends PureComponent {
 		prices: PropTypes.array.isRequired,
 		product: PropTypes.object.isRequired,
 		styles: PropTypes.object,
-		onAddToCart: PropTypes.func
+		onAddToCart: PropTypes.func,
+		onPrintTicket: PropTypes.func
 	}
 
 	static defaultProps = {
 		styles: {},
-		onAddToCart: () => null
+		onAddToCart: () => null,
+		onPrintTicket: () => null
 	}
 
 	handleAddToCart = () => {
 		const { product, onAddToCart } = this.props;
 
 		onAddToCart(product.productId);
+	}
+
+	handlePrintTicket = () => {
+		const { product, onPrintTicket } = this.props;
+
+		onPrintTicket(product);
 	}
 
 	render() {
@@ -42,7 +51,9 @@ class ProductInfo extends PureComponent {
 				<ProductName className={styles.name} name={productName} />
 				<ProductPrices
 					className={styles.prices}
-					prices={prices.map(price => Object.assign({}, price, { className: styles[price.type] }))}
+					prices={prices.map(price => Object.assign(
+						{}, price, { className: styles[price.type] }
+					))}
 				/>
 
 				<div className={styles.actionsContainer}>
@@ -50,8 +61,13 @@ class ProductInfo extends PureComponent {
 						className={styles.addToCart}
 						onClick={this.handleAddToCart}
 					/>
+
 					<ProductBuyButton className={styles.buy} />
-					<ProductPrintTicketButton className={styles.printTicket} />
+
+					<ProductPrintTicketButton
+						className={styles.printTicket}
+						onClick={this.handlePrintTicket}
+					/>
 				</div>
 			</div>
 		);
@@ -59,7 +75,10 @@ class ProductInfo extends PureComponent {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ onAddToCart: addToCart }, dispatch);
+	return bindActionCreators({
+		onAddToCart: addToCart,
+		onPrintTicket: printTicket
+	}, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(ProductInfo);

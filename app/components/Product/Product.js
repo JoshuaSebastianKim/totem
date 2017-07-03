@@ -6,7 +6,7 @@ import ProductImageContainer from './ProductImage/ProductImageContainer';
 import ProductInfoContainer from './ProductInfo/ProductInfoContainer';
 import ProductDataContainer from './ProductData/ProductDataContainer';
 import { calculateDiscountPercent, getDefaultItem, getProductPrices } from './Utils';
-import { AddedToCartModal } from '../UI/Modal';
+import { AddedToCartModal, TicketPrintModal } from '../UI/Modal';
 import { ArrowDownSmallIcon } from '../UI/Icons';
 import styles from './Product.scss';
 
@@ -94,6 +94,7 @@ class Product extends PureComponent {
 
 				{/* PRODUCT MODALS */}
 				<AddedToCartModal />
+				<TicketPrintModal />
 			</div>
 		);
 	}

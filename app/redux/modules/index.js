@@ -8,6 +8,8 @@ import compare from './compare';
 import history from './history';
 import keyboard from './keyboard';
 import modal from './modal';
+import product from './product';
+import printer from './printer';
 import search from './search';
 
 const rootReducer = combineReducers({
@@ -18,6 +20,8 @@ const rootReducer = combineReducers({
 	history,
 	keyboard,
 	modal,
+	product,
+	printer,
 	search,
 	loadingBar: loadingBarReducer
 });
