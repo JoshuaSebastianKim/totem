@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InlineSVG from './InlineSVG';
+import InlineSVG from 'svg-inline-react';
 import ArrowLeft from './svg/icn_arrow_left_line.svg';
 
 const ArrowLeftIcon = ({ className, style }) => (

@@ -195,7 +195,7 @@
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
     "lodash": "^4.17.4",
-    "node-thermal-printer": "^1.0.4",
+    "net": "^1.0.2",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-collapse": "^4.0.2",
@@ -217,7 +217,10 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "source-map-support": "^0.4.15",
-    "store": "^2.0.4"
+    "store": "^2.0.4",
+    "svg-inline-react": "1",
+    "unorm": "^1.4.1",
+    "write-file-queue": "0.0.1"
   },
   "devEngines": {
     "node": ">=6.x",

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InlineSVG from './InlineSVG';
+import InlineSVG from 'svg-inline-react';
 import Back from './svg/icn_back.svg';
 
 const BackIcon = ({ className, style }) => (

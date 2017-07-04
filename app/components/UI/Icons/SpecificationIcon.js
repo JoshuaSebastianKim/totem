@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InlineSVG from './InlineSVG';
+import InlineSVG from 'svg-inline-react';
 import Specification from './svg/icn_specification.svg';
 
 const SpecificationIcon = ({ className, style }) => (

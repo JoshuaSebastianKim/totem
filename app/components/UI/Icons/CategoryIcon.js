@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InlineSVG from './InlineSVG';
+import InlineSVG from 'svg-inline-react';
 import Menu from './svg/icn_menu.svg';
 
 const CategoryIcon = ({ className, style }) => (

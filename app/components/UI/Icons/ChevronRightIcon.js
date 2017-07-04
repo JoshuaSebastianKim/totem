@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InlineSVG from './InlineSVG';
+import InlineSVG from 'svg-inline-react';
 import ArrowDown from './svg/icn_arrow_right_line_bold.svg';
 
 const ChevronRightIcon = ({ className, style }) => (

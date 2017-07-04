@@ -1,5 +1,5 @@
 import fs from 'fs';
-import printer from 'node-thermal-printer';
+import { printer } from '../../utils';
 
 const PRINTER_INITIALIZED = 'printer/PRINTER_INITIALIZED';
 const PRINTER_ERROR = 'printer/PRINTER_ERROR';

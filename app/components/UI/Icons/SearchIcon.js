@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InlineSVG from './InlineSVG';
+import InlineSVG from 'svg-inline-react';
 import Search from './svg/icn_search.svg';
 
 const SearchIcon = ({ className, style }) => (
