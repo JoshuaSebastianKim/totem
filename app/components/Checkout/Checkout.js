@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
+import { array, number } from 'prop-types';
 import styles from './Checkout.scss';
 
 class Checkout extends Component {
-	componentDidMount() {
-		this.iframe.src = 'http://walmartarqa.vtexcommercestable.com.br/';
+	static propTypes = {
+		items: array,
+		saleChannel: number
+	}
 
+	static defaultProps = {
+		items: ['14', '11', '9', '2'],
+		saleChannel: 25
+	}
+
+	componentDidMount() {
+		this.iframe.src = this.getCheckoutUrl();
 		this.iframe.onload = () => {
-			console.log('LOADED')
-		}
-		console.log(this.iframe.contentWindow);
+			console.log('LOADED');
+		};
+	}
+
+	getCheckoutUrl() {
+		const { items, saleChannel } = this.props;
+		const base = 'http://totemwalmartarqa.vtexcommercestable.com.br/checkout/cart/add';
+		const params = items.map(item => `sku=${item}&qty=1&seller=1`).join('&');
+
+		return `${base}?${params}&sc=${saleChannel}`;
 	}
 
 	render() {
@@ -16,6 +33,7 @@ class Checkout extends Component {
 			<div className={styles.container}>
 				<iframe
 					className={styles.iframe}
+					sandbox="allow-scripts allow-same-origin"
 					title="checkout"
 					ref={iframe => { this.iframe = iframe; }}
 				/>
