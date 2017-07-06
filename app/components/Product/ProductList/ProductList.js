@@ -53,10 +53,10 @@ class ProductList extends PureComponent {
 		const { text: lastQueryText } = lastCurrentPageState.props.query;
 
 		// Set currentPage and products state as the lastCurrentPageState prop if lastLocation prop
-		// matches the '/product/' regexp
+		// matches the '/product' regexp
 		// TODO: find a way to keep this DRY
-		if (/\/product\//.test(lastLocation)) {
-			if (/\/search\//.test(currentLocation)) {
+		if (/\/product/.test(lastLocation)) {
+			if (/\/search/.test(currentLocation)) {
 				if (queryText && (queryText === lastQueryText)) {
 					this.setState({
 						...lastCurrentPageState.state

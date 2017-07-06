@@ -38,8 +38,8 @@ export default class Search extends PureComponent {
 		const { lastLocation, lastCurrentPageState } = this.props;
 
 		// Set currentPage and products state as the lastCurrentPageState prop if lastLocation prop
-		// matches the '/product/' regexp
-		if (/\/product\//.test(lastLocation)) {
+		// matches the '/product' regexp
+		if (/\/product/.test(lastLocation)) {
 			this.setState({
 				...lastCurrentPageState.props,
 				searchTerm: lastCurrentPageState.props.query.text
