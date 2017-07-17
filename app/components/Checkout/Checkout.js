@@ -33,7 +33,7 @@ class Checkout extends Component {
 			<div className={styles.container}>
 				<iframe
 					className={styles.iframe}
-					sandbox="allow-scripts allow-same-origin"
+					sandbox="allow-scripts allow-same-origin allow-forms"
 					title="checkout"
 					ref={iframe => { this.iframe = iframe; }}
 				/>

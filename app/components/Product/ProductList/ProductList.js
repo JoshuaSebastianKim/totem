@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
-import PropTypes from 'prop-types';
+import { string, object, func, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import { ProductListItem } from '../';
 import { searchQuery, searchFulfilled, storeLastCurrentPageState } from '../../../redux/modules/search';
@@ -11,17 +11,18 @@ import styles from './ProductList.scss';
 
 class ProductList extends PureComponent {
 	static propTypes = {
-		className: PropTypes.string,
-		style: PropTypes.object,
-		query: PropTypes.object.isRequired,
-		config: PropTypes.object,
-		onSearch: PropTypes.func.isRequired,
-		canCompare: PropTypes.bool,
-		lastCurrentPageState: PropTypes.object,
-		storeLastCurrentPageState: PropTypes.func,
-		lastLocation: PropTypes.string,
-		currentLocation: PropTypes.string,
-		onSearchFulfilled: PropTypes.func
+		className: string,
+		style: object,
+		query: object.isRequired,
+		config: object,
+		onSearch: func.isRequired,
+		canCompare: bool,
+		lastCurrentPageState: object,
+		storeLastCurrentPageState: func,
+		lastLocation: string,
+		currentLocation: string,
+		onSearchFulfilled: func,
+		isCompareActive: bool
 	}
 
 	static defaultProps = {
@@ -36,7 +37,8 @@ class ProductList extends PureComponent {
 		storeLastCurrentPageState: () => null,
 		lastLocation: '',
 		currentLocation: '',
-		onSearchFulfilled: () => null
+		onSearchFulfilled: () => null,
+		isCompareActive: false
 	}
 
 	state = {
@@ -211,7 +213,7 @@ class ProductList extends PureComponent {
 
 	render() {
 		const { total, currentPage, loading, products } = this.state;
-		const { className, style, config, canCompare } = this.props;
+		const { className, style, config, canCompare, isCompareActive } = this.props;
 		const pages = Math.ceil(total / config.productsPerPage);
 		const pageFirstIndex = (currentPage - 1) * config.productsPerPage;
 		const pageLastIndex = currentPage * config.productsPerPage;
@@ -239,7 +241,7 @@ class ProductList extends PureComponent {
 							<ChevronLeftIcon className={styles.listPageControlIcon} />
 						</Button>
 
-						<div className={styles.listPager}>
+						<div className={`${styles.listPager} ${isCompareActive ? styles.compareListPage : ''}`}>
 							<div
 								className={styles.listPagerThumb}
 								style={{

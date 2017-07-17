@@ -19,7 +19,7 @@ export default class ScreenKeyboard extends PureComponent {
 		layouts: PropTypes.arrayOf(PropTypes.shape({
 			symbolsKeyValue: PropTypes.string,
 			layout: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
-		})),
+		}))
 	};
 
 	static defaultProps = {
@@ -32,52 +32,58 @@ export default class ScreenKeyboard extends PureComponent {
 	state = {
 		currentLayout: 0,
 		showSymbols: false,
-		uppercase: this.isUppercase(),
+		uppercase: this.isUppercase()
 	}
 
 	handleLanguageClick = () => {
 		this.setState({
 			currentLayout: (this.state.currentLayout + 1) % this.props.layouts.length,
-			showSymbols: false,
+			showSymbols: false
 		});
 
 		this.props.inputNode.focus();
 	}
 
 	handleShiftClick = () => {
-		this.setState({uppercase: !this.state.uppercase});
+		this.setState({ uppercase: !this.state.uppercase });
 
 		this.props.inputNode.focus();
 	}
 
 	handleSymbolsClick = () => {
-		this.setState({showSymbols: !this.state.showSymbols});
+		this.setState({ showSymbols: !this.state.showSymbols });
 
 		this.props.inputNode.focus();
 	}
 
 	handleLetterButtonClick = (key) => {
-		const {inputNode} = this.props;
-		const {value, selectionStart, selectionEnd} = inputNode;
+		const { inputNode } = this.props;
+		const { value, selectionStart, selectionEnd } = inputNode;
 		const nextValue = value.substring(0, selectionStart) + key + value.substring(selectionEnd);
 
 		inputNode.value = nextValue;
+
 		if (this.props.onClick) {
 			this.props.onClick(nextValue);
 		}
+
 		setTimeout(() => {
 			inputNode.focus();
 			inputNode.setSelectionRange(selectionStart + 1, selectionStart + 1);
 		}, 0);
-		this.setState({uppercase: this.isUppercase()});
-		inputNode.dispatchEvent(new Event('input', {bubbles: true}));
+
+		this.setState({ uppercase: this.isUppercase() });
+
+		inputNode.dispatchEvent(new Event('input', { bubbles: true }));
+		inputNode.dispatchEvent(new Event('change', { bubbles: true }));
 	}
 
 	handleBackspaceClick = () => {
-		const {inputNode} = this.props;
-		const {value, selectionStart, selectionEnd} = inputNode;
+		const { inputNode } = this.props;
+		const { value, selectionStart, selectionEnd } = inputNode;
 		let nextValue;
 		let nextSelectionPosition;
+
 		if (selectionStart === selectionEnd) {
 			nextValue = value.substring(0, selectionStart - 1) + value.substring(selectionEnd);
 			nextSelectionPosition = selectionStart - 1;
@@ -85,22 +91,27 @@ export default class ScreenKeyboard extends PureComponent {
 			nextValue = value.substring(0, selectionStart) + value.substring(selectionEnd);
 			nextSelectionPosition = selectionStart;
 		}
+
 		nextSelectionPosition = (nextSelectionPosition > 0) ? nextSelectionPosition : 0;
 
 		inputNode.value = nextValue;
+
 		if (this.props.onClick) {
 			this.props.onClick(nextValue);
 		}
+
 		setTimeout(() => {
 			inputNode.focus();
 			inputNode.setSelectionRange(nextSelectionPosition, nextSelectionPosition);
 		}, 0);
-		this.setState({uppercase: this.isUppercase()});
-		inputNode.dispatchEvent(new Event('input', {bubbles: true}));
+
+		this.setState({ uppercase: this.isUppercase() });
+
+		inputNode.dispatchEvent(new Event('input', { bubbles: true }));
 	}
 
 	isUppercase() {
-		const {inputNode, isFirstLetterUppercase} = this.props;
+		const { inputNode, isFirstLetterUppercase } = this.props;
 		return inputNode.type !== 'password' &&
 			inputNode.dataset.type !== 'email' &&
 			!inputNode.value.length && isFirstLetterUppercase;

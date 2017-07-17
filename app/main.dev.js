@@ -11,7 +11,7 @@
  * @flow
  */
 import { app, BrowserWindow } from 'electron';
-import MenuBuilder from './menu';
+// import MenuBuilder from './menu';
 
 let mainWindow = null;
 
@@ -48,11 +48,17 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', async () => {
+	let windowSettings = {};
+
 	if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
 		await installExtensions();
+
+		windowSettings = { show: false, width: 1920, height: 1080 };
+	} else {
+		windowSettings = { show: false, fullscreen: true };
 	}
 
-	mainWindow = new BrowserWindow({ show: false, width: 1920, height: 1080 });
+	mainWindow = new BrowserWindow(windowSettings);
 
 	mainWindow.loadURL(`file://${__dirname}/app.html`);
 
@@ -70,6 +76,8 @@ app.on('ready', async () => {
 		mainWindow = null;
 	});
 
-	const menuBuilder = new MenuBuilder(mainWindow);
-	menuBuilder.buildMenu();
+	// const menuBuilder = new MenuBuilder(mainWindow);
+	// menuBuilder.buildMenu();
+
+	mainWindow.setMenu(null);
 });

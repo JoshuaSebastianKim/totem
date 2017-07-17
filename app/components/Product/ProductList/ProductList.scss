@@ -27,11 +27,12 @@
 	}
 
 	.controlsContainer {
+		position: relative;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		margin-top: auto;
-		padding: 0 20px;
+		padding: 10px 20px 0;
 
 		.listPageControl {
 			width: 88px;
@@ -56,12 +57,18 @@
 		}
 
 		.listPager {
-			position: relative;
+			position: absolute;
+			top: 10px;
+			bottom: 0;
+			left: 0;
+			right: 0;
 			width: 1010px;
 			height: 6px;
+			margin: 40px auto 0;
 			border-radius: 10px;
 			overflow: hidden;
 			background-color: $color-gray2;
+			transition: margin $transition-duration $transition-easing;
 
 			.listPagerThumb {
 				position: absolute;
@@ -70,6 +77,10 @@
 				background-color: $color-yellow;
 				transition: left $transition-duration $easing-easeOutQuart;
 			}
+		}
+
+		.compareListPage {
+			margin-top: 8px;
 		}
 	}
 }

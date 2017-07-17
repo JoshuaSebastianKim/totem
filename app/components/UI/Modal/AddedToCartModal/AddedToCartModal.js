@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 import { Modal } from '..';
 import { Button } from '../../Buttons';
 import { CartAddIcon, ArrowLeftIcon, ArrowRightIcon } from '../../Icons';
@@ -43,13 +44,18 @@ const AddedToCartModal = ({ isOpen, onRequestClose }) => (
 				</span>
 			</Button>
 
-			<Button className={styles.checkout}>
-				<span className={styles.actionText}>
-					FINALIZAR PEDIDO
-				</span>
+			<Link to="/checkout">
+				<Button
+					className={styles.checkout}
+					onClick={onRequestClose}
+				>
+					<span className={styles.actionText}>
+						FINALIZAR PEDIDO
+					</span>
 
-				<ArrowRightIcon className={styles.actionIcon} />
-			</Button>
+					<ArrowRightIcon className={styles.actionIcon} />
+				</Button>
+			</Link>
 		</div>
 	</Modal>
 );

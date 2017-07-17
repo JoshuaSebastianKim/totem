@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Keyboard from '../components/Keyboard/Keyboard';
-import { toggleKeyboard } from '../redux/modules/keyboard';
+import { toggleKeyboard, listenCheckoutFrameMessages } from '../redux/modules/keyboard';
 
 function mapStateToProps(state) {
 	return {
@@ -11,6 +11,8 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
+	listenCheckoutFrameMessages(dispatch);
+
 	return bindActionCreators({ toggleKeyboard }, dispatch);
 }
 

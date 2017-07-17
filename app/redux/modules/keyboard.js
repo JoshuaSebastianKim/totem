@@ -49,3 +49,20 @@ export function toggleKeyboard() {
 		type: TOGGLE_OPEN
 	};
 }
+
+export function listenCheckoutFrameMessages(dispatch) {
+	function receiveMessage(event) {
+		if (event.data) {
+			// In the event data we receive the input ID and we get it in the element
+			const inputDOM = event.source.document.getElementById(event.data);
+
+			// If the element really exist (should be redundant as the input is
+			// indeed the element firing the event)
+			if (inputDOM) {
+				dispatch(onFocusInput(inputDOM));
+			}
+		}
+	}
+
+	window.addEventListener('message', receiveMessage, false);
+}

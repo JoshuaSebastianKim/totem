@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Motion, spring } from 'react-motion';
 import _ from 'lodash';
-import { Button, CloseButton } from '../../UI/Buttons';
+import { CloseButton } from '../../UI/Buttons';
 import { ProductImage } from '../../Product/UI';
 import styles from './CompareBar.scss';
 

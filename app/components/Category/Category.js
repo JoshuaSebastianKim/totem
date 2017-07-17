@@ -33,6 +33,12 @@ class Category extends PureComponent {
 		};
 	}
 
+	componentWillUnmount() {
+		const { compareItems, removeCompareItem } = this.props;
+
+		compareItems.forEach((item) => removeCompareItem(item.id));
+	}
+
 	render() {
 		const { config, query } = this.state;
 		const { categoryTree, compareItems, removeCompareItem } = this.props;
@@ -43,7 +49,15 @@ class Category extends PureComponent {
 					{categoryTree.name}
 				</div>
 
-				<ProductList query={query} config={config} canCompare />
+				<div className={styles.filtersContainer} />
+
+				<ProductList
+					className={styles.productList}
+					query={query}
+					config={config}
+					canCompare
+					isCompareActive={compareItems.length > 0}
+				/>
 
 				<CompareBar items={compareItems} handleRemoveItem={removeCompareItem} />
 			</div>
