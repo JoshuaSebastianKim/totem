@@ -9,7 +9,7 @@ function mapStateToProps(state) {
 	return {
 		searchSuccess: state.search.success,
 		isKeyboardOpen: state.keyboard.open,
-		lastLocation: state.history.lastLocation,
+		locationHistoryStack: state.history.locationHistoryStack,
 		lastCurrentPageState: state.search.lastCurrentPageState
 	};
 }

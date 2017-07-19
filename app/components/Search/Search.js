@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import { func, bool, object, array } from 'prop-types';
 import _ from 'lodash';
 import { SearchInput } from '../UI/Input';
 import ProductList from '../Product/ProductList/ProductList';
@@ -7,13 +7,12 @@ import styles from './Search.scss';
 
 export default class Search extends PureComponent {
 	static propTypes = {
-		onFocusInput: PropTypes.func,
-		searchSuccess: PropTypes.bool,
-		clearSearch: PropTypes.func,
-		isKeyboardOpen: PropTypes.bool,
-		lastCurrentPageState: PropTypes.object,
-		storeLastCurrentPageState: PropTypes.func,
-		lastLocation: PropTypes.string
+		onFocusInput: func,
+		searchSuccess: bool,
+		clearSearch: func,
+		isKeyboardOpen: bool,
+		lastCurrentPageState: object,
+		locationHistoryStack: array
 	}
 
 	static defaultProps = {
@@ -22,8 +21,7 @@ export default class Search extends PureComponent {
 		clearSearch: () => null,
 		isKeyboardOpen: true,
 		lastCurrentPageState: {},
-		storeLastCurrentPageState: () => null,
-		lastLocation: ''
+		locationHistoryStack: []
 	}
 
 	state = {
@@ -35,11 +33,12 @@ export default class Search extends PureComponent {
 	}
 
 	componentWillMount() {
-		const { lastLocation, lastCurrentPageState } = this.props;
+		const { locationHistoryStack, lastCurrentPageState } = this.props;
+		const [currentLocation, lastLocation] = locationHistoryStack;
 
-		// Set currentPage and products state as the lastCurrentPageState prop if lastLocation prop
+		// Set currentPage and products state as the lastCurrentPageState prop if locationHistoryStack[1] prop
 		// matches the '/product' regexp
-		if (/\/product/.test(lastLocation)) {
+		if (/\/product/.test(lastLocation) && currentLocation === locationHistoryStack[2]) {
 			this.setState({
 				...lastCurrentPageState.props,
 				searchTerm: lastCurrentPageState.props.query.text

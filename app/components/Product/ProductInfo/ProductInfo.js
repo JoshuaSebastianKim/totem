@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
 	ProductAddToCartButton,
 	ProductBrand,
@@ -10,7 +11,7 @@ import {
 	ProductPrices,
 	ProductPrintTicketButton
 } from './../UI';
-import { addToCart } from '../../../redux/modules/cart';
+import { addToCart, checkoutItem } from '../../../redux/modules/cart';
 import { printTicket } from '../../../redux/modules/printer';
 
 class ProductInfo extends PureComponent {
@@ -21,6 +22,7 @@ class ProductInfo extends PureComponent {
 		product: PropTypes.object.isRequired,
 		styles: PropTypes.object,
 		onAddToCart: PropTypes.func,
+		onCheckoutItem: PropTypes.func,
 		onPrintTicket: PropTypes.func
 	}
 
@@ -34,6 +36,12 @@ class ProductInfo extends PureComponent {
 		const { product, onAddToCart } = this.props;
 
 		onAddToCart(product.productId);
+	}
+
+	handleCheckoutItem = () => {
+		const { product, onCheckoutItem } = this.props;
+
+		onCheckoutItem(product.productId);
 	}
 
 	handlePrintTicket = () => {
@@ -62,7 +70,12 @@ class ProductInfo extends PureComponent {
 						onClick={this.handleAddToCart}
 					/>
 
-					<ProductBuyButton className={styles.buy} />
+					<Link to="/checkout">
+						<ProductBuyButton
+							className={styles.buy}
+							onClick={this.handleCheckoutItem}
+						/>
+					</Link>
 
 					<ProductPrintTicketButton
 						className={styles.printTicket}
@@ -77,6 +90,7 @@ class ProductInfo extends PureComponent {
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
 		onAddToCart: addToCart,
+		onCheckoutItem: checkoutItem,
 		onPrintTicket: printTicket
 	}, dispatch);
 }

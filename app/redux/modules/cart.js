@@ -1,4 +1,5 @@
 export const ADD_TO_CART = 'cart/ADD_TO_CART';
+export const CHECKOUT_ITEM = 'cart/CHECKOUT_ITEM';
 export const REMOVE_FROM_CART = 'cart/REMOVE_FROM_CART';
 
 const initialState = {
@@ -7,7 +8,8 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
-		case ADD_TO_CART: {
+		case ADD_TO_CART:
+		case CHECKOUT_ITEM: {
 			const items = state.items.indexOf(action.payload) === -1 ?
 				state.items.concat([action.payload]) :
 				state.items;
@@ -38,6 +40,13 @@ export default function reducer(state = initialState, action) {
 export function addToCart(productId) {
 	return {
 		type: ADD_TO_CART,
+		payload: productId
+	};
+}
+
+export function checkoutItem(productId) {
+	return {
+		type: CHECKOUT_ITEM,
 		payload: productId
 	};
 }

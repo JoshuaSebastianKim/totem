@@ -55,7 +55,8 @@ class Category extends PureComponent {
 					className={styles.productList}
 					query={query}
 					config={config}
-					canCompare
+					// NOTE: To enable comparing remove uncomment the next line
+					// canCompare
 					isCompareActive={compareItems.length > 0}
 				/>
 

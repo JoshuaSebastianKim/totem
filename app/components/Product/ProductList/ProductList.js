@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
-import { string, object, func, bool } from 'prop-types';
+import { string, object, func, bool, array } from 'prop-types';
 import { connect } from 'react-redux';
 import { ProductListItem } from '../';
 import { searchQuery, searchFulfilled, storeLastCurrentPageState } from '../../../redux/modules/search';
@@ -19,8 +19,7 @@ class ProductList extends PureComponent {
 		canCompare: bool,
 		lastCurrentPageState: object,
 		storeLastCurrentPageState: func,
-		lastLocation: string,
-		currentLocation: string,
+		locationHistoryStack: array,
 		onSearchFulfilled: func,
 		isCompareActive: bool
 	}
@@ -35,8 +34,7 @@ class ProductList extends PureComponent {
 		canCompare: false,
 		lastCurrentPageState: {},
 		storeLastCurrentPageState: () => null,
-		lastLocation: '',
-		currentLocation: '',
+		locationHistoryStack: [],
 		onSearchFulfilled: () => null,
 		isCompareActive: false
 	}
@@ -50,14 +48,16 @@ class ProductList extends PureComponent {
 	}
 
 	componentWillMount() {
-		const { lastLocation, currentLocation, lastCurrentPageState, onSearchFulfilled } = this.props;
+		const { locationHistoryStack, lastCurrentPageState, onSearchFulfilled } = this.props;
 		const { text: queryText } = this.props.query;
 		const { text: lastQueryText } = lastCurrentPageState.props.query;
+		const [currentLocation, lastLocation] = locationHistoryStack;
 
 		// Set currentPage and products state as the lastCurrentPageState prop if lastLocation prop
 		// matches the '/product' regexp
 		// TODO: find a way to keep this DRY
-		if (/\/product/.test(lastLocation)) {
+		if (/\/product/.test(lastLocation) && currentLocation === locationHistoryStack[2]) {
+			// Different logic needed depending of the currentLocation
 			if (/\/search/.test(currentLocation)) {
 				if (queryText && (queryText === lastQueryText)) {
 					this.setState({
@@ -273,8 +273,7 @@ class ProductList extends PureComponent {
 function mapStateToProps(state) {
 	return {
 		lastCurrentPageState: state.search.lastCurrentPageState,
-		lastLocation: state.history.lastLocation,
-		currentLocation: state.history.currentLocation
+		locationHistoryStack: state.history.locationHistoryStack
 	};
 }
 
