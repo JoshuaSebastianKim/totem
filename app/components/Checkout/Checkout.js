@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
-import { array, number } from 'prop-types';
+import { array, number, func } from 'prop-types';
 import { Spinner } from '../UI';
 import { iframeReady } from '../../utils';
 import styles from './Checkout.scss';
 
-window.$ = $;
-
 class Checkout extends Component {
 	static propTypes = {
 		items: array,
-		saleChannel: number
+		saleChannel: number,
+		onFocusInput: func
 	}
 
 	static defaultProps = {
 		items: ['14', '11', '9', '2'],
-		saleChannel: 25
+		saleChannel: 25,
+		onFocusInput: () => null
 	}
 
 	state = {
@@ -23,8 +22,9 @@ class Checkout extends Component {
 	}
 
 	componentDidMount() {
-		this.iframe.src = this.getCheckoutUrl();
-		this.iframe.onload = this.onCheckoutIframeLoad();
+		this.iframe.src = this.getCheckoutUrl(); // Create iframe
+		this.iframe.onload = this.onCheckoutIframeLoad(); // Onload handler
+		this.iframe.onload = console.log; // Onload handler
 	}
 
 	onCheckoutIframeLoad = () => {
@@ -32,14 +32,22 @@ class Checkout extends Component {
 			loading: false
 		});
 
+		// On ready iframe
+		// NOTE: The "iframeReady" function callbacks when the iframe is really
+		// ready since an iframe loads 2 times, once with an "about:black" and
+		// then with the real page. That's why we can't use "load" handlers.
 		iframeReady(this.iframe, this.handleIframeReady);
 	}
 
 	handleIframeReady = () => {
+		console.log('IFRAME READY');
 		const { contentWindow } = this.iframe;
 
+		// NOTE: The "componentValidated" event only triggers in the same instace
+		// of jQuery that's is why I use the jQuery from "contentWindow" of the
+		// checkout frame.
 		contentWindow.$('#payment-data')
-			.one('componentValidated.vtex', this.onPaymentDataEnabled);
+			.on('componentValidated.vtex', this.onPaymentDataEnabled);
 	}
 
 	onPaymentDataEnabled = () => {
@@ -47,29 +55,43 @@ class Checkout extends Component {
 
 		this.creditCardIframe = contentWindow.$('#iframe-placeholder-creditCardPaymentGroup iframe')[0];
 
+		// NOTE: In this frame the ready checker function for the iframe tends
+		// to fail, if so try again until it works and it should.
 		try {
 			iframeReady(this.creditCardIframe, this.handleCreditCartIframeReady);
 		} catch (e) {
-			console.log(e);
-			setTimeout(this.onPaymentDataEnabled, 1);
+			setTimeout(this.onPaymentDataEnabled.bind(this), 100);
 		}
 	}
 
 	handleCreditCartIframeReady = () => {
-		console.log('credit card ready');
-		const { contentWindow } = this.iframe;
-		const DOM = contentWindow.frames[0].document;
-		console.log(DOM);
-		const cardFormDOM = DOM.getElementsByClassName('CardForm')[0];
+		this.bindCreditCartInputsFocus();
+	}
 
-		DOM.addEventListener('animationend', (event) => {
-			console.log(event);
+	bindCreditCartInputsFocus = () => {
+		const inputs = window.frames[0].frames[0].document.getElementsByTagName('input');
+
+		if (!inputs.length) {
+			return setTimeout(this.bindCreditCartInputsFocus.bind(this), 100);
+		}
+
+		// When the inputs are found bind the focus event for the keyboard
+		Array.from(inputs).forEach((input) => {
+			input.addEventListener('focus', this.handleInputFocus);
+
+			// Change the credit card number input type
+			if (input.id === 'creditCardpayment-card-0Number') {
+				Object.assign(input, { type: 'password' });
+			}
+
+			if (input.id === 'creditCardpayment-card-0Code') {
+				Object.assign(input, { type: 'text' });
+			}
 		});
+	}
 
-		// cardFormDOM.addEventListener('animationend', () => {
-		// 	const inputs = contentWindow.frames[0].document.getElementsByTagName('input');
-		// 	inputs[0].addEventListener('focus', console.log)
-		// });
+	handleInputFocus = (event) => {
+		this.props.onFocusInput(event.target);
 	}
 
 	getCheckoutUrl() {

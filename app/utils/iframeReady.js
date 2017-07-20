@@ -20,15 +20,13 @@ export default function iFrameReady(iFrame, fn) {
 	function addEvent(elem, event, fn) {
 		if (elem.addEventListener) {
 			return elem.addEventListener(event, fn);
-		} else {
-			return elem.attachEvent('on' + event, function() {
-				return fn.call(elem, window.event);
-			});
 		}
+
+		return elem.attachEvent(`on${event}`, () => fn.call(elem, window.event));
 	}
 
 	// use iFrame load as a backup - though the other events should occur first
-	addEvent(iFrame, 'load', function() {
+	addEvent(iFrame, 'load', () => {
 		ready.call(iFrame.contentDocument || iFrame.contentWindow.document);
 	});
 
@@ -47,16 +45,12 @@ export default function iFrameReady(iFrame, fn) {
 				}
 			} else {
 				// still same old original document, so keep looking for content or new document
-				timer = setTimeout(checkLoaded, 1);
+				timer = setTimeout(checkLoaded, 100);
 			}
 		} catch (e) {
-			throw new Error(e);
+			timer = setTimeout(checkLoaded, 100);
 		}
 	}
 
-	try {
-		checkLoaded();
-	} catch (e) {
-		throw new Error(e);
-	}
+	checkLoaded();
 }
