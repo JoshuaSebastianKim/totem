@@ -1,0 +1,109 @@
+@import '../../../../styles/variables';
+
+.container {
+	display: flex;
+}
+
+.step {
+	display: flex;
+	align-items: center;
+	position: relative;
+	width: 340px;
+	height: 96px;
+	margin: 0 13px;
+	padding: 0 26px;
+	background-color: #fff;
+	border-radius: 50px;
+
+	.stepIcon {
+		display: flex;
+		align-items: center;
+		position: relative;
+		width: 56px;
+		height: 56px;
+		margin-right: 18px;
+		border-radius: 100%;
+		background-color: $color-gray2;
+		transition: background $transition-duration $transition-easing;
+
+		.icon {
+			margin: auto;
+
+			svg {
+				fill: #fff;
+			}
+		}
+
+		.successIcon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: absolute;
+			top: -3px;
+			right: -3px;
+			width: 22px;
+			height: 22px;
+			border: 2px solid #fff;
+			border-radius: 100%;
+			background-color: $color-green;
+			opacity: 0;
+			transition: opacity $transition-duration $transition-easing;
+
+			svg {
+				width: 11px;
+				fill: #fff;
+			}
+		}
+	}
+
+	.stepLabel {
+		font-size: 30px;
+		font-weight: 800;
+		color: $color-gray2;
+		letter-spacing: .5px;
+		transition: color $transition-duration $transition-easing;
+	}
+
+	.underline {
+		position: absolute;
+		top: 100%;
+		bottom: -35px;
+		left: 0;
+		right: 0;
+		height: 2px;
+		width: 65px;
+		margin: auto;
+		background-color: $color-blue;
+		opacity: 0;
+		transition: opacity $transition-duration $transition-easing;
+	}
+}
+
+
+.activeStep {
+	.stepIcon {
+		background-color: $color-blue;
+	}
+
+	.stepLabel {
+		color: $color-blue;
+	}
+
+	.underline {
+		opacity: 1;
+	}
+}
+
+.successStep {
+	.stepIcon {
+		background-color: $color-blue;
+
+		.successIcon {
+			opacity: 1;
+		}
+	}
+
+	.stepLabel {
+		color: $color-blue;
+	}
+}

@@ -1,0 +1,62 @@
+@import '../../../../styles/variables';
+
+.form {
+	padding-top: 72px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.fields {
+	width: 476px;
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.email {
+	width: 100%;
+}
+
+.firstName,
+.lastName,
+.document,
+.phone {
+	width: 228px;
+	height: auto;
+}
+
+.submitContainer {
+	width: 1018px;
+	border-top: 2px solid $color-gray;
+	margin: auto 0 30px;
+	padding: 40px 0 36px;
+}
+
+.submit {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 365px;
+	height: 68px;
+	margin: auto;
+	background-color: $color-yellow;
+	border-radius: 5px;
+}
+
+.submitLabel {
+	color: #fff;
+	font-size: 22px;
+	font-weight: 800;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.submitIcon {
+	width: 19px;
+	margin-left: 25px;
+
+	svg {
+		fill: #fff;
+	}
+}

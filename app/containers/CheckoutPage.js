@@ -1,7 +1,7 @@
 // @flow
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Checkout from '../components/Checkout/Checkout';
+import Checkout from '../components/Checkout/Checkout.02';
 import { onFocusInput } from '../redux/modules/keyboard';
 
 function mapStateToProps(state, props) {

@@ -1,0 +1,35 @@
+@import '../../styles/variables';
+
+.container {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+
+	.loader {
+		width: 100px;
+		height: 100px;
+	}
+
+	.title {
+		font-size: 24px;
+		color: $color-blue;
+		letter-spacing: 0.5px;
+		line-height: 1;
+		margin-top: 46px;
+		text-align: center;
+	}
+}
+
+.stepsSummary {
+	display: flex;
+	justify-content: center;
+	margin-top: 32px;
+}
+
+.orderForm {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	margin-top: 35px;
+	background-color: #fff;
+}
