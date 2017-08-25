@@ -1,3 +1,4 @@
 export ProfileStep from './ProfileStep/ProfileStep';
-export ShippingStep1 from './ShippingStep/ShippingStep1';
+export ShippingStepAddress from './ShippingStep/ShippingStepAddress';
+export ShippingStepLogistics from './ShippingStep/ShippingStepLogistics';
 export StepSummary from './StepSummary/StepSummary';

@@ -16,6 +16,8 @@ export LogoIcon from './LogoIcon';
 export PaymentIcon from './PaymentIcon';
 export PrinterIcon from './PrinterIcon';
 export SearchIcon from './SearchIcon';
+export ShippingIcon from './ShippingIcon';
 export SpecificationIcon from './SpecificationIcon';
+export StoreIcon from './StoreIcon';
 export TrashIcon from './TrashIcon';
 export UserIcon from './UserIcon';

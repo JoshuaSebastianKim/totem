@@ -7,6 +7,21 @@
 	align-items: center;
 }
 
+.logisticsInfo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.logisticsInfoTitle {
+	font-size: 20px;
+	font-weight: 600;
+	letter-spacing: .5px;
+	line-height: 1;
+	color: $color-black;
+	margin-top: 33px;
+}
+
 .fields {
 	display: flex;
 	justify-content: space-between;
@@ -25,6 +40,74 @@
 .city,
 .receiverName {
 	width: 480px;
+}
+
+.shippingOptions {
+	display: flex;
+	margin-top: 17px;
+}
+
+.shippingOption {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 358px;
+	height: 88px;
+	margin: 0 13px;
+	background-color: #fff;
+	border: 1px solid $color-gray;
+	border-radius: 5px;
+	padding: 0;
+
+	&:after {
+		content: "";
+		position: absolute;
+		height: 1px;
+		width: 80px;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: auto;
+		background-color: $color-yellow;
+		transition: opacity $transition-duration $transition-easing;
+	}
+
+	.shippingOptionIcon {
+		width: 60px;
+		margin: 0 34px 0 25px;
+		opacity: .4;
+		transition: opacity $transition-duration $transition-easing;
+
+		svg {
+			fill: $color-black;
+		}
+	}
+
+	.shippingOptionLabel {
+		font-size: 20px;
+		font-weight: 800;
+		color: $color-black;
+		letter-spacing: .5px;
+		color: $color-black;
+		opacity: .4;
+		transition: opacity $transition-duration $transition-easing;
+	}
+}
+
+.shippingOptionActive {
+	border-color: $color-yellow;
+
+	&:after {
+		opacity: 0;
+	}
+
+	.shippingOptionIcon {
+		opacity: 1;
+	}
+
+	.shippingOptionLabel {
+		opacity: 1;
+	}
 }
 
 .submitContainer {

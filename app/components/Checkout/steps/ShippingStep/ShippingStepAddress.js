@@ -7,7 +7,7 @@ import { required, isNumber } from '../../../../utils/validations';
 import map from './map.json';
 import styles from './ShippingStep.scss';
 
-class ShippingStep extends Component {
+class ShippingStepAddress extends Component {
 	static propTypes = {
 		...propTypes
 	}
@@ -19,6 +19,8 @@ class ShippingStep extends Component {
 
 	componentWillMount() {
 		const { initialValues } = this.props;
+
+		console.log(initialValues);
 
 		if ('city' in initialValues) {
 			this.setStateLocation(initialValues.state);
@@ -125,5 +127,7 @@ class ShippingStep extends Component {
 }
 
 export default reduxForm({
-	form: 'shipping'
-})(ShippingStep);
+	form: 'shipping',
+	destroyOnUnmount: false,
+	forceUnregisterOnUnmount: true
+})(ShippingStepAddress);

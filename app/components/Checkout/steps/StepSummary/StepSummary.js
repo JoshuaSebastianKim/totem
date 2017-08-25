@@ -1,9 +1,9 @@
 import React from 'react';
-import { array, string } from 'prop-types';
+import { array, string, func } from 'prop-types';
 import { CheckIcon } from '../../../UI/Icons';
 import styles from './StepSummary.scss';
 
-const stepHierarchy = ['profile', 'shipping', 'payment'];
+const stepHierarchy = ['clientProfile', 'shipping', 'payment'];
 
 function isActive(step, activeStep) {
 	return step === activeStep && styles.activeStep;
@@ -20,12 +20,13 @@ function getClassNames(step, activeStep) {
 	return `${styles.step} ${activeClassName} ${successClassName}`;
 }
 
-const StepSummary = ({ steps, activeStep }) => (
+const StepSummary = ({ steps, activeStep, onClick }) => (
 	<div className={styles.container}>
 		{steps.map(step => (
-			<div
+			<button
 				key={step.id}
 				className={getClassNames(step, activeStep)}
+				onClick={() => onClick(step.id)}
 			>
 				<div className={styles.stepIcon}>
 					<step.icon.component
@@ -41,14 +42,19 @@ const StepSummary = ({ steps, activeStep }) => (
 				</div>
 
 				<div className={styles.underline} />
-			</div>
+			</button>
 		))}
 	</div>
 );
 
 StepSummary.propTypes = {
 	steps: array.isRequired,
-	activeStep: string.isRequired
+	activeStep: string.isRequired,
+	onClick: func
+};
+
+StepSummary.defaultProps = {
+	onClick: () => null
 };
 
 export default StepSummary;

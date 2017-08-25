@@ -3,7 +3,7 @@ import { array, number, func } from 'prop-types';
 import axios from 'axios';
 import { Spinner } from '../UI';
 import { UserIcon, LocationIcon, PaymentIcon } from '../UI/Icons';
-import { StepSummary, ProfileStep, ShippingStep1 } from './steps';
+import { StepSummary, ProfileStep, ShippingStepAddress, ShippingStepLogistics } from './steps';
 import styles from './Checkout.02.scss';
 
 class Checkout extends Component {
@@ -24,34 +24,13 @@ class Checkout extends Component {
 		loading: true,
 		error: null,
 		orderForm: null,
-		activeStep: 'profileData'
+		activeStep: 'clientProfile'
 	}
 
 	componentWillMount() {
-		const getActiveStep = orderForm => {
-			const stepDataKeys = ['clientProfileData', 'shippingDataAddress', 'shippingDataLogistics', 'paymentData'];
-			const profileDataFields = ['document', 'email', 'firstName', 'lastName', 'phone'];
-			const shippingDataAddressFields = ['city', 'number', 'postalCode', 'receiverName', 'state', 'street'];
-			const activeStepData = stepDataKeys.find(stepDataKey => {
-				const stepData = orderForm[stepDataKey.replace(/(Address|Logistics)/, '')];
-
-				switch (stepDataKey) {
-					case 'clientProfileData':
-						return profileDataFields.some(field => stepData[field] === null);
-					case 'shippingDataAddress':
-						return shippingDataAddressFields.some(field => stepData.address[field] === null);
-					case 'shippingDataLogistics':
-						return true;
-					default:
-						return true;
-				}
-			});
-
-			return activeStepData.replace(/Data/, '');
-		};
 		const handleOrderFormResolve = response => {
 			this.setState({
-				activeStep: getActiveStep(response.data),
+				activeStep: this.getActiveStep(response.data),
 				orderForm: response.data,
 				loading: false
 			});
@@ -76,7 +55,7 @@ class Checkout extends Component {
 
 	steps = [
 		{
-			id: 'profile',
+			id: 'clientProfile',
 			label: 'Identificación',
 			icon: {
 				component: UserIcon,
@@ -105,12 +84,65 @@ class Checkout extends Component {
 		}
 	]
 
+	stepDataKeys = ['clientProfileData', 'shippingDataAddress', 'shippingDataLogistics', 'paymentData'];
+
 	hostUrl = 'https://totemwalmartarqa.vtexcommercestable.com.br';
 
 	getOrderForm = () => axios.get(`${this.hostUrl}/api/checkout/pub/orderForm`)
 
 	addToCart = (items) => {
-		
+
+	}
+
+	getActiveStep = (orderForm) => {
+		const clientProfileDataFields = ['document', 'email', 'firstName', 'lastName', 'phone'];
+		const shippingDataAddressFields = ['city', 'number', 'postalCode', 'receiverName', 'state', 'street'];
+		const activeStepData = this.stepDataKeys.find(stepDataKey => {
+			const stepData = orderForm[stepDataKey.replace(/(Address|Logistics)/, '')];
+
+			switch (stepDataKey) {
+				case 'clientProfileData':
+					return clientProfileDataFields.some(field => stepData[field] === null);
+				case 'shippingDataAddress':
+					return shippingDataAddressFields.some(field => stepData.address[field] === null);
+				case 'shippingDataLogistics':
+					return true;
+				default:
+					return true;
+			}
+		});
+
+		return activeStepData.replace(/Data/, '');
+	};
+
+	handleStepClick = (step) => {
+		const { orderForm } = this.state;
+		const activeStep = this.getActiveStep(orderForm);
+		const stepHierarchy = this.stepDataKeys.find(
+			(stepKey) => new RegExp(step, 'ig').test(stepKey)
+		);
+		const stepHierarchyIndex = this.stepDataKeys.indexOf(stepHierarchy);
+		const activeStepHierarchyIndex = this.stepDataKeys.findIndex(
+			(stepKey) => stepKey.replace('Data', '') === activeStep
+		);
+
+		if (stepHierarchyIndex > activeStepHierarchyIndex) {
+			return false;
+		}
+
+		this.setState({
+			activeStep: stepHierarchy.replace('Data', '')
+		});
+	}
+
+	handleAttachmentResolve = (response) => {
+		this.setState({
+			activeStep: this.getActiveStep(response.data)
+		});
+	}
+
+	handleAttachmentReject = (error) => {
+		console.log(error);
 	}
 
 	handleProfileSubmit = (data) => {
@@ -124,7 +156,10 @@ class Checkout extends Component {
 			isCorporate: false
 		};
 
-		return axios.post(attachmentUrl, attachmentData);
+		return axios.post(attachmentUrl, attachmentData)
+			.then(this.getOrderForm)
+			.then(this.handleAttachmentResolve)
+			.catch(this.handleAttachmentReject);
 	}
 
 	handleShippingSubmit = (data) => {
@@ -137,16 +172,15 @@ class Checkout extends Component {
 			}
 		};
 
-		console.log(data);
-
-		return axios.post(attachmentUrl, attachmentData);
+		return axios.post(attachmentUrl, attachmentData)
+			.then(this.getOrderForm)
+			.then(this.handleAttachmentResolve)
+			.catch(this.handleAttachmentReject);
 	}
 
 	render() {
 		const { loading, error, orderForm, activeStep } = this.state;
 		const { onFocusInput } = this.props;
-
-		console.log(orderForm, activeStep);
 
 		return (
 			loading ?
@@ -159,12 +193,16 @@ class Checkout extends Component {
 					</div>
 
 					<div className={styles.stepsSummary}>
-						<StepSummary steps={this.steps} activeStep={activeStep} />
+						<StepSummary
+							steps={this.steps}
+							activeStep={activeStep.replace(/(Address|Logistics)/, '')}
+							onClick={this.handleStepClick}
+						/>
 					</div>
 
 					{orderForm &&
 						<div className={styles.orderForm}>
-							{activeStep === 'profile' &&
+							{activeStep === 'clientProfile' &&
 								<ProfileStep
 									initialValues={orderForm.clientProfileData}
 									onSubmit={this.handleProfileSubmit}
@@ -173,9 +211,16 @@ class Checkout extends Component {
 							}
 
 							{activeStep === 'shippingAddress' &&
-								<ShippingStep1
+								<ShippingStepAddress
 									initialValues={orderForm.shippingData.address}
 									onSubmit={this.handleShippingSubmit}
+								/>
+							}
+
+							{activeStep === 'shippingLogistics' &&
+								<ShippingStepLogistics
+									onSubmit={this.handleShippingSubmit}
+									logisticsInfo={orderForm.shippingData.logisticsInfo}
 								/>
 							}
 						</div>
