@@ -5,6 +5,7 @@ import styles from './CustomField.scss';
 
 const CustomField = ({
 	className,
+	onFocusInput,
 	name,
 	input,
 	label,
@@ -22,6 +23,7 @@ const CustomField = ({
 				type={type}
 				disabled={submitting}
 				className={styles.input}
+				onFocus={ev => onFocusInput(ev.target)}
 			/>
 
 			{touched && (

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { func } from 'prop-types';
 import { Field, reduxForm, propTypes } from 'redux-form';
 import CustomField from '../CustomField';
 import CustomSelect from '../CustomSelect';
@@ -9,7 +10,8 @@ import styles from './ShippingStep.scss';
 
 class ShippingStepAddress extends Component {
 	static propTypes = {
-		...propTypes
+		...propTypes,
+		onFocusInput: func.isRequired
 	}
 
 	state = {
@@ -44,7 +46,7 @@ class ShippingStepAddress extends Component {
 
 	render() {
 		const { cities } = this.state;
-		const { handleSubmit, submitting } = this.props;
+		const { handleSubmit, submitting, onFocusInput } = this.props;
 
 		return (
 			<form onSubmit={handleSubmit} className={styles.form}>
@@ -55,6 +57,7 @@ class ShippingStepAddress extends Component {
 						component={CustomField}
 						validate={[required, isNumber]}
 						className={styles.postalCode}
+						onFocusInput={onFocusInput}
 					/>
 
 					<Field
@@ -63,6 +66,7 @@ class ShippingStepAddress extends Component {
 						component={CustomField}
 						validate={[required]}
 						className={styles.street}
+						onFocusInput={onFocusInput}
 					/>
 
 					<Field
@@ -71,6 +75,7 @@ class ShippingStepAddress extends Component {
 						component={CustomField}
 						validate={[required, isNumber]}
 						className={styles.number}
+						onFocusInput={onFocusInput}
 					/>
 
 					<Field
@@ -78,6 +83,7 @@ class ShippingStepAddress extends Component {
 						label="Piso o Depto."
 						component={CustomField}
 						className={styles.complement}
+						onFocusInput={onFocusInput}
 					/>
 
 					<Field
@@ -88,6 +94,7 @@ class ShippingStepAddress extends Component {
 						values={Object.keys(map)}
 						onChange={this.handleStateChange}
 						className={styles.state}
+						onFocusInput={onFocusInput}
 					/>
 
 					<Field
@@ -97,6 +104,7 @@ class ShippingStepAddress extends Component {
 						validate={[required]}
 						values={cities}
 						className={styles.city}
+						onFocusInput={onFocusInput}
 					/>
 
 					<Field
@@ -105,6 +113,7 @@ class ShippingStepAddress extends Component {
 						component={CustomField}
 						validate={[required]}
 						className={styles.receiverName}
+						onFocusInput={onFocusInput}
 					/>
 				</div>
 

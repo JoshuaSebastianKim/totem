@@ -13,7 +13,7 @@ class ProfileStep extends Component {
 	}
 
 	render() {
-		const { handleSubmit, submitting } = this.props;
+		const { handleSubmit, submitting, onFocusInput } = this.props;
 
 		return (
 			<form onSubmit={handleSubmit} className={styles.form}>
@@ -24,6 +24,7 @@ class ProfileStep extends Component {
 						component={CustomField}
 						validate={[required, isEmail]}
 						className={styles.email}
+						onFocusInput={onFocusInput}
 					/>
 
 					<Field
@@ -32,6 +33,7 @@ class ProfileStep extends Component {
 						component={CustomField}
 						validate={[required]}
 						className={styles.firstName}
+						onFocusInput={onFocusInput}
 					/>
 
 					<Field
@@ -40,6 +42,7 @@ class ProfileStep extends Component {
 						component={CustomField}
 						validate={[required]}
 						className={styles.lastName}
+						onFocusInput={onFocusInput}
 					/>
 
 					<Field
@@ -48,6 +51,7 @@ class ProfileStep extends Component {
 						component={CustomField}
 						validate={[required, isNumber, minLength8]}
 						className={styles.document}
+						onFocusInput={onFocusInput}
 					/>
 
 					<Field
@@ -56,6 +60,7 @@ class ProfileStep extends Component {
 						component={CustomField}
 						validate={[required, isNumber, minLength8]}
 						className={styles.phone}
+						onFocusInput={onFocusInput}
 					/>
 				</div>
 

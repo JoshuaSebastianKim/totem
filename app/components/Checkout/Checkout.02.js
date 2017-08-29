@@ -47,8 +47,11 @@ class Checkout extends Component {
 
 			return error;
 		};
+		const { items, saleChannel } = this.props;
 
 		this.getOrderForm()
+			.then(response => this.addToCart(response.data, items, saleChannel))
+			.then(this.getOrderForm)
 			.then(handleOrderFormResolve)
 			.catch(handleOrderFormReject);
 	}
@@ -90,8 +93,19 @@ class Checkout extends Component {
 
 	getOrderForm = () => axios.get(`${this.hostUrl}/api/checkout/pub/orderForm`)
 
-	addToCart = (items) => {
+	addToCart = (orderForm, items, saleChannel) => {
+		const orderItems = items.map(item => ({
+			id: item,
+			quantity: 1,
+			seller: 1
+		}));
+		const config = {
+			params: {
+				sc: saleChannel
+			}
+		};
 
+		return axios.post(`${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/items`, { orderItems }, config);
 	}
 
 	getActiveStep = (orderForm) => {
@@ -104,7 +118,11 @@ class Checkout extends Component {
 				case 'clientProfileData':
 					return clientProfileDataFields.some(field => stepData[field] === null);
 				case 'shippingDataAddress':
-					return shippingDataAddressFields.some(field => stepData.address[field] === null);
+					if (!stepData.address) {
+						return true;
+					}
+
+					return shippingDataAddressFields.some(field => stepData.address[field] === null || stepData.address[field] === '');
 				case 'shippingDataLogistics':
 					return true;
 				default:
@@ -137,7 +155,8 @@ class Checkout extends Component {
 
 	handleAttachmentResolve = (response) => {
 		this.setState({
-			activeStep: this.getActiveStep(response.data)
+			activeStep: this.getActiveStep(response.data),
+			orderForm: response.data
 		});
 	}
 
@@ -212,15 +231,16 @@ class Checkout extends Component {
 
 							{activeStep === 'shippingAddress' &&
 								<ShippingStepAddress
-									initialValues={orderForm.shippingData.address}
+									initialValues={orderForm.shippingData.address || {}}
 									onSubmit={this.handleShippingSubmit}
+									onFocusInput={onFocusInput}
 								/>
 							}
 
 							{activeStep === 'shippingLogistics' &&
 								<ShippingStepLogistics
 									onSubmit={this.handleShippingSubmit}
-									logisticsInfo={orderForm.shippingData.logisticsInfo}
+									orderForm={orderForm}
 								/>
 							}
 						</div>

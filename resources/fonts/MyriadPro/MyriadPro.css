@@ -18,14 +18,14 @@
 	font-style: italic;
 }
 
-@font-face {
+/*@font-face {
 	font-family: 'Myriad Pro';
 	src: url('MyriadPro-SemiCnIt.eot');
 	src: url('MyriadPro-SemiCnIt.eot?#iefix') format('embedded-opentype'),
 		url('MyriadPro-SemiCnIt.ttf') format('truetype');
 	font-weight: normal;
 	font-style: italic;
-}
+}*/
 
 @font-face {
 	font-family: 'Myriad Pro';
@@ -45,14 +45,14 @@
 	font-style: italic;
 }
 
-@font-face {
+/*@font-face {
 	font-family: 'Myriad Pro';
 	src: url('MyriadPro-SemiExtIt.eot');
 	src: url('MyriadPro-SemiExtIt.eot?#iefix') format('embedded-opentype'),
 		url('MyriadPro-SemiExtIt.ttf') format('truetype');
 	font-weight: normal;
 	font-style: italic;
-}
+}*/
 
 @font-face {
 	font-family: 'Myriad Pro';
@@ -117,14 +117,14 @@
 	font-style: normal;
 }
 
-@font-face {
+/*@font-face {
 	font-family: 'Myriad Pro';
 	src: url('MyriadPro-Cond.eot');
 	src: url('MyriadPro-Cond.eot?#iefix') format('embedded-opentype'),
 		url('MyriadPro-Cond.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
-}
+}*/
 
 @font-face {
 	font-family: 'Myriad Pro';
@@ -261,14 +261,14 @@
 	font-style: italic;
 }
 
-@font-face {
+/*@font-face {
 	font-family: 'Myriad Pro';
 	src: url('MyriadPro-SemiExt.eot');
 	src: url('MyriadPro-SemiExt.eot?#iefix') format('embedded-opentype'),
 		url('MyriadPro-SemiExt.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
-}
+}*/
 
 @font-face {
 	font-family: 'Myriad Pro';
@@ -315,23 +315,23 @@
 	font-style: italic;
 }
 
-@font-face {
+/*@font-face {
 	font-family: 'Myriad Pro';
 	src: url('MyriadPro-CondIt.eot');
 	src: url('MyriadPro-CondIt.eot?#iefix') format('embedded-opentype'),
 		url('MyriadPro-CondIt.ttf') format('truetype');
 	font-weight: normal;
 	font-style: italic;
-}
+}*/
 
-@font-face {
+/*@font-face {
 	font-family: 'Myriad Pro';
 	src: url('MyriadPro-SemiCn.eot');
 	src: url('MyriadPro-SemiCn.eot?#iefix') format('embedded-opentype'),
 		url('MyriadPro-SemiCn.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
-}
+}*/
 
 @font-face {
 	font-family: 'Myriad Pro';

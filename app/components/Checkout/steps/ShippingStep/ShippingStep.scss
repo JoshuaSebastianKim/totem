@@ -110,6 +110,121 @@
 	}
 }
 
+.shippingSchedule {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	border-top: 2px solid $color-gray;
+	margin-top: 22px;
+	padding-top: 34px;
+}
+
+.shippingDate {
+	display: flex;
+	flex-direction: column;
+	width: 386px;
+}
+
+.shippingWindow {
+	display: flex;
+	flex-direction: column;
+	width: 495px;
+}
+
+.shippingDateTitle,
+.shippingWindowTitle {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.shippingDateTitleIcon,
+	.shippingWindowTitleIcon {
+		width: 27px;
+		margin-right: 12px;
+
+		svg {
+			fill: $color-blue;
+		}
+	}
+
+	.shippingDateTitleLabel,
+	.shippingWindowTitleLabel {
+		font-size: 19px;
+		font-weight: 600;
+		color: $color-black;
+		letter-spacing: .5px;
+	}
+}
+
+.datePicker {
+	display: flex;
+	margin-top: 22px;
+}
+
+.deliveryWindows {
+	display: flex;
+	flex-direction: column;
+	margin-top: 22px;
+}
+
+.deliveryWindow {
+	display: flex;
+	justify-content: space-between;
+	height: 62px;
+	width: 100%;
+	border: 1px solid $color-gray2;
+	padding: 0 16px 0 22px;
+	background-color: #fff;
+	border-radius: 50px;
+	transition: border $transition-duration $transition-easing;
+
+	.deliveryWindowLabel {
+		font-size: 19px;
+		color: #808080;
+		transition: color $transition-duration $transition-easing;
+	}
+
+	.deliveryWindowRadio {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 25px;
+		height: 25px;
+		background-color: #fff;
+		border: 1px solid $color-gray3;
+		border-radius: 100%;
+		transition-property: border, background-color;
+		transition-duration: $transition-duration;
+		transition-timing-function: $transition-easing;
+
+		svg {
+			fill: #fff;
+			width: 11px;
+		}
+	}
+}
+
+.deliveryWindowSelected {
+	border-color: $color-yellow;
+
+	.deliveryWindowLabel {
+		color: $color-black;
+	}
+
+	.deliveryWindowRadio {
+		background-color: $color-yellow;
+		border-color: $color-yellow;
+	}
+}
+
+.datePendingMessage {
+	margin-top: 42px;
+	width: 100%;
+	text-align: center;
+	font-size: 22px;
+	color: $color-gray3;
+}
+
 .submitContainer {
 	width: 1018px;
 	border-top: 2px solid $color-gray;
