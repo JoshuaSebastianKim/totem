@@ -3,7 +3,7 @@ import { array, number, func } from 'prop-types';
 import axios from 'axios';
 import { Spinner } from '../UI';
 import { UserIcon, LocationIcon, PaymentIcon } from '../UI/Icons';
-import { StepSummary, ProfileStep, ShippingStepAddress, ShippingStepLogistics } from './steps';
+import { StepSummary, PaymentStep, ProfileStep, ShippingStepAddress, ShippingStepLogistics } from './steps';
 import styles from './Checkout.02.scss';
 
 class Checkout extends Component {
@@ -124,7 +124,7 @@ class Checkout extends Component {
 
 					return shippingDataAddressFields.some(field => stepData.address[field] === null || stepData.address[field] === '');
 				case 'shippingDataLogistics':
-					return true;
+					return !stepData.logisticsInfo[0].slas.some((sla) => sla.deliveryWindow !== null);
 				default:
 					return true;
 			}
@@ -153,15 +153,21 @@ class Checkout extends Component {
 		});
 	}
 
-	handleAttachmentResolve = (response) => {
+	handleAttachmentResolve = (response, activeStep = null) => {
 		this.setState({
-			activeStep: this.getActiveStep(response.data),
+			activeStep: !activeStep ? this.getActiveStep(response.data) : activeStep,
 			orderForm: response.data
 		});
 	}
 
 	handleAttachmentReject = (error) => {
 		console.log(error);
+	}
+
+	handleShippingLogisticsBack = () => {
+		this.setState({
+			activeStep: 'shippingAddress'
+		});
 	}
 
 	handleProfileSubmit = (data) => {
@@ -181,7 +187,7 @@ class Checkout extends Component {
 			.catch(this.handleAttachmentReject);
 	}
 
-	handleShippingSubmit = (data) => {
+	handleShippingAddressSubmit = (data) => {
 		const { orderForm } = this.state;
 		const attachmentUrl = `${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/attachments/shippingData`;
 		const attachmentData = {
@@ -189,6 +195,43 @@ class Checkout extends Component {
 				...data,
 				country: 'ARG'
 			}
+		};
+
+		return axios.post(attachmentUrl, attachmentData)
+			.then(this.getOrderForm)
+			.then(res => this.handleAttachmentResolve(res, 'shippingLogistics'))
+			.catch(this.handleAttachmentReject);
+	}
+
+	handleShippingLogisticsSubmit = (data) => {
+		const { orderForm } = this.state;
+		const { address } = orderForm.shippingData;
+		const { deliveryWindow, logisticsInfo } = data;
+		const formattedLogisticsInfo = logisticsInfo.map((li) => {
+			const { itemIndex, selectedSla } = li;
+			const isScheduled = li.slas
+				.map((sla) => Object.assign({}, sla, { deliveryWindow }))
+				.find((sla) => {
+					if (sla.id === li.selectedSla) {
+						const { availableDeliveryWindows } = sla;
+
+						return (availableDeliveryWindows !== null ? availableDeliveryWindows.length : 0) > 0;
+					}
+
+					return false;
+				});
+
+			return {
+				itemIndex,
+				selectedSla,
+				deliveryWindow,
+				isScheduled
+			};
+		});
+		const attachmentUrl = `${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/attachments/shippingData`;
+		const attachmentData = {
+			address,
+			logisticsInfo: formattedLogisticsInfo
 		};
 
 		return axios.post(attachmentUrl, attachmentData)
@@ -232,16 +275,21 @@ class Checkout extends Component {
 							{activeStep === 'shippingAddress' &&
 								<ShippingStepAddress
 									initialValues={orderForm.shippingData.address || {}}
-									onSubmit={this.handleShippingSubmit}
+									onSubmit={this.handleShippingAddressSubmit}
 									onFocusInput={onFocusInput}
 								/>
 							}
 
 							{activeStep === 'shippingLogistics' &&
 								<ShippingStepLogistics
-									onSubmit={this.handleShippingSubmit}
+									onBack={this.handleShippingLogisticsBack}
+									onSubmit={this.handleShippingLogisticsSubmit}
 									orderForm={orderForm}
 								/>
+							}
+
+							{activeStep === 'payment' &&
+								<PaymentStep />
 							}
 						</div>
 					}

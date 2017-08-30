@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { object } from 'prop-types';
-import { Field, reduxForm, propTypes } from 'redux-form';
+import { object, func } from 'prop-types';
+import { Field, reduxForm, propTypes, change } from 'redux-form';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
@@ -14,7 +14,8 @@ import styles from './ShippingStep.scss';
 class ShippingStepLogistics extends Component {
 	static propTypes = {
 		...propTypes,
-		orderForm: object.isRequired
+		orderForm: object.isRequired,
+		onBack: func.isRequired
 	}
 
 	constructor(props) {
@@ -23,22 +24,30 @@ class ShippingStepLogistics extends Component {
 		const { items, sellers } = props.orderForm;
 		const { logisticsInfo } = props.orderForm.shippingData;
 		const shippingOptions = withLogisticsInfo.getShippingOptionsData(logisticsInfo, items, sellers);
+		const [defaultShippingOption] = shippingOptions;
+		const { deliveryWindow } = defaultShippingOption.selectedSla;
+		const selectedDate = deliveryWindow ? moment(deliveryWindow.formattedDate, 'DD/MM/YYYY') : null;
 
 		this.state = {
 			logisticsInfo,
 			sellers,
 			shippingOptions,
-			items: items.map((item, index) => Object.assign({}, item, { index })),
-			selectedDate: null
+			selectedDate,
+			items: items.map((item, index) => Object.assign({}, item, { index }))
 		};
+	}
+
+	componentWillMount() {
+		const { logisticsInfo, deliveryWindow } = this.state;
+
+		this.props.change('logisticsInfo', logisticsInfo);
+		this.props.change('deliveryWindow', deliveryWindow);
 	}
 
 	handleShippingOptionClick = (id) => {
 		const { logisticsInfo, shippingOptions, items, sellers } = this.state;
 		const updatedLogisticsInfo = withLogisticsInfo.updateLogisticsInfoModel(logisticsInfo, shippingOptions[0], id);
 		const updatedShippingOptions = withLogisticsInfo.getShippingOptionsData(updatedLogisticsInfo, items, sellers);
-
-		console.log(updatedLogisticsInfo);
 
 		this.setState({
 			logisticsInfo: updatedLogisticsInfo,
@@ -47,17 +56,8 @@ class ShippingStepLogistics extends Component {
 	}
 
 	handleDatePickerChange = (date) => {
-		const { shippingOptions } = this.state;
-		const [defaultShippingOption] = shippingOptions;
-		const selectedSla = defaultShippingOption.slas.find(sla => sla.id === defaultShippingOption.selectedSla.id);
-		const cheapestDeliveryWindow = withLogisticsInfo.getCheapestDeliveryWindow(defaultShippingOption, date);
-		const updatedShippingOptions = Object.assign({}, defaultShippingOption, {
-			selectedSla: withLogisticsInfo.selectDeliveryWindow(selectedSla, cheapestDeliveryWindow)
-		});
-
 		this.setState({
-			selectedDate: date,
-			shippingOptions: [updatedShippingOptions]
+			selectedDate: date
 		});
 	}
 
@@ -66,12 +66,15 @@ class ShippingStepLogistics extends Component {
 			return;
 		}
 
-		const { shippingOptions } = this.state;
+		const { shippingOptions, logisticsInfo } = this.state;
 		const [defaultShippingOption] = shippingOptions;
 		const selectedSla = defaultShippingOption.slas.find(sla => sla.id === defaultShippingOption.selectedSla.id);
 		const updatedShippingOptions = Object.assign({}, defaultShippingOption, {
 			selectedSla: withLogisticsInfo.selectDeliveryWindow(selectedSla, deliveryWindow)
 		});
+
+		this.props.change('logisticsInfo', logisticsInfo);
+		this.props.change('deliveryWindow', deliveryWindow);
 
 		this.setState({
 			shippingOptions: [updatedShippingOptions]
@@ -80,13 +83,14 @@ class ShippingStepLogistics extends Component {
 
 	render() {
 		const { shippingOptions, selectedDate } = this.state;
-		const { handleSubmit, submitting } = this.props;
+		const { handleSubmit, submitting, onBack } = this.props;
 		const [defaultShippingOption] = shippingOptions;
 		const { slas } = defaultShippingOption;
-		const selectedSla = defaultShippingOption.slas.find(sla => sla.id === defaultShippingOption.selectedSla.id);
+		const selectedSla = slas.find(sla => sla.id === defaultShippingOption.selectedSla.id);
 		const { deliveryWindows } = slas.find(sla => sla.id === selectedSla.id);
 		const includeDates = Object.keys(deliveryWindows).map((date) => moment(date, 'YYYY/M/DD'));
 		const dateDeliveryWindows = selectedDate ? selectedSla.deliveryWindows[selectedDate.format('YYYY/M/DD')] : null;
+		const selectedDeliveryWindow = dateDeliveryWindows != null && dateDeliveryWindows.find(dw => dw.isWindowSelected);
 
 		return (
 			<form onSubmit={handleSubmit} className={styles.logisticsInfo}>
@@ -113,8 +117,20 @@ class ShippingStepLogistics extends Component {
 					/>
 				</div>
 
+				<Field
+					name="logisticsInfo"
+					component="input"
+					type="hidden"
+				/>
+
+				<Field
+					name="deliveryWindow"
+					component="input"
+					type="hidden"
+				/>
+
 				<div className={styles.submitContainer}>
-					<button type="button" className={styles.back}>
+					<button type="button" className={styles.back} onClick={onBack}>
 						<ArrowLeftIcon className={styles.backIcon} />
 
 						<span className={styles.backLabel}>
@@ -122,7 +138,7 @@ class ShippingStepLogistics extends Component {
 						</span>
 					</button>
 
-					<button type="submit" disabled={submitting} className={styles.submit}>
+					<button type="submit" disabled={submitting || !selectedDeliveryWindow} className={styles.submit}>
 						<span className={styles.submitLabel}>
 							Siguiente
 						</span>

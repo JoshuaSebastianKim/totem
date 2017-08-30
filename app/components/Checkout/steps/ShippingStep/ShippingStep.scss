@@ -11,6 +11,10 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+
+	.submitContainer {
+		justify-content: space-between;
+	}
 }
 
 .logisticsInfoTitle {
@@ -85,7 +89,7 @@
 
 	.shippingOptionLabel {
 		font-size: 20px;
-		font-weight: 800;
+		font-weight: 700;
 		color: $color-black;
 		letter-spacing: .5px;
 		color: $color-black;
@@ -226,36 +230,70 @@
 }
 
 .submitContainer {
+	display: flex;
+	justify-content: center;
 	width: 1018px;
 	border-top: 2px solid $color-gray;
 	margin: auto 0 30px;
 	padding: 40px 0 36px;
 }
 
+.back {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 378px;
+	height: 68px;
+	background-color: #fff;
+	border: 1px solid $color-gray3;
+	border-radius: 5px;
+
+	.backLabel {
+		color: $color-gray3;
+		font-size: 22px;
+		font-weight: 700;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+	}
+
+	.backIcon {
+		width: 19px;
+		margin-right: 22px;
+
+		svg {
+			fill: $color-gray3;
+		}
+	}
+}
+
 .submit {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 365px;
+	width: 378px;
 	height: 68px;
-	margin: auto;
 	background-color: $color-yellow;
 	border-radius: 5px;
-}
+	transition: background-color $transition-duration $transition-easing;
 
-.submitLabel {
-	color: #fff;
-	font-size: 22px;
-	font-weight: 800;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-}
+	.submitLabel {
+		color: #fff;
+		font-size: 22px;
+		font-weight: 700;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+	}
 
-.submitIcon {
-	width: 19px;
-	margin-left: 25px;
+	.submitIcon {
+		width: 19px;
+		margin-left: 22px;
 
-	svg {
-		fill: #fff;
+		svg {
+			fill: #fff;
+		}
+	}
+
+	&:disabled {
+		background-color: $color-gray3;
 	}
 }
