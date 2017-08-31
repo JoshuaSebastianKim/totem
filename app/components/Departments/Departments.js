@@ -1,20 +1,33 @@
+/* eslint global-require: 0 */
 // @flow
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import bannerAireLibre from '../../images/mundo-airelibre.png';
-import bannerCuidadoPersonal from '../../images/mundo-cuidadopersonal.png';
-import bannerHogar from '../../images/mundo-hogar.png';
-import bannerLineaBlanca from '../../images/mundo-lineablanca.png';
-import bannerTecnologia from '../../images/mundo-tecnologia.png';
+import { AireLibreIcon, CuidadoPersonalIcon, HogarIcon, LineaBlancaIcon, TecnologiaIcon } from '../UI/Icons';
+import Department from './Department';
 import styles from './Departments.scss';
 
-const banners = {
-	'1': bannerTecnologia,
-	'2': bannerLineaBlanca,
-	'3': bannerCuidadoPersonal,
-	'4': bannerHogar,
-	'5': bannerAireLibre
+const departmentAssets = {
+	'1': {
+		banner: require('../../images/mundo-tecnologia.png'),
+		icon: TecnologiaIcon
+	},
+	'2': {
+		banner: require('../../images/mundo-lineablanca.png'),
+		icon: LineaBlancaIcon
+	},
+	'3': {
+		banner: require('../../images/mundo-cuidadopersonal.png'),
+		icon: CuidadoPersonalIcon
+	},
+	'4': {
+		banner: require('../../images/mundo-hogar.png'),
+		icon: HogarIcon
+	},
+	'5': {
+		banner: require('../../images/mundo-airelibre.png'),
+		icon: AireLibreIcon
+	}
 };
 
 export default class Departments extends PureComponent {
@@ -34,14 +47,14 @@ export default class Departments extends PureComponent {
 						<Link
 							key={department.id}
 							to={`/category/${department.id}`}
-							className={styles.department}
+							className={styles.departmentLink}
 						>
-							<img src={banners[department.id]} alt={department.name} />
-							<div className={styles.departmentTitle}>
-								<span className={styles.departmentTitleName}>
-									{department.name}
-								</span>
-							</div>
+							<Department
+								id={department.id}
+								name={department.name}
+								bannerSrc={departmentAssets[department.id].banner}
+								Icon={departmentAssets[department.id].icon}
+							/>
 						</Link>
 					))}
 				</div>

@@ -1,21 +1,81 @@
 [{
 	"name": "Línea blanca",
 	"id": 2,
-	"children": []
+	"children": [{
+		"id": 505,
+		"name": "Lavavajillas",
+		"url": "/lavado/lavavajillas"
+	}, {
+		"id": 488,
+		"name": "Heladeras y Freezers",
+		"url": "/heladeras-y-freezers"
+	}, {
+		"id": 497,
+		"name": "Lavado",
+		"url": "/lavado"
+	}, {
+		"id": 495,
+		"name": "Cavas",
+		"url": "/heladeras-y-freezers/cavas"
+	}, {
+		"id": 511,
+		"name": "Cocinas",
+		"url": "/cocinas-y-extractores/cocinas"
+	}]
 }, {
 	"name": "Hogar",
 	"id": 4,
-	"children": []
+	"children": [{
+		"id": 917,
+		"name": "Colchones y Sommiers",
+		"url": "/colchones-y-almohadas/colchones-y-sommiers"
+	}]
 }, {
 	"name": "Cuidado personal",
 	"id": 3,
-	"children": []
+	"children": [{
+		"id": 544,
+		"name": "Cortacabellos",
+		"url": "/cuidado-personal/cortacabellos"
+	}, {
+		"id": 542,
+		"name": "Afeitadoras",
+		"url": "/cuidado-personal/afeitadoras"
+	}, {
+		"id": 545,
+		"name": "Depiladoras",
+		"url": "/cuidado-personal/depiladoras"
+	}]
 }, {
 	"name": "Tecnología",
 	"id": 1,
-	"children": []
+	"children": [{
+		"id": 196,
+		"name": "Tablets",
+		"url": "/computacion/tablets"
+	}, {
+		"id": 542,
+		"name": "Afeitadoras",
+		"url": "/cuidado-personal/afeitadoras"
+	}, {
+		"id": 545,
+		"name": "Depiladoras",
+		"url": "/cuidado-personal/depiladoras"
+	}]
 }, {
 	"name": "Aire libre y deportes",
 	"id": 5,
-	"children": []
+	"children": [{
+		"id": 701,
+		"name": "Ejercitadores",
+		"url": "/fitness/ejercitadores"
+	}, {
+		"id": 751,
+		"name": "Juegos Infantiles para el Jardín",
+		"url": "/muebles-de-jardin-y-playa/juegos-infantiles-para-el-jardin"
+	}, {
+		"id": 712,
+		"name": "Ping Pong",
+		"url": "/otros-deportes/ping-pong"
+	}]
 }]

@@ -10,6 +10,9 @@ export default class Home extends Component {
 				<Link to="/category">
 					<h2>Home</h2>
 				</Link>
+				<Link to="/checkout">
+					<h2>Checkout</h2>
+				</Link>
 			</div>
 		);
 	}

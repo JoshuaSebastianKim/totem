@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 68">
+	<defs>
+		<style>
+			#icon_tecnologia .cls-1 {
+				fill: #593799;
+			}
+			#icon_tecnologia .cls-2 {
+				fill: #fff;
+			}
+		</style>
+	</defs>
+	<title>icon_tecnologia</title>
+	<g id="icon_tecnologia">
+		<path class="cls-1" d="M0,34A34,34,0,1,1,34,68,34,34,0,0,1,0,34"/>
+		<path class="cls-2" d="M34,13A21,21,0,1,0,55,34,21,21,0,0,0,34,13ZM33,18.87a1,1,0,1,1,2.1,0V34.36a1,1,0,1,1-2.1,0Zm1,27.85a12.86,12.86,0,0,1-6.07-24.19,1.05,1.05,0,1,1,1,1.85,10.76,10.76,0,1,0,10.15,0,1.05,1.05,0,0,1,1-1.85A12.86,12.86,0,0,1,34,46.72Z"/>
+	</g>
+</svg>

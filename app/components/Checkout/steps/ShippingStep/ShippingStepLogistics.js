@@ -26,7 +26,9 @@ class ShippingStepLogistics extends Component {
 		const shippingOptions = withLogisticsInfo.getShippingOptionsData(logisticsInfo, items, sellers);
 		const [defaultShippingOption] = shippingOptions;
 		const { deliveryWindow } = defaultShippingOption.selectedSla;
-		const selectedDate = deliveryWindow ? moment(deliveryWindow.formattedDate, 'DD/MM/YYYY') : null;
+		const selectedDate = deliveryWindow && Object.keys(deliveryWindow).length ?
+			moment(deliveryWindow.formattedDate, 'DD/MM/YYYY') :
+			null;
 
 		this.state = {
 			logisticsInfo,
@@ -88,7 +90,7 @@ class ShippingStepLogistics extends Component {
 		const { slas } = defaultShippingOption;
 		const selectedSla = slas.find(sla => sla.id === defaultShippingOption.selectedSla.id);
 		const { deliveryWindows } = slas.find(sla => sla.id === selectedSla.id);
-		const includeDates = Object.keys(deliveryWindows).map((date) => moment(date, 'YYYY/M/DD'));
+		const includeDates = Object.keys(deliveryWindows).map((date) => moment(date, 'YYYY/MM/DD'));
 		const dateDeliveryWindows = selectedDate ? selectedSla.deliveryWindows[selectedDate.format('YYYY/M/DD')] : null;
 		const selectedDeliveryWindow = dateDeliveryWindows != null && dateDeliveryWindows.find(dw => dw.isWindowSelected);
 

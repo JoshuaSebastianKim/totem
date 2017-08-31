@@ -3,8 +3,29 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Motion, spring } from 'react-motion';
+import CategoryLink from './CategoryLink';
+import { AireLibreIcon, CuidadoPersonalIcon, HogarIcon, LineaBlancaIcon, TecnologiaIcon } from '../../Icons';
 import { Sidebar } from '../../';
 import styles from './CategorySidebar.scss';
+
+const departmentAssets = {
+	'1': {
+		icon: TecnologiaIcon
+	},
+	'2': {
+		icon: LineaBlancaIcon
+	},
+	'3': {
+		icon: CuidadoPersonalIcon
+	},
+	'4': {
+		icon: HogarIcon
+	},
+	'5': {
+		icon: AireLibreIcon
+	}
+};
+
 
 const CategorySidebar = ({ categories, products }) => (
 	<Motion
@@ -47,12 +68,10 @@ const CategorySidebar = ({ categories, products }) => (
 							}}
 							to={`/category/${category.id}`}
 						>
-							<div className={styles.categoryLinkIcon}>
-								ICON
-							</div>
-							<div className={styles.categoryLinkLabel}>
-								{category.name}
-							</div>
+							<CategoryLink
+								Icon={departmentAssets[category.id].icon}
+								name={category.name}
+							/>
 						</NavLink>
 					))}
 				</div>

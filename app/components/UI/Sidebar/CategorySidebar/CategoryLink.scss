@@ -1,0 +1,19 @@
+.category {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	height: 120px;
+	width: 100%;
+
+	.categoryIcon {
+		width: 70px;
+	}
+
+	.categoryLabel {
+		width: 80%;
+		font-size: 14px;
+		font-weight: 600;
+		margin-top: 6px;
+	}
+}

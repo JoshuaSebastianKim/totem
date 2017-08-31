@@ -11,7 +11,8 @@ import styles from './ShippingStep.scss';
 class ShippingStepAddress extends Component {
 	static propTypes = {
 		...propTypes,
-		onFocusInput: func.isRequired
+		onFocusInput: func.isRequired,
+		onPostalCodeChange: func.isRequired
 	}
 
 	state = {
@@ -46,7 +47,7 @@ class ShippingStepAddress extends Component {
 
 	render() {
 		const { cities } = this.state;
-		const { handleSubmit, submitting, onFocusInput } = this.props;
+		const { handleSubmit, submitting, onFocusInput, onPostalCodeChange } = this.props;
 
 		return (
 			<form onSubmit={handleSubmit} className={styles.form}>
@@ -58,6 +59,7 @@ class ShippingStepAddress extends Component {
 						validate={[required, isNumber]}
 						className={styles.postalCode}
 						onFocusInput={onFocusInput}
+						onChange={(ev, pc) => onPostalCodeChange(pc)}
 					/>
 
 					<Field

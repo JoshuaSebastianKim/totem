@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .container {
 	flex: 1;
 	display: flex;
@@ -5,8 +7,66 @@
 	justify-content: center;
 	align-items: center;
 	background-color: #fff;
+}
 
-	a {
-		color: black;
+.header {
+	font-size: 48px;
+	font-weight: 700;
+	color: $color-black;
+	letter-spacing: .5px;
+	line-height: 1;
+}
+
+.departments {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-top: 45px;
+	padding: 0 72px 78px;
+}
+
+.departmentLink {
+	padding: 9px;
+	width: 33%;
+}
+
+.department {
+	position: relative;
+
+	.departmentGradient {
+		position: absolute;
+		height: 198px;
+		background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.01) 1%,rgba(0,0,0,0.5) 100%);
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+
+	.departmentBanner {
+		width: 100%;
+		height: auto;
+	}
+
+	.departmentLabel {
+		display: flex;
+		align-items: center;
+		position: absolute;
+		bottom: 25px;
+		left: 0;
+		right: 0;
+		padding: 0 22px;
+
+		.departmentLabelIcon {
+			width: 68px;
+			height: 68px;
+			margin-right: 18px;
+		}
+
+		.departmentLabelName {
+			font-size: 42px;
+			font-weight: 700;
+			color: #fff;
+			font-style: italic;
+		}
 	}
 }

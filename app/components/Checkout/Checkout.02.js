@@ -28,6 +28,16 @@ class Checkout extends Component {
 	}
 
 	componentWillMount() {
+		async function initOrderForm(items, saleChannel) {
+			const { data: orderForm } = await this.getOrderForm();
+
+			await this.changeToAnonymousUser(orderForm.orderFormId);
+			await this.addToCart(orderForm, items, saleChannel);
+
+			return this.getOrderForm()
+				.then(handleOrderFormResolve)
+				.catch(handleOrderFormReject);
+		}
 		const handleOrderFormResolve = response => {
 			this.setState({
 				activeStep: this.getActiveStep(response.data),
@@ -49,11 +59,7 @@ class Checkout extends Component {
 		};
 		const { items, saleChannel } = this.props;
 
-		this.getOrderForm()
-			.then(response => this.addToCart(response.data, items, saleChannel))
-			.then(this.getOrderForm)
-			.then(handleOrderFormResolve)
-			.catch(handleOrderFormReject);
+		initOrderForm.call(this, items, saleChannel);
 	}
 
 	steps = [
@@ -89,7 +95,19 @@ class Checkout extends Component {
 
 	stepDataKeys = ['clientProfileData', 'shippingDataAddress', 'shippingDataLogistics', 'paymentData'];
 
+	expectedOrderFormSections = [
+		'items',
+		'totalizers',
+		'clientProfileData',
+		'shippingData',
+		'paymentData',
+		'sellers',
+		'clientPreferencesData'
+	]
+
 	hostUrl = 'https://totemwalmartarqa.vtexcommercestable.com.br';
+
+	changeToAnonymousUser = (orderFormId) => axios.get(`${this.hostUrl}/checkout/changeToAnonymousUser/${orderFormId}`)
 
 	getOrderForm = () => axios.get(`${this.hostUrl}/api/checkout/pub/orderForm`)
 
@@ -105,6 +123,8 @@ class Checkout extends Component {
 			}
 		};
 
+		console.log(orderForm);
+
 		return axios.post(`${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/items`, { orderItems }, config);
 	}
 
@@ -116,6 +136,10 @@ class Checkout extends Component {
 
 			switch (stepDataKey) {
 				case 'clientProfileData':
+					if (stepData === null) {
+						return true;
+					}
+
 					return clientProfileDataFields.some(field => stepData[field] === null);
 				case 'shippingDataAddress':
 					if (!stepData.address) {
@@ -171,9 +195,11 @@ class Checkout extends Component {
 	}
 
 	handleProfileSubmit = (data) => {
+		const { expectedOrderFormSections } = this;
 		const { orderForm } = this.state;
 		const attachmentUrl = `${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/attachments/clientProfileData`;
 		const attachmentData = {
+			expectedOrderFormSections,
 			...data,
 			documentType: 'dni',
 			phone: data.phone,
@@ -182,28 +208,38 @@ class Checkout extends Component {
 		};
 
 		return axios.post(attachmentUrl, attachmentData)
-			.then(this.getOrderForm)
 			.then(this.handleAttachmentResolve)
 			.catch(this.handleAttachmentReject);
 	}
 
-	handleShippingAddressSubmit = (data) => {
+	handleShippingAddressSubmit = (data, holdStep = false) => {
+		const { expectedOrderFormSections } = this;
 		const { orderForm } = this.state;
+		const { address } = orderForm.shippingData;
 		const attachmentUrl = `${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/attachments/shippingData`;
 		const attachmentData = {
-			address: {
-				...data,
-				country: 'ARG'
-			}
+			address: Object.assign({}, address, {
+				addressId: address && address.addressId,
+				city: data.city,
+				number: data.number,
+				postalCode: data.postalCode,
+				receiverName: data.receiverName,
+				state: data.state ? data.state.toUpperCase() : '',
+				street: data.street,
+				country: 'ARG',
+				addressType: 'residential'
+			}),
+			logisticsInfo: data.logisticsInfo,
+			expectedOrderFormSections
 		};
 
 		return axios.post(attachmentUrl, attachmentData)
-			.then(this.getOrderForm)
-			.then(res => this.handleAttachmentResolve(res, 'shippingLogistics'))
+			.then(res => this.handleAttachmentResolve(res, (!holdStep && 'shippingLogistics')))
 			.catch(this.handleAttachmentReject);
 	}
 
 	handleShippingLogisticsSubmit = (data) => {
+		const { expectedOrderFormSections } = this;
 		const { orderForm } = this.state;
 		const { address } = orderForm.shippingData;
 		const { deliveryWindow, logisticsInfo } = data;
@@ -230,14 +266,22 @@ class Checkout extends Component {
 		});
 		const attachmentUrl = `${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/attachments/shippingData`;
 		const attachmentData = {
+			expectedOrderFormSections,
 			address,
 			logisticsInfo: formattedLogisticsInfo
 		};
 
 		return axios.post(attachmentUrl, attachmentData)
-			.then(this.getOrderForm)
 			.then(this.handleAttachmentResolve)
 			.catch(this.handleAttachmentReject);
+	}
+
+	handlePostalCodeChange = (postalCode) => {
+		if (postalCode.length === 4) {
+			axios.get(`${this.hostUrl}/api/checkout/pub/postal-code/ARG/${postalCode}`)
+				.then((response) => this.handleShippingAddressSubmit(response.data, true))
+				.catch(console.error);
+		}
 	}
 
 	render() {
@@ -277,6 +321,7 @@ class Checkout extends Component {
 									initialValues={orderForm.shippingData.address || {}}
 									onSubmit={this.handleShippingAddressSubmit}
 									onFocusInput={onFocusInput}
+									onPostalCodeChange={this.handlePostalCodeChange}
 								/>
 							}
 
