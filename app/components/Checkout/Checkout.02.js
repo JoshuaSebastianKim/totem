@@ -334,7 +334,9 @@ class Checkout extends Component {
 							}
 
 							{activeStep === 'payment' &&
-								<PaymentStep />
+								<PaymentStep
+									orderForm={orderForm}
+								/>
 							}
 						</div>
 					}

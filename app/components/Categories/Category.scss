@@ -1,0 +1,38 @@
+.category {
+	flex: 1;
+	position: relative;
+	margin: 0 9px;
+
+	.categoryGradient {
+		position: absolute;
+		height: 198px;
+		background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.01) 1%,rgba(0,0,0,0.5) 100%);
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+
+	.categoryBanner {
+		width: auto;
+		height: 100%;
+	}
+
+	.categoryLabel {
+		display: flex;
+		align-items: center;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		padding: 0 22px 22px;
+
+		.categoryLabelName {
+			font-size: 42px;
+			line-height: 1;
+			font-weight: 700;
+			color: #fff;
+			text-transform: uppercase;
+			font-style: italic;
+		}
+	}
+}

@@ -9,6 +9,7 @@ body {
 	position: relative;
 	font-family: "Myriad Pro";
 	height: 100vh;
+	width: 100vw;
 	overflow-y: hidden;
 	display: flex;
 	margin: 0;
@@ -19,6 +20,7 @@ body {
 #app {
 	flex: 1;
 	display: flex;
+	width: 100%;
 }
 
 #app {

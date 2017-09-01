@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, element } from 'prop-types';
+import { string, func } from 'prop-types';
 import styles from './CategoryLink.scss';
 
 const CategoryLink = ({ Icon, name }) => (
@@ -13,7 +13,7 @@ const CategoryLink = ({ Icon, name }) => (
 );
 
 CategoryLink.propTypes = {
-	Icon: element.isRequired,
+	Icon: func.isRequired,
 	name: string.isRequired
 };
 

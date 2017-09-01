@@ -5,9 +5,21 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-direction: column;
 	background-color: $color-gray;
+	padding-top: 92px;
+}
 
-	a {
-		color: $color-black;
-	}
+.categorySlider {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	overflow: hidden;
+	width: 100%;
+}
+
+.categoryLink {
+	display: flex;
+	height: 100%;
+	max-height: 890px;
 }

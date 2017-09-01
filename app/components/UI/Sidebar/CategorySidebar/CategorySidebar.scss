@@ -31,7 +31,10 @@
 	.categoryLink {
 		text-align: center;
 		color: $color-black;
-		margin: 5px 0;
+
+		> div {
+			transition: background-color $transition-duration $transition-easing;
+		}
 	}
 
 	.activeCategoryLink {

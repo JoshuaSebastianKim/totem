@@ -1,8 +1,8 @@
 import React from 'react';
-import { string, element } from 'prop-types';
+import { string, func } from 'prop-types';
 import styles from './Departments.scss';
 
-const Department = ({ id, name, bannerSrc, Icon }) => (
+const Department = ({ name, bannerSrc, Icon }) => (
 	<div className={styles.department}>
 		<img
 			src={bannerSrc}
@@ -23,10 +23,9 @@ const Department = ({ id, name, bannerSrc, Icon }) => (
 );
 
 Department.propTypes = {
-	id: string.isRequired,
 	name: string.isRequired,
 	bannerSrc: string.isRequired,
-	Icon: element.isRequired
+	Icon: func.isRequired
 };
 
 export default Department;
