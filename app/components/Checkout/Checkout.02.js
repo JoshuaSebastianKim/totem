@@ -123,8 +123,6 @@ class Checkout extends Component {
 			}
 		};
 
-		console.log(orderForm);
-
 		return axios.post(`${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/items`, { orderItems }, config);
 	}
 
@@ -284,6 +282,32 @@ class Checkout extends Component {
 		}
 	}
 
+	handleSelectedPayment = (paymentSystemId, installmentCount = 1) => {
+		const { expectedOrderFormSections } = this;
+		const { orderForm } = this.state;
+		const { paymentSystems, installmentOptions } = orderForm.paymentData;
+		const paymentSystem = paymentSystems.find(ps => ps.id === paymentSystemId);
+		const installmentOption = installmentOptions.find(opts => opts.paymentSystem === String(paymentSystemId));
+		const installment = installmentOption.installments.find(i => i.count === installmentCount);
+		const attachmentUrl = `${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/attachments/paymentData`;
+		const attachmentData = {
+			expectedOrderFormSections,
+			payments: [{
+				group: paymentSystem.groupName,
+				paymentSystem: paymentSystemId,
+				paymentSystemName: paymentSystem.name,
+				installments: installmentCount,
+				installmentsInterestRate: installment.interestRate,
+				installmentsValue: installment.value,
+				referenceValue: installmentOption.value
+			}]
+		};
+
+		return axios.post(attachmentUrl, attachmentData)
+			.then(this.handleAttachmentResolve)
+			.catch(this.handleAttachmentReject);
+	}
+
 	render() {
 		const { loading, error, orderForm, activeStep } = this.state;
 		const { onFocusInput } = this.props;
@@ -336,6 +360,7 @@ class Checkout extends Component {
 							{activeStep === 'payment' &&
 								<PaymentStep
 									orderForm={orderForm}
+									onSelectedPayment={this.handleSelectedPayment}
 								/>
 							}
 						</div>

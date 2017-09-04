@@ -1,0 +1,49 @@
+@import '../../../../styles/variables';
+
+.container {
+	display: flex;
+	flex-direction: column;
+}
+
+.paymentGroup {
+	display: flex;
+	align-items: center;
+	background-color: #fff;
+	border: 1px solid $color-gray;
+	border-radius: 5px;
+	height: 88px;
+	padding: 0 20px;
+	margin-bottom: 15px;
+	transition: border-color $transition-duration $transition-easing;
+
+	.icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 74px;
+		margin-right: 20px;
+		opacity: .4;
+		transition: opacity $transition-duration $transition-easing;
+	}
+
+	.label {
+		flex: 1;
+		opacity: .4;
+		font-size: 20px;
+		font-weight: 700;
+		text-align: left;
+		transition: opacity $transition-duration $transition-easing;
+	}
+}
+
+.activePaymentGroup {
+	border-color: $color-yellow;
+
+	.icon {
+		opacity: 1;
+	}
+
+	.label {
+		opacity: 1;
+	}
+}

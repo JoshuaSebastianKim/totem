@@ -1,0 +1,26 @@
+@import '../../../../styles/variables';
+
+.container {
+	display: flex;
+	justify-content: center;
+}
+
+.paymentGroups {
+	display: flex;
+	flex-direction: column;
+	padding-top: 40px;
+	margin-right: 56px;
+
+	.title {
+		font-size: 19px;
+		font-weight: 600;
+		color: $color-black;
+		letter-spacing: .5px;
+		line-height: 1;
+		margin-bottom: 15px;
+	}
+}
+
+.paymentGroupFrom {
+	width: 616px;
+}

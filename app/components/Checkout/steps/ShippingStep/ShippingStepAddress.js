@@ -23,8 +23,6 @@ class ShippingStepAddress extends Component {
 	componentWillMount() {
 		const { initialValues } = this.props;
 
-		console.log(initialValues);
-
 		if ('city' in initialValues) {
 			this.setStateLocation(initialValues.state);
 		}
@@ -37,7 +35,14 @@ class ShippingStepAddress extends Component {
 	}
 
 	setStateLocation = (state) => {
-		const cities = (state in map) ? Object.keys(map[state]) : [];
+		const capitalizeStateName = stateString => stateString.split(/\s/).map((string) => {
+			const firstLetter = string.charAt(0);
+			const restOfString = string.slice(1).toLowerCase();
+
+			return `${firstLetter}${restOfString}`;
+		}).join(' ');
+		const capitalizedState = capitalizeStateName(state);
+		const cities = (capitalizedState in map) ? Object.keys(map[capitalizedState]) : [];
 
 		this.setState({
 			state,
