@@ -98,10 +98,9 @@ class ShippingStepAddress extends Component {
 						label="Provincia"
 						component={CustomSelect}
 						validate={[required]}
-						values={Object.keys(map)}
+						values={Object.keys(map).map(state => ({ value: state, label: state }))}
 						onChange={this.handleStateChange}
 						className={styles.state}
-						onFocusInput={onFocusInput}
 					/>
 
 					<Field
@@ -109,9 +108,8 @@ class ShippingStepAddress extends Component {
 						label="Ciudad"
 						component={CustomSelect}
 						validate={[required]}
-						values={cities}
+						values={cities.map(state => ({ value: state, label: state }))}
 						className={styles.city}
-						onFocusInput={onFocusInput}
 					/>
 
 					<Field

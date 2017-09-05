@@ -282,7 +282,7 @@ class Checkout extends Component {
 		}
 	}
 
-	handleSelectedPayment = (paymentSystemId, installmentCount = 1) => {
+	handleSelectedPayment = (paymentSystemId, installmentCount = 1, bin = null) => {
 		const { expectedOrderFormSections } = this;
 		const { orderForm } = this.state;
 		const { paymentSystems, installmentOptions } = orderForm.paymentData;
@@ -299,13 +299,18 @@ class Checkout extends Component {
 				installments: installmentCount,
 				installmentsInterestRate: installment.interestRate,
 				installmentsValue: installment.value,
-				referenceValue: installmentOption.value
+				referenceValue: installmentOption.value,
+				bin
 			}]
 		};
 
 		return axios.post(attachmentUrl, attachmentData)
 			.then(this.handleAttachmentResolve)
 			.catch(this.handleAttachmentReject);
+	}
+
+	handlePaymentSubmit = (data) => {
+		console.log(data);
 	}
 
 	render() {
@@ -361,6 +366,7 @@ class Checkout extends Component {
 								<PaymentStep
 									orderForm={orderForm}
 									onSelectedPayment={this.handleSelectedPayment}
+									onSubmit={this.handlePaymentSubmit}
 								/>
 							}
 						</div>

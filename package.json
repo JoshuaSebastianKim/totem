@@ -192,6 +192,7 @@
     "axios-retry": "^1.2.0",
     "bootstrap": "^3.3.7",
     "electron-debug": "^1.1.0",
+    "flow": "^0.2.3",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
     "lodash": "^4.17.4",

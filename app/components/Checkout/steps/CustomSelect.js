@@ -19,8 +19,13 @@ const CustomField = ({
 		<div id={name} className={styles.inputContainer}>
 			<select {...input} disabled={submitting} className={styles.select}>
 				<option value="" />
-				{values.map(value => (
-					<option key={value} value={value}>{value}</option>
+				{values.map(option => (
+					<option
+						key={option.value}
+						value={option.value}
+					>
+						{option.label}
+					</option>
 				))}
 			</select>
 

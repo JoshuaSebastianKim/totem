@@ -113,6 +113,18 @@ class PaymentStep extends Component {
 		}
 	}
 
+	handleCardIssuerChange = (paymentSystemId) => {
+		this.props.onSelectedPayment(paymentSystemId);
+	}
+
+	handleCardNumberChange = (paymentSystemId, installments, bin) => {
+		this.props.onSelectedPayment(paymentSystemId, installments, bin);
+	}
+
+	handleInstallmentsChange = (paymentSystemId, installments) => {
+		this.props.onSelectedPayment(paymentSystemId, installments);
+	}
+
 	render() {
 		const { orderForm } = this.props;
 		const { paymentGroups, selectedPaymentGroupName } = this.state;
@@ -145,8 +157,11 @@ class PaymentStep extends Component {
 								ps => selectedPaymentGroup.paymentSystems.indexOf(ps.id) !== -1
 							)}
 							installmentOptions={orderForm.paymentData.installmentOptions.filter(
-								ps => selectedPaymentGroup.paymentSystems.indexOf(ps.paymentSystem) !== -1
+								ps => selectedPaymentGroup.paymentSystems.indexOf(Number(ps.paymentSystem)) !== -1
 							)}
+							onCardIssuerChange={this.handleCardIssuerChange}
+							onCardNumberChange={this.handleCardNumberChange}
+							onInstallmentsChange={this.handleInstallmentsChange}
 						/>
 					}
 

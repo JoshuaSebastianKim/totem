@@ -1,5 +1,11 @@
 export const required = value => (value ? undefined : 'Campo obligatorio');
 
+export const exactLength = length => value => (
+	value && value.length !== length
+	? `Debe tener ${length} caracteres`
+	: undefined
+);
+
 export const minLength = min => value => (
 	value && value.length < min
 	? `Debe tener al menos ${min} caracteres`
