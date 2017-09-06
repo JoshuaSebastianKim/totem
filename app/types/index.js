@@ -1,0 +1,24 @@
+export type Item = {
+	additionalInfo: {
+		brandName: string
+	},
+	id: string,
+	imageUrl: string,
+	name: string,
+	listPrice: number,
+	price: number,
+	sellingPrice: number,
+	quantity: number
+};
+
+export type Totalizer = {
+	id: string,
+	name: string,
+	value: number
+};
+
+export type OrderForm = {
+	items: Array<Item>,
+	totalizers: Array<Totalizer>,
+	value: number
+};

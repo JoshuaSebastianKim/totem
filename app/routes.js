@@ -50,7 +50,7 @@ export default() => (
 			{/* KEYBOARD */}
 			<Switch>
 				<Route path="/search" component={Keyboard} />
-				<Route path="/checkout" component={Keyboard} />
+				{/* <Route path="/checkout" component={Keyboard} /> */}
 			</Switch>
 		</div>
 	</App>

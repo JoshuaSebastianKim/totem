@@ -7079,9 +7079,9 @@ react-motion@^0.4.8:
     prop-types "^15.5.8"
     raf "^3.1.0"
 
-react-motion@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/react-motion/-/react-motion-0.5.0.tgz#1708fc2aee552900d21c1e6bed28346863e017b6"
+react-motion@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/react-motion/-/react-motion-0.5.1.tgz#b90631408175ab1668e173caccd66d41a44f4592"
   dependencies:
     performance-now "^0.2.0"
     prop-types "^15.5.8"

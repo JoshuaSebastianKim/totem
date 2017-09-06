@@ -3,7 +3,8 @@
 .container {
 	flex: 1;
 	display: flex;
-	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 
 	.loader {
 		width: 100px;
@@ -26,10 +27,23 @@
 	margin-top: 32px;
 }
 
-.orderForm {
-	flex: 1;
+.checkoutForm {
 	display: flex;
-	justify-content: center;
-	margin-top: 35px;
-	background-color: #fff;
+	flex-direction: column;
+	flex: 1;
+	height: 100%;
+
+	.orderForm {
+		flex: 1;
+		display: flex;
+		justify-content: center;
+		margin-top: 35px;
+		background-color: #fff;
+	}
+}
+
+.checkoutSummary {
+	display: flex;
+	width: 445px;
+	height: 100%;
 }

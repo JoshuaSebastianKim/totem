@@ -1,0 +1,54 @@
+@import '../../../styles/variables';
+
+.container {
+	margin-top: 16px;
+	padding-top: 30px;
+	border-top: 2px solid $color-black;
+}
+
+.totalizers {
+}
+
+.totalizer {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 16px;
+
+	&:first-of-type {
+		margin-top: 0;
+	}
+
+	.label,
+	.value {
+		font-size: 28px;
+		line-height: 1;
+		color: $color-black;
+	}
+
+	.value {
+		font-weight: 700;
+	}
+}
+
+.total {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 26px;
+	border-top: 1px solid $color-gray2;
+	height: 82px;
+
+	.label,
+	.value {
+		font-size: 28px;
+		font-weight: 700;
+	}
+
+	.label {
+		color: $color-black;
+	}
+
+	.value {
+		color: $color-yellow;
+	}
+}

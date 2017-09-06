@@ -1,0 +1,29 @@
+@import '../../../styles/variables';
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 80px;
+	border: 2px solid $color-green;
+	border-top: 0;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.icon {
+	width: 23px;
+	margin-right: 15px;
+
+	svg {
+		fill: $color-green;
+	}
+}
+
+.label {
+	font-size: 18px;
+	font-weight: 600;
+	text-transform: uppercase;
+	color: $color-green;
+	letter-spacing: 1px;
+}

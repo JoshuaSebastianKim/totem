@@ -1,0 +1,70 @@
+@import '../../../styles/variables';
+
+.item {
+	display: flex;
+	padding: 10px 15px 20px 10px;
+	margin-bottom: 16px;
+	background-color: #fff;
+}
+
+.image {
+	width: 140px;
+	height: 140px;
+	margin-right: 13px;
+}
+
+.info {
+	flex: 1;
+}
+
+.brand {
+	font-size: 14px;
+	line-height: 24px;
+	letter-spacing: 1px;
+	color: $color-black;
+}
+
+.name {
+	font-size: 20px;
+	font-weight: 700;
+	color: $color-black;
+	line-height: 24px;
+	margin-top: 10px;
+}
+
+.itemValues {
+	display: flex;
+	justify-content: space-between;
+	border-top: 1px solid $color-gray;
+	margin-top: 16px;
+	padding-top: 12px;
+}
+
+.prices {
+	.listPrice {
+		font-size: 15px;
+		color: $color-gray3;
+		line-height: 1;
+	}
+
+	.sellingPrice {
+		margin-top: 3px;
+		font-size: 22px;
+		font-weight: 700;
+		color: $color-blue;
+		line-height: 1;
+	}
+}
+
+.quantity {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	font-size: 16px;
+	font-weight: 700;
+	color: #fff;
+	background-color: $color-black;
+	border-radius: 100%;
+}

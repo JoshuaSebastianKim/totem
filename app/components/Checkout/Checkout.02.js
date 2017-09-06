@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Spinner } from '../UI';
 import { UserIcon, LocationIcon, PaymentIcon } from '../UI/Icons';
 import { StepSummary, PaymentStep, ProfileStep, ShippingStepAddress, ShippingStepLogistics } from './steps';
+import CartSummary from './CartSummary/CartSummary';
 import styles from './Checkout.02.scss';
 
 class Checkout extends Component {
@@ -31,7 +32,7 @@ class Checkout extends Component {
 		async function initOrderForm(items, saleChannel) {
 			const { data: orderForm } = await this.getOrderForm();
 
-			await this.changeToAnonymousUser(orderForm.orderFormId);
+			// await this.changeToAnonymousUser(orderForm.orderFormId);
 			await this.addToCart(orderForm, items, saleChannel);
 
 			return this.getOrderForm()
@@ -313,6 +314,69 @@ class Checkout extends Component {
 		console.log(data);
 	}
 
+	handleCheckoutClick = () => {
+		const startTransaction = (transactionUrl, transactionData) => axios.post(transactionUrl, transactionData);
+		const sendPayments = ({ data: orderForm }) => {
+			const { receiverUri, merchantTransactions, paymentData, id, gatewayCallbackTemplatePath } = orderForm;
+			const orderId = gatewayCallbackTemplatePath.split('/')[3];
+			const paymentsArray = paymentData.payments.map((p, index) => {
+				const paymentSystem = paymentData.paymentSystems.find(ps => ps.id === Number(p.paymentSystem));
+				const installmentOption = paymentData.installmentOptions.find(io => io.paymentSystem === p.paymentSystem);
+				const installment = installmentOption.installments.find(i => i.count === p.installments);
+				const merchant = merchantTransactions.find(m => m.id === p.merchantSellerPayments[0].id);
+
+				return {
+					accountId: p.accountId,
+					avaiableAccounts: undefined,
+					bin: p.bin,
+					fields: undefined,
+					group: paymentSystem.groupName,
+					installments: p.installments,
+					installmentsInterestRate: installment.interestRate,
+					installmentsValue: installment.value,
+					transaction: {
+						id,
+						merchantName: merchant.merchantName
+					},
+					paymentSystem: paymentSystem.id,
+					paymentSystemName: paymentSystem.name,
+					referenceValue: p.referenceValue,
+					value: p.value,
+					currencyCode: 'ARS',
+					originalPaymentIndex: index
+				};
+			});
+			const data = new FormData();
+
+			data.append('paymentsArray', JSON.stringify(paymentsArray));
+			data.append('callbackUrl', `${this.hostUrl}${gatewayCallbackTemplatePath}`);
+
+			return axios.post(receiverUri, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+				.then(() => axios.get(`${this.hostUrl}/api/checkout/pub/orders/order-group/${orderId}`));
+		};
+		const { expectedOrderFormSections } = this;
+		const { orderForm } = this.state;
+		const { installmentOptions, payments } = orderForm.paymentData;
+		const [payment] = payments;
+		const installmentOption = installmentOptions.find(io => io.paymentSystem === payment.paymentSystem);
+		const installment = installmentOption.installments.find(i => i.count === payment.installments);
+		const transactionUrl = `${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/transaction`;
+		const transactionData = {
+			expectedOrderFormSections,
+			interestValue: installment.interestRate,
+			optinNewsletter: true,
+			referenceId: orderForm.orderFormId,
+			referenceValue: payment.referenceValue,
+			value: payment.value,
+			savePersonalData: false
+		};
+
+		return startTransaction(transactionUrl, transactionData)
+			.then(sendPayments)
+			.then(console.log)
+			.catch(console.log);
+	}
+
 	render() {
 		const { loading, error, orderForm, activeStep } = this.state;
 		const { onFocusInput } = this.props;
@@ -323,58 +387,69 @@ class Checkout extends Component {
 					<Spinner className={styles.loader} />
 				</div> :
 				<div className={styles.container}>
-					<div className={styles.title}>
-						Completa los siguientes datos para finalizar la compra
-					</div>
-
-					<div className={styles.stepsSummary}>
-						<StepSummary
-							steps={this.steps}
-							activeStep={activeStep.replace(/(Address|Logistics)/, '')}
-							onClick={this.handleStepClick}
-						/>
-					</div>
-
-					{orderForm &&
-						<div className={styles.orderForm}>
-							{activeStep === 'clientProfile' &&
-								<ProfileStep
-									initialValues={orderForm.clientProfileData}
-									onSubmit={this.handleProfileSubmit}
-									onFocusInput={onFocusInput}
-								/>
-							}
-
-							{activeStep === 'shippingAddress' &&
-								<ShippingStepAddress
-									initialValues={orderForm.shippingData.address || {}}
-									onSubmit={this.handleShippingAddressSubmit}
-									onFocusInput={onFocusInput}
-									onPostalCodeChange={this.handlePostalCodeChange}
-								/>
-							}
-
-							{activeStep === 'shippingLogistics' &&
-								<ShippingStepLogistics
-									onBack={this.handleShippingLogisticsBack}
-									onSubmit={this.handleShippingLogisticsSubmit}
-									orderForm={orderForm}
-								/>
-							}
-
-							{activeStep === 'payment' &&
-								<PaymentStep
-									orderForm={orderForm}
-									onSelectedPayment={this.handleSelectedPayment}
-									onSubmit={this.handlePaymentSubmit}
-								/>
-							}
+					<div className={styles.checkoutForm}>
+						<div className={styles.title}>
+							Completa los siguientes datos para finalizar la compra
 						</div>
-					}
 
-					{error &&
-						<div>{error}</div>
-					}
+						<div className={styles.stepsSummary}>
+							<StepSummary
+								steps={this.steps}
+								activeStep={activeStep.replace(/(Address|Logistics)/, '')}
+								onClick={this.handleStepClick}
+							/>
+						</div>
+
+						{orderForm &&
+							<div className={styles.orderForm}>
+								{activeStep === 'clientProfile' &&
+									<ProfileStep
+										initialValues={orderForm.clientProfileData}
+										onSubmit={this.handleProfileSubmit}
+										onFocusInput={onFocusInput}
+									/>
+								}
+
+								{activeStep === 'shippingAddress' &&
+									<ShippingStepAddress
+										initialValues={orderForm.shippingData.address || {}}
+										onSubmit={data => this.handleShippingAddressSubmit(data)}
+										onFocusInput={onFocusInput}
+										onPostalCodeChange={this.handlePostalCodeChange}
+									/>
+								}
+
+								{activeStep === 'shippingLogistics' &&
+									<ShippingStepLogistics
+										onBack={this.handleShippingLogisticsBack}
+										onSubmit={this.handleShippingLogisticsSubmit}
+										orderForm={orderForm}
+									/>
+								}
+
+								{activeStep === 'payment' &&
+									<PaymentStep
+										orderForm={orderForm}
+										onSelectedPayment={this.handleSelectedPayment}
+										onSubmit={this.handlePaymentSubmit}
+									/>
+								}
+							</div>
+						}
+
+						{error &&
+							<div>{error}</div>
+						}
+					</div>
+					<div className={styles.checkoutSummary}>
+						{orderForm &&
+							<CartSummary
+								orderForm={orderForm}
+								enableCheckout={activeStep === 'payment'}
+								onCheckout={this.handleCheckoutClick}
+							/>
+						}
+					</div>
 				</div>
 		);
 	}

@@ -1,19 +1,19 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
 import { FormattedNumber } from 'react-intl';
 
-const Price = ({ price, currency }) => (
+type Props = {
+	price: number,
+	currency: string
+};
+
+const Price = ({ price, currency }: Props) => (
 	<FormattedNumber
 		value={price}
 		style="currency"
 		currency={currency}
 	/>
 );
-
-Price.propTypes = {
-	price: PropTypes.number.isRequired,
-	currency: PropTypes.string
-};
 
 Price.defaultProps = {
 	currency: 'ARS'
