@@ -1,38 +1,49 @@
 import React, { Component } from 'react';
 import { array, number, func } from 'prop-types';
+import { Redirect } from 'react-router';
 import axios from 'axios';
 import { Spinner } from '../UI';
+import { CheckoutSubmitModal } from '../UI/Modal';
 import { UserIcon, LocationIcon, PaymentIcon } from '../UI/Icons';
 import { StepSummary, PaymentStep, ProfileStep, ShippingStepAddress, ShippingStepLogistics } from './steps';
 import CartSummary from './CartSummary/CartSummary';
+import Keyboard from '../../containers/KeyboardContainer';
 import styles from './Checkout.02.scss';
 
 class Checkout extends Component {
 	static propTypes = {
 		items: array,
 		saleChannel: number,
-		onFocusInput: func
+		onFocusInput: func,
+		submitForm: func,
+		orderPlaced: func
 	}
 
 	static defaultProps = {
 		items: ['14', '11', '9', '2'],
 		// items: ['25416'],
 		saleChannel: 25,
-		onFocusInput: () => null
+		onFocusInput: () => null,
+		submitForm: () => null,
+		orderPlaced: () => null
 	}
 
 	state = {
 		loading: true,
 		error: null,
 		orderForm: null,
-		activeStep: 'clientProfile'
+		activeStep: 'clientProfile',
+		checkingOut: false,
+		toOrderPlaced: false,
+		transactionError: null,
+		disableCheckout: false
 	}
 
 	componentWillMount() {
 		async function initOrderForm(items, saleChannel) {
 			const { data: orderForm } = await this.getOrderForm();
 
-			// await this.changeToAnonymousUser(orderForm.orderFormId);
+			await this.changeToAnonymousUser(orderForm.orderFormId);
 			await this.addToCart(orderForm, items, saleChannel);
 
 			return this.getOrderForm()
@@ -126,6 +137,11 @@ class Checkout extends Component {
 
 		return axios.post(`${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/items`, { orderItems }, config);
 	}
+
+	clearMessages = () =>
+		axios.post(`${this.hostUrl}/api/checkout/pub/orderForm/${this.state.orderForm.orderFormId}/messages/clear`, {
+			expectedOrderFormSections: this.expectedOrderFormSections
+		})
 
 	getActiveStep = (orderForm) => {
 		const clientProfileDataFields = ['document', 'email', 'firstName', 'lastName', 'phone'];
@@ -305,19 +321,37 @@ class Checkout extends Component {
 			}]
 		};
 
+		this.setState({
+			disableCheckout: true
+		});
+
 		return axios.post(attachmentUrl, attachmentData)
-			.then(this.handleAttachmentResolve)
+			.then((res) => {
+				this.setState({
+					disableCheckout: false
+				});
+
+				return this.handleAttachmentResolve(res);
+			})
 			.catch(this.handleAttachmentReject);
 	}
 
 	handlePaymentSubmit = (data) => {
-		console.log(data);
-	}
-
-	handleCheckoutClick = () => {
-		const startTransaction = (transactionUrl, transactionData) => axios.post(transactionUrl, transactionData);
-		const sendPayments = ({ data: orderForm }) => {
-			const { receiverUri, merchantTransactions, paymentData, id, gatewayCallbackTemplatePath } = orderForm;
+		const startTransaction = (transactionUrl, transactionData) => axios.post(transactionUrl, transactionData, {
+			headers: {
+				'X-VTEX-API-appKey': 'joshua@fizzmod.com',
+				'X-VTEX-API-appToken': 'Elcano3142'
+			}
+		});
+		const sendPayments = (orderForm, groupName, clientDocument) => {
+			const {
+				receiverUri,
+				merchantTransactions,
+				paymentData,
+				id,
+				gatewayCallbackTemplatePath,
+				shippingData
+			} = orderForm;
 			const orderId = gatewayCallbackTemplatePath.split('/')[3];
 			const paymentsArray = paymentData.payments.map((p, index) => {
 				const paymentSystem = paymentData.paymentSystems.find(ps => ps.id === Number(p.paymentSystem));
@@ -325,10 +359,11 @@ class Checkout extends Component {
 				const installment = installmentOption.installments.find(i => i.count === p.installments);
 				const merchant = merchantTransactions.find(m => m.id === p.merchantSellerPayments[0].id);
 
-				return {
+				let paymentObject = {
 					accountId: p.accountId,
 					avaiableAccounts: undefined,
 					bin: p.bin,
+					currencyCode: 'ARS',
 					fields: undefined,
 					group: paymentSystem.groupName,
 					installments: p.installments,
@@ -342,22 +377,91 @@ class Checkout extends Component {
 					paymentSystemName: paymentSystem.name,
 					referenceValue: p.referenceValue,
 					value: p.value,
-					currencyCode: 'ARS',
 					originalPaymentIndex: index
 				};
+
+				if (paymentSystem.groupName === 'creditCardPaymentGroup') {
+					paymentObject = Object.assign({}, paymentObject, {
+						chooseToUseNewCard: true,
+						fields: {
+							address: null,
+							addressId: shippingData.address.addressId,
+							bin: p.bin,
+							cardNumber: data.cardNumber,
+							document: clientDocument,
+							dueDate: `${data.cardExpirationMonth}/${data.cardExpirationYear}`,
+							holderName: data.cardName,
+							validationCode: data.cardCode
+						},
+						groupName: paymentSystem.groupName,
+						id,
+						interestRate: installment.interestRate,
+						installmentValue: installment.value,
+						isBillingAddressDifferent: false
+					});
+				}
+
+				return paymentObject;
 			});
-			const data = new FormData();
 
-			data.append('paymentsArray', JSON.stringify(paymentsArray));
-			data.append('callbackUrl', `${this.hostUrl}${gatewayCallbackTemplatePath}`);
+			if (groupName === 'creditCardPaymentGroup') {
+				const url = `https://totemwalmartarqa.vtexpayments.com.br/api/pub/transactions/${id}/payments`;
+				const formData = paymentsArray;
 
-			return axios.post(receiverUri, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+				return axios.post(url, formData, {
+					params: {
+						orderId,
+						callbackUrl: `${this.hostUrl}${gatewayCallbackTemplatePath}`
+					}
+				}).then(() => axios.get(`${this.hostUrl}/api/checkout/pub/orders/order-group/${orderId}`));
+			}
+
+			const formData = new FormData();
+
+			formData.append('paymentsArray', JSON.stringify(paymentsArray));
+			formData.append('callbackUrl', `${this.hostUrl}${gatewayCallbackTemplatePath}`);
+
+			return axios.post(receiverUri, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
 				.then(() => axios.get(`${this.hostUrl}/api/checkout/pub/orders/order-group/${orderId}`));
+		};
+		const checkOrderStatus = (orders) => {
+			const isCompleted = orders.some(o => o.isCompleted);
+
+			if (isCompleted) {
+				return Promise.resolve(orders);
+			}
+
+			return this.getOrderForm()
+				.then(({ data: { messages } }) => {
+					const transactionError = messages.find(m => m.code === 'transactionAuthorizationDenied');
+
+					if (transactionError) {
+						return Promise.reject(transactionError.text);
+					}
+
+					return Promise.reject('Ocurrió un error inesperado, por favor intente de nuevo');
+				});
+		};
+		const orderPlaced = orders => {
+			this.props.orderPlaced(orders);
+
+			this.setState({
+				toOrderPlaced: true
+			});
+		};
+		const showError = (error) => {
+			this.setState({
+				checkingOut: false,
+				transactionError: error
+			});
+
+			this.clearMessages();
 		};
 		const { expectedOrderFormSections } = this;
 		const { orderForm } = this.state;
-		const { installmentOptions, payments } = orderForm.paymentData;
+		const { installmentOptions, paymentSystems, payments } = orderForm.paymentData;
 		const [payment] = payments;
+		const paymentSystem = paymentSystems.find(ps => ps.id === Number(payment.paymentSystem));
 		const installmentOption = installmentOptions.find(io => io.paymentSystem === payment.paymentSystem);
 		const installment = installmentOption.installments.find(i => i.count === payment.installments);
 		const transactionUrl = `${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/transaction`;
@@ -371,15 +475,37 @@ class Checkout extends Component {
 			savePersonalData: false
 		};
 
+		this.setState({
+			checkingOut: true
+		});
+
 		return startTransaction(transactionUrl, transactionData)
-			.then(sendPayments)
-			.then(console.log)
-			.catch(console.log);
+			.then(res => sendPayments(res.data, paymentSystem.groupName, orderForm.clientProfileData.document))
+			.then(res => checkOrderStatus(res.data))
+			.then(orderPlaced)
+			.catch(showError);
+	}
+
+	handleCheckoutClick = () => {
+		this.props.submitForm('payment');
 	}
 
 	render() {
-		const { loading, error, orderForm, activeStep } = this.state;
+		const {
+			loading,
+			error,
+			orderForm,
+			activeStep,
+			checkingOut,
+			toOrderPlaced,
+			transactionError,
+			disableCheckout
+		} = this.state;
 		const { onFocusInput } = this.props;
+
+		if (toOrderPlaced) {
+			return <Redirect to="/orderPlaced" />;
+		}
 
 		return (
 			loading ?
@@ -431,25 +557,39 @@ class Checkout extends Component {
 									<PaymentStep
 										orderForm={orderForm}
 										onSelectedPayment={this.handleSelectedPayment}
+										onFocusInput={onFocusInput}
 										onSubmit={this.handlePaymentSubmit}
 									/>
 								}
+
 							</div>
 						}
 
 						{error &&
 							<div>{error}</div>
 						}
+
+						{transactionError &&
+							<div>
+								{transactionError}
+							</div>
+						}
+
+						<div className={styles.keyboard}>
+							<Keyboard />
+						</div>
 					</div>
 					<div className={styles.checkoutSummary}>
 						{orderForm &&
 							<CartSummary
 								orderForm={orderForm}
-								enableCheckout={activeStep === 'payment'}
+								enableCheckout={activeStep === 'payment' && !disableCheckout}
 								onCheckout={this.handleCheckoutClick}
 							/>
 						}
 					</div>
+
+					<CheckoutSubmitModal isOpen={checkingOut} />
 				</div>
 		);
 	}

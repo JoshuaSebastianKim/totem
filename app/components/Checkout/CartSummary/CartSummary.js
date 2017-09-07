@@ -1,5 +1,6 @@
 // @flow
-import React, { Component } from 'react';
+import React from 'react';
+import type { OrderForm } from '../../../types';
 import SecurePurchase from './SecurePurchase';
 import CartItems from './CartItems';
 import CartTotalizers from './CartTotalizers';
@@ -7,10 +8,10 @@ import CheckoutButton from './CheckoutButton';
 import styles from './CartSummary.scss';
 
 type Props = {
-	orderForm: object,
+	orderForm: OrderForm,
 	enableCheckout: boolean,
 	onCheckout: () => void
-}
+};
 
 const CartSummary = ({ orderForm, enableCheckout, onCheckout }: Props) => (
 	<div className={styles.container}>
@@ -22,6 +23,6 @@ const CartSummary = ({ orderForm, enableCheckout, onCheckout }: Props) => (
 
 		<CheckoutButton disabled={!enableCheckout} onClick={onCheckout} />
 	</div>
-)
+);
 
 export default CartSummary;

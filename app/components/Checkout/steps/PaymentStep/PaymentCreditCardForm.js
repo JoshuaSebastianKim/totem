@@ -114,7 +114,7 @@ class PaymentCreditCardForm extends Component {
 				return `Total - ${formattedValue}`;
 			}
 
-			return `${count} cuotas de ${formattedValue} ${hasInterestRate ? 'sin interés' : ''}`;
+			return `${count} cuotas de ${formattedValue} ${!hasInterestRate ? 'sin interés' : ''}`;
 		};
 		const value = installment.count;
 		const label = renderLabel(installment);
@@ -135,12 +135,17 @@ class PaymentCreditCardForm extends Component {
 	normalizeCardNumber = value => value.replace(/\s/g, '');
 
 	handleCardIssuerChange = (paymentSystem) => {
+		const { onCardIssuerChange, installments, cardNumber } = this.props;
+		const bin = cardNumber && cardNumber.length > 5
+			? cardNumber.slice(0, 6)
+			: null;
+
 		this.setState({
 			selectedPaymentSystem: paymentSystem,
 			selectedInstallmentOption: this.getInstallmentOption(paymentSystem)
 		});
 
-		this.props.onCardIssuerChange(paymentSystem.id);
+		onCardIssuerChange(paymentSystem.id, installments ? Number(installments) : 1, bin);
 	}
 
 	handleCardNumberChange = (ev, value) => {
@@ -151,12 +156,15 @@ class PaymentCreditCardForm extends Component {
 		});
 
 		if (cardPaymentSystem) {
-			const { change, onCardNumberChange, installments, cardIssuer } = this.props;
+			const { change, onCardNumberChange, installments, cardIssuer, cardNumber } = this.props;
 
 			if (cardIssuer !== cardPaymentSystem.name) {
+				const bin = cardNumber && cardNumber.length > 5
+					? cardNumber.slice(0, 6)
+					: null;
 				change('cardIssuer', cardPaymentSystem.name);
 
-				this.handleCardIssuerChange(cardPaymentSystem);
+				this.handleCardIssuerChange(cardPaymentSystem, Number(installments), bin);
 			}
 
 			if (value.length === 16) {
@@ -171,6 +179,8 @@ class PaymentCreditCardForm extends Component {
 			const bin = cardNumber && cardNumber.length > 5
 				? cardNumber.slice(0, 6)
 				: null;
+
+			console.log(cardNumber, bin);
 
 			onInstallmentsChange(this.state.selectedPaymentSystem.id, Number(value), bin);
 		}
@@ -206,7 +216,7 @@ class PaymentCreditCardForm extends Component {
 					name="cardNumber"
 					label="Número"
 					component={CustomField}
-					format={this.formatCardNumber}
+					// format={this.formatCardNumber}
 					normalize={this.normalizeCardNumber}
 					validate={[required, isNumber, exactLength(16)]}
 					onFocusInput={onFocusInput}
@@ -281,7 +291,11 @@ const mapStateToProps = (state) => ({
 });
 
 const PaymentCreditCardFormI18n = injectIntl(PaymentCreditCardForm);
-const PaymentCreditCardFormForm = reduxForm({ form: 'payment' })(PaymentCreditCardFormI18n);
+const PaymentCreditCardFormForm = reduxForm({
+	form: 'payment',
+	destroyOnUnmount: false,
+	forceUnregisterOnUnmount: true
+})(PaymentCreditCardFormI18n);
 const PaymentCreditCardFormRedux = connect(mapStateToProps)(PaymentCreditCardFormForm);
 
 export default PaymentCreditCardFormRedux;

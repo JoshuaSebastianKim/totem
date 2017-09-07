@@ -1,0 +1,75 @@
+@import '../../styles/variables';
+
+.container {
+	display: flex;
+	flex-direction: column;
+	width: 438px;
+	padding-top: 45px;
+	background-color: #E9EDF4;
+}
+
+.dataContainer {
+	display: flex;
+	margin-top: 60px;
+	padding-left: 30px;
+
+	&:first-of-type {
+		margin-top: 0;
+	}
+}
+
+.icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 65px;
+	height: 65px;
+	background-color: #fff;
+	border-radius: 100%;
+
+	svg {
+		fill: $color-blue;
+	}
+}
+
+.userIcon {
+	svg {
+		width: 22px;
+	}
+}
+
+.locationIcon {
+	svg {
+		width: 21px;
+	}
+}
+
+.cardIcon {
+	svg {
+		width: 25px;
+	}
+}
+
+.data {
+	padding-left: 22px;
+
+	.label {
+		font-size: 26px;
+		font-weight: 700;
+		letter-spacing: .5px;
+		line-height: 1;
+		color: $color-blue;
+	}
+
+	.value {
+		margin-top: 9px;
+		font-size: 18px;
+		color: $color-black;
+		letter-spacing: .5px;
+		line-height: 29px;
+
+		span {
+			margin: 0 3px;
+		}
+	}
+}

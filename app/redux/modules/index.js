@@ -5,6 +5,7 @@ import { loadingBarReducer } from 'react-redux-loading-bar';
 import { reducer as form } from 'redux-form';
 import cart from './cart';
 import catalog from './catalog';
+import checkout from './checkout';
 import compare from './compare';
 import history from './history';
 import keyboard from './keyboard';
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
 	router,
 	cart,
 	catalog,
+	checkout,
 	compare,
 	history,
 	keyboard,

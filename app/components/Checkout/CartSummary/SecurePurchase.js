@@ -4,7 +4,7 @@ import { SecureIcon } from '../../UI/Icons';
 import styles from './SecurePurchase.scss';
 
 type Props = {
-	label: string
+	label?: string
 };
 
 const SecurePurchase = ({ label }: Props) => (

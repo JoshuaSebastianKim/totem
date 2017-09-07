@@ -13,6 +13,9 @@ export default class Home extends Component {
 				<Link to="/checkout">
 					<h2>Checkout</h2>
 				</Link>
+				<Link to="/orderPlaced">
+					<h2>orderPlaced</h2>
+				</Link>
 			</div>
 		);
 	}

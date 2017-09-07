@@ -82,13 +82,12 @@
 
 .cardData {
 	display: flex;
+	justify-content: space-between;
 }
 
 .cardExpiration {
 	display: flex;
 	align-items: center;
-	height: 45px;
-	margin-right: 40px;
 
 	.label {
 		width: 202px;
@@ -108,7 +107,7 @@
 
 .cardExpirationMonth,
 .cardExpirationYear {
-	width: 80px;
+	width: 100px;
 
 	select {
 		width: 100%;
@@ -120,12 +119,25 @@
 	    color: $color-black;
 		background-color: #fff;
 	}
+
+	.error {
+		color: $color-red;
+    	font-size: 12px;
+    	margin-top: 4px;
+    	line-height: 1;
+	}
 }
 
 .cardCode {
+	margin-bottom: 0;
+
 	label {
 		width: 80px;
 		padding-right: 10px;
 		margin-bottom: 0;
+	}
+
+	input {
+		width: 100px;
 	}
 }

@@ -9,6 +9,7 @@ import DepartmentsPage from './containers/DepartmentsPage';
 import HomePage from './containers/HomePage';
 import ProductPage from './containers/ProductPage';
 import SearchPage from './containers/SearchPage';
+import OrderPlacedPage from './containers/OrderPlacedPage';
 import { MainSidebar, CategorySidebar } from './components/UI/Sidebar';
 import Keyboard from './containers/KeyboardContainer';
 
@@ -42,6 +43,7 @@ export default() => (
 				<Route path="/category" component={DepartmentsPage} />
 				<Route path="/compare" component={ComparePage} />
 				<Route path="/checkout" component={CheckoutPage} />
+				<Route path="/orderPlaced" component={OrderPlacedPage} />
 				<Route path="/product/:productId" component={ProductPage} />
 				<Route path="/search" component={SearchPage} />
 				<Route path="/" component={HomePage} />

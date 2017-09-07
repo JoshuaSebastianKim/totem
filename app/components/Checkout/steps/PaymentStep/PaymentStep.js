@@ -2,13 +2,21 @@ import React, { Component } from 'react';
 import { func, object } from 'prop-types';
 import { CardIcon, MercadopagoIcon, StoreIcon } from '../../../UI/Icons';
 import PaymentGroups from './PaymentGroups';
+import PaymentStore from './PaymentStore';
 import PaymentCreditCardForm from './PaymentCreditCardForm';
 import styles from './PaymentStep.scss';
 
 class PaymentStep extends Component {
 	static propTypes = {
 		orderForm: object.isRequired,
-		onSelectedPayment: func.isRequired
+		onSelectedPayment: func.isRequired,
+		onSubmit: func,
+		onFocusInput: func
+	}
+
+	static defaultProps = {
+		onSubmit: () => null,
+		onFocusInput: () => null
 	}
 
 	constructor(props) {
@@ -113,20 +121,20 @@ class PaymentStep extends Component {
 		}
 	}
 
-	handleCardIssuerChange = (paymentSystemId) => {
-		this.props.onSelectedPayment(paymentSystemId);
+	handleCardIssuerChange = (paymentSystemId, installments, bin) => {
+		this.props.onSelectedPayment(paymentSystemId, installments, bin);
 	}
 
 	handleCardNumberChange = (paymentSystemId, installments, bin) => {
 		this.props.onSelectedPayment(paymentSystemId, installments, bin);
 	}
 
-	handleInstallmentsChange = (paymentSystemId, installments) => {
-		this.props.onSelectedPayment(paymentSystemId, installments);
+	handleInstallmentsChange = (paymentSystemId, installments, bin) => {
+		this.props.onSelectedPayment(paymentSystemId, installments, bin);
 	}
 
 	render() {
-		const { orderForm } = this.props;
+		const { orderForm, onSubmit, onFocusInput } = this.props;
 		const { paymentGroups, selectedPaymentGroupName } = this.state;
 		const selectedPaymentGroup = paymentGroups.find(pg => pg.groupName === selectedPaymentGroupName);
 
@@ -146,9 +154,7 @@ class PaymentStep extends Component {
 
 				<div className={styles.paymentGroupFrom}>
 					{selectedPaymentGroupName === 'custom201PaymentGroupPaymentGroup' &&
-						<div>
-							Pago en tienda
-						</div>
+						<PaymentStore onSubmit={onSubmit} />
 					}
 
 					{selectedPaymentGroupName === 'creditCardPaymentGroup' &&
@@ -159,9 +165,11 @@ class PaymentStep extends Component {
 							installmentOptions={orderForm.paymentData.installmentOptions.filter(
 								ps => selectedPaymentGroup.paymentSystems.indexOf(Number(ps.paymentSystem)) !== -1
 							)}
-							onCardIssuerChange={this.handleCardIssuerChange}
-							onCardNumberChange={this.handleCardNumberChange}
-							onInstallmentsChange={this.handleInstallmentsChange}
+							onCardIssuerChange={this.props.onSelectedPayment}
+							onCardNumberChange={this.props.onSelectedPayment}
+							onInstallmentsChange={this.props.onSelectedPayment}
+							onFocusInput={onFocusInput}
+							onSubmit={onSubmit}
 						/>
 					}
 
