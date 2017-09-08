@@ -77,7 +77,7 @@ export default function reducer(state = initialState, action) {
 }
 
 async function search(query: string, cache) {
-	const url = 'http://walmartar.vtexcommercestable.com.br/api/catalog_system/pub/products/search/';
+	const url = 'http://totemwalmartarqa.vtexcommercestable.com.br/api/catalog_system/pub/products/search/';
 	const hash = SHA256(query);
 
 	if (cancelToken) {
@@ -89,7 +89,7 @@ async function search(query: string, cache) {
 		return Promise.resolve(cache[hash]);
 	}
 
-	return axios.get(`${url}?${query}`, {
+	return axios.get(`${url}?${query}&sc=25`, {
 		cancelToken: new CancelToken((token) => {
 			cancelToken = token;
 		})

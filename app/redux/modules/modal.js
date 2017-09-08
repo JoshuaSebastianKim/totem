@@ -15,7 +15,7 @@ const CLOSE_CART_MODAL = 'modal/CLOSE_CART_MODAL';
 const TOGGLE_PRINT_TICKET_MODAL = 'modal/TOGGLE_PRINT_TICKET_MODAL';
 
 const initialState = {
-	storeName: storage.get('storeName'),
+	storeName: storage.get('storeName') || 'WALMART',
 	storeModalOpen: false,
 	addedToCartOpen: false,
 	cartModalOpen: false,

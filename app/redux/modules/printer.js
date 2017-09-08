@@ -7,6 +7,8 @@ export const PRINT_TICKET_START = 'printer/PRINT_TICKET_START';
 export const PRINT_TICKET_SUCCESS = 'printer/PRINT_TICKET_SUCCESS';
 export const PRINT_TICKET_ERROR = 'printer/PRINT_TICKET_ERROR';
 
+console.log(process.platform);
+
 const initialState = {
 	initialized: false,
 	config: {},
@@ -49,10 +51,15 @@ export default function reducer(state = initialState, action) {
 }
 
 function getPrinterPath() {
-	const usbPath = '/dev/usb/';
-	const files = fs.readdirSync(usbPath);
+	switch (process.platform) {
+		case 'linux':
+			const usbPath = '/dev/usb/';
+			const files = fs.readdirSync(usbPath);
 
-	return `${usbPath}${files[0]}`;
+			return `${usbPath}${files[0]}`;
+		case 'win32':
+			return '\\\\totem\\EPSON';
+	}
 }
 
 export function printerInit() {
