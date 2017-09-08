@@ -1,0 +1,81 @@
+@import '../../../../styles/variables';
+
+.overlay {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, .4);
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 824px;
+	border-radius: 8px;
+	padding: 50px 88px 54px;
+	background-color: #fff;
+	outline: 0;
+	border: 4px solid $color-yellow;
+}
+
+.icon {
+	width: 48px;
+
+	svg {
+		fill: $color-yellow;
+	}
+}
+
+.warning {
+	text-align: center;
+	margin-top: 25px;
+	font-size: 38px;
+	font-weight: 700;
+	color: $color-black;
+	line-height: 45px;
+	letter-spacing: .5px;
+}
+
+.errorMessage {
+	text-align: center;
+	margin-top: 30px;
+	font-size: 18px;
+	color: $color-black;
+	line-height: 29px;
+	letter-spacing: .5px;
+}
+
+.errorDetails {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	height: 110px;
+	width: 648px;
+	margin-top: 38px;
+	padding: 0 50px;
+	background-color: $color-gray;
+	font-size: 15px;
+	color: $color-gray3;
+	line-height: 26px;
+	letter-spacing: .5px;
+}
+
+.close {
+	margin-top: 22px;
+	height: 76px;
+	width: 648px;
+	background-color: $color-yellow;
+	border-radius: 5px;
+	font-size: 18px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: #fff;
+}

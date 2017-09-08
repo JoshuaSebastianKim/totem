@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import homeImage from '../../images/home.png';
 import styles from './Home.scss';
 
 export default class Home extends Component {
@@ -8,13 +9,7 @@ export default class Home extends Component {
 		return (
 			<div className={styles.container}>
 				<Link to="/category">
-					<h2>Home</h2>
-				</Link>
-				<Link to="/checkout">
-					<h2>Checkout</h2>
-				</Link>
-				<Link to="/orderPlaced">
-					<h2>orderPlaced</h2>
+					<img src={homeImage} alt="Home" />
 				</Link>
 			</div>
 		);

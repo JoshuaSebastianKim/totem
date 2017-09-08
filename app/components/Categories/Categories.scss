@@ -4,22 +4,84 @@
 	flex: 1;
 	display: flex;
 	align-items: center;
-	justify-content: center;
 	flex-direction: column;
 	background-color: $color-gray;
 	padding-top: 92px;
+	width: 100%;
+	overflow: hidden;
 }
 
 .categorySlider {
-	flex: 1;
 	display: flex;
 	justify-content: center;
-	overflow: hidden;
 	width: 100%;
+	max-height: 890px;
+	transition: transform $transition-duration $transition-easing;
+}
+
+.categorySliderPager {
+	justify-content: flex-start;
+	padding: 0 105px;
+
+	.categoryLink {
+		width: 470px;
+		height: 826px;
+	}
 }
 
 .categoryLink {
 	display: flex;
-	height: 100%;
-	max-height: 890px;
+	margin: 0 9px;
+}
+
+.categorySliderControls {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 40px;
+}
+
+.listPageControl {
+	width: 88px;
+	height: 88px;
+	border-radius: 100%;
+	background-color: $color-black;
+	transition: opacity $transition-duration;
+	opacity: .8;
+
+	&:disabled {
+		opacity: .3;
+	}
+
+	.listPageControlIcon {
+		width: 18px;
+		margin: auto;
+
+		svg {
+			fill: #fff;
+		}
+	}
+}
+
+.sliderPager {
+	position: relative;
+	top: 10px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 1010px;
+	height: 6px;
+	margin: 0 165px;
+	border-radius: 10px;
+	overflow: hidden;
+	background-color: $color-gray2;
+	transition: margin $transition-duration $transition-easing;
+
+	.sliderPagerThumb {
+		position: absolute;
+		top: 0;
+		height: 100%;
+		background-color: $color-yellow;
+		transition: left $transition-duration $easing-easeOutQuart;
+	}
 }

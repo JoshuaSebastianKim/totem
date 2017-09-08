@@ -8,43 +8,43 @@ import { ChevronLeftIcon, ChevronRightIcon } from '../UI/Icons';
 import styles from './Categories.scss';
 
 const categoryAssets = {
-	'Lavavajillas': {
+	Lavavajillas: {
 		banner: require('../../images/cat_lavavajillas.png')
 	},
-	'Heladeras': {
+	Heladeras: {
 		banner: require('../../images/cat_heladeras.png')
 	},
-	'Lavarropas': {
+	Lavarropas: {
 		banner: require('../../images/cat_lavarropas.png')
 	},
-	'Cavas': {
+	Cavas: {
 		banner: require('../../images/cat_cavas.png')
 	},
-	'Freezers': {
+	Freezers: {
 		banner: require('../../images/cat_freezers.png')
 	},
-	'Cocinas': {
+	Cocinas: {
 		banner: require('../../images/cat_cocinas.png')
 	},
 	'Colchones y Sommiers': {
 		banner: require('../../images/cat_colchonesysommiers.png')
 	},
-	'Cortacabellos': {
+	Cortacabellos: {
 		banner: require('../../images/cat_cortacabellos.png')
 	},
-	'Afeitadoras': {
+	Afeitadoras: {
 		banner: require('../../images/cat_afeitadoras.png')
 	},
-	'Depiladoras': {
+	Depiladoras: {
 		banner: require('../../images/cat_depiladoras.png')
 	},
-	'Tablets': {
+	Tablets: {
 		banner: require('../../images/cat_tablets.png')
 	},
-	'Notebooks': {
+	Notebooks: {
 		banner: require('../../images/cat_notebooks.png')
 	},
-	'Celulares': {
+	Celulares: {
 		banner: require('../../images/cat_celulares.png')
 	},
 	'TV Led': {
@@ -62,7 +62,7 @@ const categoryAssets = {
 	'Bicicletas Fijas': {
 		banner: require('../../images/cat_bicicletasfijas.png')
 	},
-	'Elipticos': {
+	Elipticos: {
 		banner: require('../../images/cat_elipticos.png')
 	},
 	'Camas Elásticas': {
@@ -75,12 +75,20 @@ const categoryAssets = {
 
 export default class Categories extends Component {
 	static propTypes = {
-		categoryTree: PropTypes.object,
-		match: PropTypes.object
+		categoryTree: PropTypes.object.isRequired,
+		match: PropTypes.object.isRequired
 	}
 
 	state = {
 		currentSlide: 1
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (this.props.categoryTree !== nextProps.categoryTree) {
+			this.setState({
+				currentSlide: 1
+			});
+		}
 	}
 
 	handlePrevControlClick = () => {
@@ -107,7 +115,12 @@ export default class Categories extends Component {
 
 		return (
 			<div className={styles.container}>
-				<div className={styles.categorySlider}>
+				<div
+					className={`${styles.categorySlider} ${categories.length > 3 && styles.categorySliderPager}`}
+					style={{
+						transform: `translateX(${-((currentSlide - 1) * 488)}px)`
+					}}
+				>
 					{categories.map(category => (
 						<Link
 							key={category.name}
@@ -136,8 +149,8 @@ export default class Categories extends Component {
 							<div
 								className={styles.sliderPagerThumb}
 								style={{
-									width: `${Math.floor(100 / categories.length) || 1}%`,
-									left: `${((currentSlide - 1) * 100) / categories.length}%`
+									width: `${Math.floor(100 / (categories.length - 2)) || 1}%`,
+									left: `${((currentSlide - 1) * 100) / (categories.length - 2)}%`
 								}}
 							/>
 						</div>

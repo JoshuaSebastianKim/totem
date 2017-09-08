@@ -4,3 +4,4 @@ export CartModal from './CartModal/CartModal';
 export CheckoutSubmitModal from './CheckoutSubmitModal/CheckoutSubmitModal';
 export StoreModal from './StoreModal/StoreModal';
 export TicketPrintModal from './TicketPrintModal/TicketPrintModal';
+export TransactionErrorModal from './TransactionErrorModal/TransactionErrorModal';

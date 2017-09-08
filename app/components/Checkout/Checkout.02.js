@@ -3,7 +3,7 @@ import { array, number, func } from 'prop-types';
 import { Redirect } from 'react-router';
 import axios from 'axios';
 import { Spinner } from '../UI';
-import { CheckoutSubmitModal } from '../UI/Modal';
+import { CheckoutSubmitModal, TransactionErrorModal } from '../UI/Modal';
 import { UserIcon, LocationIcon, PaymentIcon } from '../UI/Icons';
 import { StepSummary, PaymentStep, ProfileStep, ShippingStepAddress, ShippingStepLogistics } from './steps';
 import CartSummary from './CartSummary/CartSummary';
@@ -43,7 +43,9 @@ class Checkout extends Component {
 		async function initOrderForm(items, saleChannel) {
 			const { data: orderForm } = await this.getOrderForm();
 
+			await this.clearMessages(orderForm);
 			await this.changeToAnonymousUser(orderForm.orderFormId);
+			await this.removeAllItems(orderForm);
 			await this.addToCart(orderForm, items, saleChannel);
 
 			return this.getOrderForm()
@@ -124,6 +126,7 @@ class Checkout extends Component {
 	getOrderForm = () => axios.get(`${this.hostUrl}/api/checkout/pub/orderForm`)
 
 	addToCart = (orderForm, items, saleChannel) => {
+		const { expectedOrderFormSections } = this;
 		const orderItems = items.map(item => ({
 			id: item,
 			quantity: 1,
@@ -135,11 +138,24 @@ class Checkout extends Component {
 			}
 		};
 
-		return axios.post(`${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/items`, { orderItems }, config);
+		return axios.post(`${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/items`,
+			{ orderItems, expectedOrderFormSections },
+			config
+		);
 	}
 
-	clearMessages = () =>
-		axios.post(`${this.hostUrl}/api/checkout/pub/orderForm/${this.state.orderForm.orderFormId}/messages/clear`, {
+	removeAllItems = (orderForm) => {
+		if (orderForm.items.length) {
+			const orderItems = orderForm.items.map((_, index) => ({ index, quantity: 0 }));
+
+			return axios.post(`${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/items/update`, { orderItems });
+		}
+
+		return Promise.resolve();
+	}
+
+	clearMessages = (orderForm) =>
+		axios.post(`${this.hostUrl}/api/checkout/pub/orderForm/${orderForm.orderFormId}/messages/clear`, {
 			expectedOrderFormSections: this.expectedOrderFormSections
 		})
 
@@ -435,6 +451,8 @@ class Checkout extends Component {
 				.then(({ data: { messages } }) => {
 					const transactionError = messages.find(m => m.code === 'transactionAuthorizationDenied');
 
+					console.log(transactionError);
+
 					if (transactionError) {
 						return Promise.reject(transactionError.text);
 					}
@@ -449,13 +467,15 @@ class Checkout extends Component {
 				toOrderPlaced: true
 			});
 		};
-		const showError = (error) => {
+		const showError = (errorString) => {
+			console.log(errorString);
+			const [message, details] = errorString.split(/ \*\*\* /);
+			const error = { message, details };
+
 			this.setState({
 				checkingOut: false,
 				transactionError: error
 			});
-
-			this.clearMessages();
 		};
 		const { expectedOrderFormSections } = this;
 		const { orderForm } = this.state;
@@ -490,6 +510,12 @@ class Checkout extends Component {
 		this.props.submitForm('payment');
 	}
 
+	handleTransactionErrorModalClose = () => {
+		this.setState({
+			transactionError: null
+		});
+	}
+
 	render() {
 		const {
 			loading,
@@ -501,7 +527,11 @@ class Checkout extends Component {
 			transactionError,
 			disableCheckout
 		} = this.state;
-		const { onFocusInput } = this.props;
+		const { onFocusInput, items } = this.props;
+
+		if (items.length === 0) {
+			return <Redirect to="/" />;
+		}
 
 		if (toOrderPlaced) {
 			return <Redirect to="/orderPlaced" />;
@@ -569,12 +599,6 @@ class Checkout extends Component {
 							<div>{error}</div>
 						}
 
-						{transactionError &&
-							<div>
-								{transactionError}
-							</div>
-						}
-
 						<div className={styles.keyboard}>
 							<Keyboard />
 						</div>
@@ -590,6 +614,12 @@ class Checkout extends Component {
 					</div>
 
 					<CheckoutSubmitModal isOpen={checkingOut} />
+
+					<TransactionErrorModal
+						isOpen={transactionError !== null}
+						onRequestClose={this.handleTransactionErrorModalClose}
+						error={transactionError !== null ? transactionError : {}}
+					/>
 				</div>
 		);
 	}
