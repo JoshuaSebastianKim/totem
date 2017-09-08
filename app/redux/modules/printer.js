@@ -177,12 +177,84 @@ function printExampleTicket(resolveTimeout = 5000) {
 	});
 }
 
+function printRealTicket(product, resolveTimeout = 5000) {
+	return new Promise((resolve, reject) => {
+		printer.alignCenter();
+
+		printer.setTextDoubleHeight();
+		printer.println('NO VALIDO COMO TIQUE');
+		printer.setTextNormal();
+
+		printer.drawLine();
+
+		printer.setTextQuadArea();
+		printer.println('CUPON PERSONALIZADO');
+		printer.setTextNormal();
+
+		// Set date
+		const date = new Date();
+		const dateFormatted = `${date.getDate()}/${(date.getMonth() + 1)}/${date.getFullYear()}`;
+
+		printer.println(`VALIDO HASTA EL ${dateFormatted}`);
+
+		printer.drawLine();
+		printer.newLine();
+
+		printer.bold(true);
+		printer.println('SU PRODUCTO SERA ENTREGADO DENTRO DE');
+		printer.println('LOS 15 DIAS');
+		printer.bold(false);
+		printer.setTextNormal();
+
+		printer.newLine();
+
+		// Product info in table
+		// printer.table(['CODIGO', 'ARTICULO']);
+		// printer.table([$scope.product.ean, ($scope.product.productName).substr(0,21)]);
+		// printer.newLine();
+
+		// Product info in lines
+		printer.println('CODIGO');
+		printer.println(product.items[0].ean)
+		printer.newLine();
+
+		printer.println('ARTICULO');
+		printer.println(product.productName.substring(0, 200))
+		printer.newLine();
+
+		printer.println('NO VALIDO COMO TIQUE');
+
+		printer.newLine();
+
+		printer.printBarcode(product.items[0].ean);
+		printer.newLine();
+
+		printer.setTextDoubleHeight();
+		printer.println('GRACIAS');
+		printer.println('POR ELEGIRNOS');
+
+		printer.newLine();
+
+		printer.println('NO VALIDO COMO TIQUE');
+		printer.setTextNormal();
+
+		printer.cut();
+		printer.execute((err) => {
+			if (err) {
+				return reject(err);
+			}
+
+			setTimeout(() => resolve(true), resolveTimeout);
+		});
+	});
+}
+
 export function printTicket(product) {
 	return dispatch => {
 		dispatch(printTicketStart());
 
 		// TODO: Replace example ticket with the real one
-		return printExampleTicket().then(
+		return printRealTicket(product).then(
 			() => dispatch(printTicketSucces()),
 			(err) => dispatch(printTicketError(err))
 		);
