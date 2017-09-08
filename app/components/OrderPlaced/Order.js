@@ -1,6 +1,7 @@
 import React from 'react';
 import OrderData from './OrderData';
 import OrderItems from './OrderItems';
+import OrderTotalizers from './OrderTotalizers';
 import styles from './Order.scss';
 
 type Props = {
@@ -16,6 +17,8 @@ const Order = ({ order }: Props) => (
 		/>
 
 		<OrderItems items={order.items} />
+
+		<OrderTotalizers total={order.value} totalizers={order.totals} />
 	</div>
 );
 

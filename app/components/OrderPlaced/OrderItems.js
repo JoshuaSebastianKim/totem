@@ -31,7 +31,7 @@ const OrderItems = ({ items }: Props) => (
 
 		<div className={styles.items}>
 			{items.map(item => {
-				const discount = ((item.listPrice - item.sellingPrice) * 100) / item.listPrice;
+				const discount = Math.round(((item.listPrice - item.sellingPrice) * 100) / item.listPrice);
 
 				return (
 					<div key={item.id} className={styles.item}>
@@ -67,7 +67,9 @@ const OrderItems = ({ items }: Props) => (
 						</div>
 
 						<div className={styles.quantity}>
-							{item.quantity}
+							<div className={styles.amount}>
+								{item.quantity}
+							</div>
 						</div>
 
 						<div className={styles.total}>

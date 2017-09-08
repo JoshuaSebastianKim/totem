@@ -8,7 +8,7 @@ type Props = {
 	orderId: string,
 	shippingData: object,
 	paymentData: object
-}
+};
 
 function getDeliveryTime(shippingData) {
 	const { selectedSla } = shippingData.logisticsInfo[0];
@@ -36,7 +36,7 @@ function getPaymentLabel(paymentData) {
 	}
 }
 
-const OrderData = ({ orderId, shippingData, paymentData }) => (
+const OrderData = ({ orderId, shippingData, paymentData }: Props) => (
 	<div className={styles.container}>
 		<div className={styles.dataContainer}>
 			<UserIcon className={`${styles.icon} ${styles.userIcon}`} />
