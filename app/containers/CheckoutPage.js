@@ -9,7 +9,7 @@ import { getCartItems } from '../redux/selectors/cartSelectors';
 
 function mapStateToProps(state, props) {
 	return {
-		// items: getCartItems(state).map(p => p.items[0].itemId)
+		items: getCartItems(state).map(p => p.items[0].itemId)
 	};
 }
 
