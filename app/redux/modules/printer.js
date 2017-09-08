@@ -51,22 +51,21 @@ export default function reducer(state = initialState, action) {
 }
 
 function getPrinterPath() {
-	console.log(process.platform);
 	switch (process.platform) {
-		case 'linux':
+		case 'win32':
+			return '\\\\totem\\EPSON';
+		default: {
 			const usbPath = '/dev/usb/';
 			const files = fs.readdirSync(usbPath);
 
 			return `${usbPath}${files[0]}`;
-		case 'win32':
-			return '\\\\totem\\EPSON';
+		}
 	}
 }
 
 export function printerInit() {
 	try {
 		const printerPath = getPrinterPath();
-		console.log(printerPath);
 		const config = {
 			type: 'epson',
 			characterSet: 'LATINA',
@@ -235,7 +234,7 @@ function printRealTicket(product, resolveTimeout = 5000) {
 
 		printer.newLine();
 
-		printer.printBarcode(product.items[0].ean);
+		printer.printBarcode(product.items[0].ean, 67, { width: 6, height: 168 });
 		printer.newLine();
 
 		printer.setTextDoubleHeight();
