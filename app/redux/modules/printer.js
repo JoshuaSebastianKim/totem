@@ -51,6 +51,7 @@ export default function reducer(state = initialState, action) {
 }
 
 function getPrinterPath() {
+	console.log(process.platform);
 	switch (process.platform) {
 		case 'linux':
 			const usbPath = '/dev/usb/';
@@ -65,6 +66,7 @@ function getPrinterPath() {
 export function printerInit() {
 	try {
 		const printerPath = getPrinterPath();
+		console.log(printerPath);
 		const config = {
 			type: 'epson',
 			characterSet: 'LATINA',
