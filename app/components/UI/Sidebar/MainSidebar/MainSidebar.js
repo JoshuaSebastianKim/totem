@@ -77,7 +77,9 @@ const MainSidebar = ({
 		</div>
 
 		<div className={styles.goback}>
-			<GoBackButton className={styles.goBackButton} onClick={onGoBack} />
+			<Link to={lastLocation}>
+				<GoBackButton className={styles.goBackButton} />
+			</Link>
 			<div className={styles.goBackLabel}>
 				VOLVER
 			</div>

@@ -187,7 +187,6 @@ function printExampleTicket(resolveTimeout = 5000) {
 
 function printRealTicket(product, resolveTimeout = 5000) {
 	return new Promise((resolve, reject) => {
-		console.log(product);
 		printer.alignCenter();
 
 		printer.setTextDoubleHeight();

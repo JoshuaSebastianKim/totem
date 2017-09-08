@@ -1,0 +1,18 @@
+Guía de instalación
+
+1. Extraer el .zip en el Escritorio
+2. Buscar la carpeta en donde se extrajo
+3. Ejecutar el archivo "TotemWalmart Setup 1.0.0.exe"
+4. Este se va abrir automaticamente despues de instalar y va a crear un acceso directo en el escritorio
+
+- COMPARTIR IMPRESORA (Windows)
+
+1. Inicio -> Dispositivos e Impresoras
+2. Click derecho en la impresora EPSON -> Propiedades de impresora
+3. Click en la pestaña "Compartir"
+4. Checkear "Compartir esta impresora"
+5. Asignar en el campo "Recurso compartido" el valor de "EPSON"
+
+- AJUSTAR PANTALLA
+1. Inicio -> Pantalla
+2. Mover el slider de "Cambiar el tamaño del texto, las aplicaciones y otro elementos" al 100%

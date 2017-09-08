@@ -31,19 +31,19 @@ const Keyboard = ({ input, open, toggleKeyboard }) => (
 				<ScreenKeyboard
 					inputNode={input}
 					layouts={[LatinLayout]}
-					leftButtons={[
-						<KeyboardButton
-							key="back"
-							onClick={() => null}
-							classes="keyboard-back-button"
-							value="< Back"
-						/>
-					]}
+					// leftButtons={[
+					// 	<KeyboardButton
+					// 		key="back"
+					// 		onClick={() => null}
+					// 		classes="keyboard-back-button"
+					// 		value="< Back"
+					// 	/>
+					// ]}
 					rightButtons={[
 						<KeyboardButton
 							key="submit"
-							onClick={() => null}
-							value="Submit"
+							onClick={toggleKeyboard}
+							value="Aceptar"
 							classes="keyboard-submit-button"
 						/>
 					]}
