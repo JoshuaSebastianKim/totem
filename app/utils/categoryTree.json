@@ -1,104 +1,104 @@
 [{
 	"name": "Línea blanca",
-	"id": 2,
+	"id": "2",
 	"children": [{
-		"id": 505,
+		"id": "497-505",
 		"name": "Lavavajillas",
 		"url": "/lavado/lavavajillas"
 	}, {
-		"id": 488,
+		"id": "488",
 		"name": "Heladeras",
 		"url": "/heladeras-y-freezers"
 	}, {
-		"id": 497,
+		"id": "497",
 		"name": "Lavarropas",
 		"url": "/lavado"
 	}, {
-		"id": 495,
+		"id": "488-495",
 		"name": "Cavas",
 		"url": "/heladeras-y-freezers/cavas"
 	}, {
-		"id": 489,
+		"id": "488-489",
 		"name": "Freezers",
 		"url": "/heladeras-y-freezers/freezers"
 	}, {
-		"id": 511,
+		"id": "509-511",
 		"name": "Cocinas",
 		"url": "/cocinas-y-extractores/cocinas"
 	}]
 }, {
 	"name": "Hogar",
-	"id": 4,
+	"id": "4",
 	"children": [{
-		"id": 917,
+		"id": "909-917",
 		"name": "Colchones y Sommiers",
 		"url": "/colchones-y-almohadas/colchones-y-sommiers"
 	}]
 }, {
 	"name": "Cuidado personal",
-	"id": 3,
+	"id": "3",
 	"children": [{
-		"id": 544,
+		"id": "541-544",
 		"name": "Cortacabellos",
 		"url": "/cuidado-personal/cortacabellos"
 	}, {
-		"id": 542,
+		"id": "541-542",
 		"name": "Afeitadoras",
 		"url": "/cuidado-personal/afeitadoras"
 	}, {
-		"id": 545,
+		"id": "541-545",
 		"name": "Depiladoras",
 		"url": "/cuidado-personal/depiladoras"
 	}]
 }, {
 	"name": "Tecnología",
-	"id": 1,
+	"id": "1",
 	"children": [{
-		"id": 196,
+		"id": "193-196",
 		"name": "Tablets",
 		"url": "/computacion/tablets"
 	}, {
-		"id": 194,
+		"id": "193-194",
 		"name": "Notebooks",
 		"url": "/computacion/notebooks"
 	}, {
-		"id": 252,
+		"id": "249-252",
 		"name": "Celulares",
 		"url": "/telefonia/celulares-libres"
 	}, {
-		"id": 146,
+		"id": "145-146",
 		"name": "TV Led",
 		"url": "/tv-y-video/tv-led"
 	}, {
-		"id": 178,
+		"id": "158-171",
 		"name": "Parlantes Potenciados",
 		"url": "/audio/equipos-de-audio/radiograbadores---reproductores-de-cd"
 	}]
 }, {
 	"name": "Aire libre y deportes",
-	"id": 5,
+	"id": "5",
 	"children": [{
-		"id": 701,
+		"id": "700-701",
 		"name": "Cintas Para Correr",
 		"url": "/fitness/ejercitadores"
 	}, {
-		"id": 701,
+		"id": "700-701",
 		"name": "Home GYM",
 		"url": "/fitness/ejercitadores"
 	}, {
-		"id": 701,
+		"id": "700-701",
 		"name": "Bicicletas Fijas",
 		"url": "/fitness/ejercitadores"
 	}, {
-		"id": 701,
+		"id": "700-701",
 		"name": "Elipticos",
 		"url": "/fitness/ejercitadores"
 	}, {
-		"id": 751,
+		"id": "742-751",
 		"name": "Camas Elásticas",
 		"url": "/muebles-de-jardin-y-playa/juegos-infantiles-para-el-jardin"
 	}, {
-		"id": 712,
+		"id": "704-712",
 		"name": "Ping Pong",
 		"url": "/otros-deportes/ping-pong"
 	}]

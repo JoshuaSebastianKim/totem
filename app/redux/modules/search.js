@@ -77,7 +77,7 @@ export default function reducer(state = initialState, action) {
 }
 
 async function search(query: string, cache) {
-	const url = 'http://totemwalmartarqa.vtexcommercestable.com.br/api/catalog_system/pub/products/search/';
+	const url = 'http://walmartar.vtexcommercestable.com.br/api/catalog_system/pub/products/search/';
 	const hash = SHA256(query);
 
 	if (cancelToken) {

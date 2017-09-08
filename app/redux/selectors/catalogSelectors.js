@@ -1,8 +1,12 @@
 import { createSelector } from 'reselect';
 
 const getTree = state => state.catalog.categoryTree;
-const getDepartmentId = (_, props) => parseInt(props.match.params.departmentId, 10);
-const getCategoryId = (_, props) => parseInt(props.match.params.categoryId, 10);
+const getDepartmentId = (_, props) => props.match.params.departmentId;
+const getCategoryId = (_, props) => {
+	const ids = props.match.params.categoryId.split('-');
+
+	return ids[ids.length - 1];
+};
 const getProducts = state => state.catalog.products;
 const getProductId = (_, props) => props.match.params.productId;
 
@@ -15,7 +19,7 @@ export const getCategoryTree = createSelector(
 	[getTree, getDepartmentId, getCategoryId],
 	(categoriesTree, departmentId, categoryId) => {
 		const departmentTree = categoriesTree.find(category => category.id === departmentId);
-		const categoryTree = departmentTree.children.find(category => category.id === categoryId);
+		const categoryTree = departmentTree.children.find(category => new RegExp(categoryId).test(category.id));
 
 		return categoryTree;
 	}

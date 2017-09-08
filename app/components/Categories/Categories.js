@@ -124,7 +124,7 @@ export default class Categories extends Component {
 					{categories.map(category => (
 						<Link
 							key={category.name}
-							to={`${match.url}/${category.id}`}
+							to={`${match.url}/${category.id}?path=${category.id}`}
 							className={styles.categoryLink}
 						>
 							<Category

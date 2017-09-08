@@ -24,7 +24,7 @@ class Category extends PureComponent {
 				productsPerPage: 6
 			},
 			query: {
-				category: `/${props.categoryTree.id}/`,
+				category: `/${props.categoryTree.id.replace(/-/g, '/')}/`,
 				range: {
 					from: 0,
 					to: 5
