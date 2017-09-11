@@ -15,6 +15,7 @@ export ChevronRightIcon from './ChevronRightIcon';
 export CloseIcon from './CloseIcon';
 export CuidadoPersonalIcon from './CuidadoPersonalIcon';
 export DetailIcon from './DetailIcon';
+export EmptySearchIcon from './EmptySearchIcon';
 export HogarIcon from './HogarIcon';
 export LineaBlancaIcon from './LineaBlancaIcon';
 export LocationIcon from './LocationIcon';

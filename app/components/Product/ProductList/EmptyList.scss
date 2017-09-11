@@ -1,0 +1,36 @@
+@import '../../../styles/variables';
+
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 12px;
+}
+
+.icon {
+	width: 218px;
+
+	svg {
+		fill: $color-blue;
+	}
+}
+
+.label {
+	margin-top: 30px;
+	font-size: 36px;
+	font-weight: 700;
+	color: $color-black;
+}
+
+.term {
+	font-size: 36px;
+	font-weight: 700;
+	color: $color-blue;
+}
+
+.tips {
+	margin-top: 30px;
+	font-size: 18px;
+	color: $color-black;
+	line-height: 1;
+}

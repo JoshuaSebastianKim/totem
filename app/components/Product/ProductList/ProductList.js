@@ -7,6 +7,7 @@ import { searchQuery, searchFulfilled, storeLastCurrentPageState } from '../../.
 import { Spinner } from '../../UI';
 import { Button } from '../../UI/Buttons';
 import { ChevronLeftIcon, ChevronRightIcon } from '../../UI/Icons';
+import EmptyList from './EmptyList';
 import styles from './ProductList.scss';
 
 class ProductList extends PureComponent {
@@ -213,7 +214,7 @@ class ProductList extends PureComponent {
 
 	render() {
 		const { total, currentPage, loading, products } = this.state;
-		const { className, style, config, canCompare, isCompareActive } = this.props;
+		const { query, className, style, config, canCompare, isCompareActive } = this.props;
 		const pages = Math.ceil(total / config.productsPerPage);
 		const pageFirstIndex = (currentPage - 1) * config.productsPerPage;
 		const pageLastIndex = currentPage * config.productsPerPage;
@@ -221,15 +222,20 @@ class ProductList extends PureComponent {
 
 		return (
 			<div className={`${styles.container} ${className}`} style={style}>
-				<div className={styles.productsContainer}>
-					{pageProducts.map(product => (
-						<ProductListItem
-							key={product.productId}
-							product={product}
-							showCompare={canCompare}
-						/>
-					))}
-				</div>
+				{total > 0 ?
+					<div className={styles.productsContainer}>
+						{pageProducts.map(product => (
+							<ProductListItem
+								key={product.productId}
+								product={product}
+								showCompare={canCompare}
+							/>
+						))}
+					</div> :
+					(!loading &&
+						<EmptyList query={query} />
+					)
+				}
 
 				{products.length > 0 &&
 					<div className={styles.controlsContainer}>

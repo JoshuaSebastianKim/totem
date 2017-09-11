@@ -29,7 +29,7 @@ class ProductDataContainer extends PureComponent {
 
 				{/* PRODUCT SPECIFICATIONS */}
 				<UnmountClosed isOpened={isSpecificationsActive}>
-					<ProductSpecifications onToggleSpecifications={onToggleSpecifications} />
+					<ProductSpecifications product={product} onToggleSpecifications={onToggleSpecifications} />
 				</UnmountClosed>
 			</div>
 		);

@@ -80,36 +80,67 @@ export default class Categories extends Component {
 	}
 
 	state = {
-		currentSlide: 1
+		currentSlide: 1,
+		slideWidth: 488,
+		translateX: 0,
+		touchStart: 0,
+		isTouching: false
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (this.props.categoryTree !== nextProps.categoryTree) {
 			this.setState({
-				currentSlide: 1
+				currentSlide: 1,
+				translateX: 0,
+				isTouching: false
 			});
 		}
 	}
 
+	getSlideTranslateX = (slide) => {
+		const { slideWidth } = this.state;
+
+		return -Math.abs((slide - 1) * slideWidth);
+	}
+
+	getTranslateXSlide = (translateX, minSlide = 0) => {
+		const { children: categories } = this.props.categoryTree;
+		const { slideWidth } = this.state;
+		const lastSlide = categories.length - 2;
+		let slide = Math.abs(Math.ceil(translateX / slideWidth));
+
+		if (slide > lastSlide) {
+			slide = lastSlide;
+		}
+
+		if (slide <= minSlide) {
+			slide = 1;
+		}
+
+		return slide;
+	}
+
 	handlePrevControlClick = () => {
-		const { currentSlide } = this.state;
+		const prevSlide = this.state.currentSlide - 1;
 
 		this.setState({
-			currentSlide: currentSlide - 1
+			currentSlide: prevSlide,
+			translateX: this.getSlideTranslateX(prevSlide)
 		});
 	}
 
 	handleNextControlClick = () => {
-		const { currentSlide } = this.state;
+		const nextSlide = this.state.currentSlide + 1;
 
 		this.setState({
-			currentSlide: currentSlide + 1
+			currentSlide: nextSlide,
+			translateX: this.getSlideTranslateX(nextSlide)
 		});
 	}
 
 	render() {
 		const { categoryTree, match } = this.props;
-		const { currentSlide } = this.state;
+		const { currentSlide, translateX, isTouching } = this.state;
 		const categories = categoryTree.children;
 		const lastSlide = categories.length - 2;
 
@@ -118,7 +149,8 @@ export default class Categories extends Component {
 				<div
 					className={`${styles.categorySlider} ${categories.length > 3 && styles.categorySliderPager}`}
 					style={{
-						transform: `translateX(${-((currentSlide - 1) * 488)}px)`
+						transform: `translateX(${translateX}px)`,
+						transitionProperty: `${isTouching ? 'none' : 'transform'}`
 					}}
 				>
 					{categories.map(category => (
@@ -149,8 +181,8 @@ export default class Categories extends Component {
 							<div
 								className={styles.sliderPagerThumb}
 								style={{
-									width: `${Math.floor(100 / (categories.length - 2)) || 1}%`,
-									left: `${((currentSlide - 1) * 100) / (categories.length - 2)}%`
+									width: `${Math.floor(100 / lastSlide) || 1}%`,
+									left: `${((currentSlide - 1) * 100) / lastSlide}%`
 								}}
 							/>
 						</div>

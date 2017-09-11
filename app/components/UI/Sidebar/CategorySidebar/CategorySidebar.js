@@ -56,9 +56,9 @@ const CategorySidebar = ({ categories, products }) => (
 									try {
 										const productId = location.pathname.split('/')[2];
 										const { categoriesIds } = products[productId];
-										const parentCategoryId = Number(categoriesIds[categoriesIds.length - 1].replace(/\//g, ''));
+										const parentCategoryId = categoriesIds[categoriesIds.length - 1].replace(/\//g, '');
 
-										return category.children.some(subcategory => subcategory.id === parentCategoryId);
+										return category.children.some(subcategory => new RegExp(parentCategoryId).test(subcategory.id));
 									} catch (e) {
 										return false;
 									}

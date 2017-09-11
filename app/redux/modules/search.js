@@ -1,9 +1,6 @@
 import axios from 'axios';
-import axiosRetry from 'axios-retry';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { SHA256 } from '../../utils';
-
-axiosRetry(axios, { retries: 3 });
 
 const { CancelToken } = axios;
 let cancelToken;
@@ -77,7 +74,8 @@ export default function reducer(state = initialState, action) {
 }
 
 async function search(query: string, cache) {
-	const url = 'http://totemwalmartarqa.vtexcommercestable.com.br/api/catalog_system/pub/products/search/';
+	const url = 'http://walmartar.vtexcommercestable.com.br/api/catalog_system/pub/products/search/';
+	// const url = 'http://totemwalmartarqa.vtexcommercestable.com.br/api/catalog_system/pub/products/search/';
 	const hash = SHA256(query);
 
 	if (cancelToken) {
@@ -89,7 +87,7 @@ async function search(query: string, cache) {
 		return Promise.resolve(cache[hash]);
 	}
 
-	return axios.get(`${url}?${query}&sc=25`, {
+	return axios.get(`${url}?${query}`, {
 		cancelToken: new CancelToken((token) => {
 			cancelToken = token;
 		})

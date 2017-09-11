@@ -7,8 +7,6 @@ export const PRINT_TICKET_START = 'printer/PRINT_TICKET_START';
 export const PRINT_TICKET_SUCCESS = 'printer/PRINT_TICKET_SUCCESS';
 export const PRINT_TICKET_ERROR = 'printer/PRINT_TICKET_ERROR';
 
-console.log(process.platform);
-
 const initialState = {
 	initialized: false,
 	config: {},
