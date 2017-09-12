@@ -221,6 +221,7 @@
     "redux-form": "^7.0.3",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
+    "slick-carousel": "^1.7.1",
     "source-map-support": "^0.4.15",
     "store": "^2.0.4",
     "svg-inline-react": "1",

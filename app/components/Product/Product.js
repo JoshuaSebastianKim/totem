@@ -50,8 +50,6 @@ class Product extends PureComponent {
 		const listPrice = prices.find(price => price.type === 'list-price');
 		const discount = (bestPrice && listPrice) ? calculateDiscountPercent(listPrice.value, bestPrice.value) : 0;
 
-		console.log(product.allSpecifications);
-
 		return (
 			<div className={styles.container}>
 				{/* PRODUCT IMAGE */}

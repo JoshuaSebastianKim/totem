@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { UnmountClosed } from 'react-collapse';
 import ProductDescription from './ProductDescription';
 import ProductSpecifications from './ProductSpecifications';
+import placeholderData from './placeholderData.json';
 import styles from './ProductDataContainer.scss';
 
 class ProductDataContainer extends PureComponent {
@@ -17,8 +18,20 @@ class ProductDataContainer extends PureComponent {
 		onToggleSpecifications: () => null
 	}
 
+	getSpecifications = (product) => {
+		const { allSpecifications } = product;
+
+		return allSpecifications ?
+			allSpecifications.map(spec => ({
+				key: spec,
+				value: product[spec].join(', ')
+			}))
+			: [];
+	}
+
 	render() {
 		const { product, isSpecificationsActive, onToggleSpecifications } = this.props;
+		const specifications = this.getSpecifications(placeholderData);
 
 		return (
 			<div className={styles.container}>
@@ -29,7 +42,7 @@ class ProductDataContainer extends PureComponent {
 
 				{/* PRODUCT SPECIFICATIONS */}
 				<UnmountClosed isOpened={isSpecificationsActive}>
-					<ProductSpecifications product={product} onToggleSpecifications={onToggleSpecifications} />
+					<ProductSpecifications specifications={specifications} onToggleSpecifications={onToggleSpecifications} />
 				</UnmountClosed>
 			</div>
 		);

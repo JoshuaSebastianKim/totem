@@ -7873,7 +7873,7 @@ slice-ansi@0.0.4:
   dependencies:
     readable-stream "~1.0.31"
 
-slick-carousel@^1.6.0:
+slick-carousel@^1.6.0, slick-carousel@^1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/slick-carousel/-/slick-carousel-1.7.1.tgz#51f5489bbb52212542ccbe9f42689f818bd29ed2"
   dependencies:

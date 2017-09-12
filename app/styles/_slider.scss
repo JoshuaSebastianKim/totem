@@ -1,0 +1,28 @@
+.slick-slider.specifications {
+	.slick-dots {
+		bottom: -75px;
+
+		li {
+			margin: 0 9px;
+
+			button {
+				background-color: $color-gray;
+				border-radius: 100%;
+				transition: background-color $transition-duration $transition-easing;
+				margin: 1px;
+				width: 18px;
+				height: 18px;
+
+				&:before {
+					content: none;
+				}
+			}
+
+			&.slick-active {
+				button {
+					background-color: $color-yellow;
+				}
+			}
+		}
+	}
+}

@@ -1,9 +1,12 @@
 @import "~font-awesome/css/font-awesome.css";
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
 @import "../resources/fonts/MyriadPro/MyriadPro.css";
 @import "styles/keyboard";
 @import "styles/modal";
 @import "styles/datepicker";
+@import "styles/slider";
 
 body {
 	position: relative;

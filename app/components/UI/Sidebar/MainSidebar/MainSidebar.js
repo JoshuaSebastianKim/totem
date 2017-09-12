@@ -48,7 +48,7 @@ const MainSidebar = ({
 				<div className={styles.cartItemsLength}>
 					{cartItems.length}
 				</div>
-				<CartButton onClick={onToggleCartModal} />
+				<CartButton onClick={currentLocation === '/checkout' ? null : onToggleCartModal} />
 			</div>
 			<CartModal />
 

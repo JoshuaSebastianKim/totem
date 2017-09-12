@@ -4,6 +4,7 @@
 	display: flex;
 	flex-direction: column;
 	padding-top: 62px;
+	max-width: 880px;
 
 	.specificationsHead {
 		display: flex;
@@ -30,6 +31,52 @@
 
 			svg {
 				fill: $color-yellow;
+			}
+		}
+	}
+
+	.specificationsBody {
+		flex: 1;
+		margin-top: 40px;
+
+		.slide {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.specification {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			height: 70px;
+			border-bottom: 1px solid $color-gray;
+
+			.key {
+				flex: 1;
+				display: flex;
+				align-items: center;
+				font-size: 18px;
+				letter-spacing: 1px;
+				color: $color-black;
+				text-transform: uppercase;
+
+				&:before {
+					content: "";
+					width: 8px;
+					height: 8px;
+					border: 1px solid $color-blue;
+					border-radius: 100%;
+					display: block;
+					margin: 0 21px 0 4px;
+				}
+			}
+
+			.value {
+				flex: 1;
+				font-size: 18px;
+				letter-spacing: 1px;
+				color: $color-blue;
+				text-transform: uppercase;
 			}
 		}
 	}

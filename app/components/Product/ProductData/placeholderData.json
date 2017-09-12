@@ -1,0 +1,419 @@
+{
+	"productId": "110",
+	"productName": "Notebook Gamer GM-X 15s",
+	"brand": "Banghó",
+	"linkText": "notebook-gamer-gm-x-15s",
+	"productReference": "10000000000703",
+	"categoryId": "30",
+	"clusterHighlights": {
+		"144": "Nuevo Producto"
+	},
+	"categories": [
+		"/Uso Personal/Notebook/Notebook Gamer/", "/Uso Personal/Notebook/", "/Uso Personal/"
+	],
+	"categoriesIds": [
+		"/1/4/30/", "/1/4/", "/1/"
+	],
+	"link": "http://www.bangho.com.ar/notebook-gamer-gm-x-15s/p",
+	"Versión SO": ["Windows 10 Home"],
+	"Sistema Operativo": ["Versión SO"],
+	"Familia del procesador": ["Intel® Core® i7"],
+	"Modelo": ["Intel® Core™ i7-7700HQ"],
+	"Generación": ["7ma generación"],
+	"Procesador": [
+		"Familia del procesador", "Modelo", "Generación"
+	],
+	"Touch Screen": ["No"],
+	"Panel": ["TN"],
+	"Tamaño": ["15.6"],
+	"Resolución": ["1920 x 1080 FULL HD"],
+	"Brillo": ["Non Glare Display"],
+	"Pantalla": [
+		"Touch Screen", "Panel", "Tamaño", "Resolución", "Brillo"
+	],
+	"Capacidad": ["16 Gb"],
+	"Tecnología": ["DDR4 2400MHZ"],
+	"Memoria RAM": [
+		"Capacidad", "Tecnología"
+	],
+	"Placa de red": ["10/100/1000Mb"],
+	"Wi-Fi": ["802.11 b/g/n"],
+	"Bluetooth": ["4.2"],
+	"USB": [
+		"USB 2.0 x 1", "USB 3.0 x 2"
+	],
+	"Salida de video": ["HDMI x 1"],
+	"Conectividad y Puertos": [
+		"Placa de red", "Wi-Fi", "Bluetooth", "USB", "Salida de video"
+	],
+	"Disco rígido": ["1 Tb"],
+	"Unidad SSD": ["256 GB"],
+	"Tecnología.": ["SATA 3 + M.2 SDD"],
+	"Almacenamiento": [
+		"Disco rígido", "Unidad SSD", "Tecnología."
+	],
+	"Placa de video dedicada": ["Nvidia GeForce® GTX 1050 4GB GDDR5"],
+	"Gráficos": ["Placa de video dedicada"],
+	"Batería": ["5300 mAh (62Wh)"],
+	"Fuente externa": ["Fuente 220V-120W. 19.5Volt. 6.15A."],
+	"Batería y Alimentación": [
+		"Batería", "Fuente externa"
+	],
+	"Software incluido": ["Sound Blaster Cinema 3"],
+	"Software y aplicaciones": ["Software incluido"],
+	"Kensington": ["Si"],
+	"Seguridad y sensores": ["Kensington"],
+	"Teclado": ["Chocolate alfanumérico Retroiluminado RGB"],
+	"Lector de memorias": ["6 en 1 (MMC/SD/RSMMC/nimiSD/SDHC/SDXC)"],
+	"Webcam frontal": ["2.0 Mpx HD"],
+	"Unidad óptica": ["No posee"],
+	"Salida de audio": ["Jack 3.5 mm"],
+	"Entrada de micrófono": ["Jack 3.5 mm"],
+	"Parlantes incorporados": ["Stereo 2W"],
+	"Micrófono incorporado": ["Si"],
+	"Multimedia": [
+		"Teclado",
+		"Lector de memorias",
+		"Webcam frontal",
+		"Unidad óptica",
+		"Salida de audio",
+		"Entrada de micrófono",
+		"Parlantes incorporados",
+		"Micrófono incorporado"
+	],
+	"Tiempo de garantía": ["1 año"],
+	"Garantía": ["Tiempo de garantía"],
+	"Color": ["Gris oscuro satinado"],
+	"Dimensiones": ["378 x 267 x 26.9 mm"],
+	"Peso": ["2.4 Kg"],
+	"Apariencia": [
+		"Color", "Dimensiones", "Peso"
+	],
+	"$": ["$ 29.999"],
+	"PVP": ["$"],
+	"Descripción": ["Cuando tu pasión por el <strong>Gaming</strong> hace que deje de ser  un pasatiempo para convertirse en tu estilo de vida, sólo una <strong>Notebook Banghó Gamer GM-X</strong> con Procesador <strong>Intel Core</strong> y Placa de video <strong>Nvidia Geforce</strong> de última generación te permitirá ganar todas tus partidas. Aprovecha la <strong>Pantalla Full HD 1080p</strong> y teclado retroiluminado, para disfrutar todo tipo de juegos."],
+	"allSpecifications": [
+		"Versión SO",
+		"Familia del procesador",
+		"Modelo",
+		"Generación",
+		"Touch Screen",
+		"Panel",
+		"Tamaño",
+		"Resolución",
+		"Brillo",
+		"Capacidad",
+		"Tecnología",
+		"Placa de red",
+		"Wi-Fi",
+		"Bluetooth",
+		"USB",
+		"Salida de video",
+		"Disco rígido",
+		"Unidad SSD",
+		"Tecnología.",
+		"Placa de video dedicada",
+		"Batería",
+		"Fuente externa",
+		"Software incluido",
+		"Kensington",
+		"Teclado",
+		"Lector de memorias",
+		"Webcam frontal",
+		"Unidad óptica",
+		"Salida de audio",
+		"Entrada de micrófono",
+		"Parlantes incorporados",
+		"Micrófono incorporado",
+		"Tiempo de garantía",
+		"Color",
+		"Dimensiones",
+		"Peso",
+		"$",
+		"Descripción"
+	],
+	"description": "http://bangho.vteximg.com.br/arquivos/ids/156468-360-360/notebook-gmx.jpg",
+	"items": [
+		{
+			"itemId": "108",
+			"name": "Notebook Gamer GM-X 15s",
+			"nameComplete": "Notebook Gamer GM-X 15s",
+			"complementName": "",
+			"ean": "10000000000703",
+			"referenceId": [
+				{
+					"Key": "RefId",
+					"Value": "BANGHO GAMER GM-X 15s"
+				}
+			],
+			"measurementUnit": "un",
+			"unitMultiplier": 1,
+			"images": [
+				{
+					"imageId": "156453",
+					"imageLabel": "1",
+					"imageTag": "<img src=\"~/arquivos/ids/156453-#width#-#height#/Bangho01.jpg\" width=\"#width#\" height=\"#height#\" alt=\"Nueva-Notebook-Bangho-Gamer\" id=\"\" />",
+					"imageUrl": "http://bangho.vteximg.com.br/arquivos/ids/156453/Bangho01.jpg",
+					"imageText": "Nueva-Notebook-Bangho-Gamer"
+				}, {
+					"imageId": "156454",
+					"imageLabel": "2",
+					"imageTag": "<img src=\"~/arquivos/ids/156454-#width#-#height#/Bangho02.jpg\" width=\"#width#\" height=\"#height#\" alt=\"Nueva-Notebook-Bangho-Gamer\" id=\"\" />",
+					"imageUrl": "http://bangho.vteximg.com.br/arquivos/ids/156454/Bangho02.jpg",
+					"imageText": "Nueva-Notebook-Bangho-Gamer"
+				}, {
+					"imageId": "156455",
+					"imageLabel": "3",
+					"imageTag": "<img src=\"~/arquivos/ids/156455-#width#-#height#/Bangho03.jpg\" width=\"#width#\" height=\"#height#\" alt=\"Nueva-Notebook-Bangho-Gamer\" id=\"\" />",
+					"imageUrl": "http://bangho.vteximg.com.br/arquivos/ids/156455/Bangho03.jpg",
+					"imageText": "Nueva-Notebook-Bangho-Gamer"
+				}, {
+					"imageId": "156456",
+					"imageLabel": "4",
+					"imageTag": "<img src=\"~/arquivos/ids/156456-#width#-#height#/Bangho04.jpg\" width=\"#width#\" height=\"#height#\" alt=\"Nueva-Notebook-Bangho-Gamer\" id=\"\" />",
+					"imageUrl": "http://bangho.vteximg.com.br/arquivos/ids/156456/Bangho04.jpg",
+					"imageText": "Nueva-Notebook-Bangho-Gamer"
+				}, {
+					"imageId": "156457",
+					"imageLabel": "5",
+					"imageTag": "<img src=\"~/arquivos/ids/156457-#width#-#height#/Bangho05.jpg\" width=\"#width#\" height=\"#height#\" alt=\"Nueva-Notebook-Bangho-Gamer\" id=\"\" />",
+					"imageUrl": "http://bangho.vteximg.com.br/arquivos/ids/156457/Bangho05.jpg",
+					"imageText": "Nueva-Notebook-Bangho-Gamer"
+				}
+			],
+			"attachments": [
+				{
+					"id": 1,
+					"name": "storePickup",
+					"required": false,
+					"domainValues": "[{\"FieldName\":\"storeId\",\"MaxCaracters\":\"10\",\"DomainValues\":\"\"},{\"FieldName\":\"lat\",\"MaxCaracters\":\"15\",\"DomainValues\":\"\"},{\"FieldName\":\"lng\",\"MaxCaracters\":\"15\",\"DomainValues\":\"\"},{\"FieldName\":\"storeName\",\"MaxCaracters\":\"100\",\"DomainValues\":\"\"},{\"FieldName\":\"bookingId\",\"MaxCaracters\":\"10\",\"DomainValues\":\"\"},{\"FieldName\":\"eta\",\"MaxCaracters\":\"10\",\"DomainValues\":\"\"},{\"FieldName\":\"address\",\"MaxCaracters\":\"150\",\"DomainValues\":\"\"},{\"FieldName\":\"phone\",\"MaxCaracters\":\"50\",\"DomainValues\":\"\"},{\"FieldName\":\"schedule\",\"MaxCaracters\":\"150\",\"DomainValues\":\"\"}]"
+				}
+			],
+			"sellers": [
+				{
+					"sellerId": "1",
+					"sellerName": "Bangho",
+					"addToCartLink": "https://www.bangho.com.ar/checkout/cart/add?sku=108&qty=1&seller=1&sc=1&price=2999900&cv=e582a400f1ac275c322bba7ed6ccdba3_geral:B415DE713B10BE079DEAF4544FF574F5&sc=1",
+					"sellerDefault": true,
+					"commertialOffer": {
+						"DeliverySlaSamplesPerRegion": {
+							"0": {
+								"DeliverySlaPerTypes": [],
+								"Region": null
+							},
+							"1": {
+								"DeliverySlaPerTypes": [
+									{
+										"TypeName": "Envío a domicilio OCA",
+										"Price": 0,
+										"EstimatedTimeSpanToDelivery": "00:00:00"
+									}, {
+										"TypeName": "Retiro en sucursal OCA",
+										"Price": 0,
+										"EstimatedTimeSpanToDelivery": "00:00:00"
+									}, {
+										"TypeName": "Sucursal OCA - Retiro - Local",
+										"Price": 0,
+										"EstimatedTimeSpanToDelivery": "00:00:00"
+									}, {
+										"TypeName": "Sucursal OCA - Retiro - Nacional 1",
+										"Price": 0,
+										"EstimatedTimeSpanToDelivery": "00:00:00"
+									}, {
+										"TypeName": "Sucursal OCA - Retiro - Nacional 2",
+										"Price": 0,
+										"EstimatedTimeSpanToDelivery": "00:00:00"
+									}, {
+										"TypeName": "Sucursal OCA - Retiro - Regional",
+										"Price": 0,
+										"EstimatedTimeSpanToDelivery": "00:00:00"
+									}
+								],
+								"Region": {
+									"IsPersisted": true,
+									"IsRemoved": false,
+									"Id": 1,
+									"Name": "ARG",
+									"CountryCode": "ARG",
+									"ZipCode": "2000",
+									"CultureInfoName": "es-AR"
+								}
+							}
+						},
+						"Installments": [
+							{
+								"Value": 2838.43,
+								"InterestRate": 2.01,
+								"TotalValuePlusInterestRate": 34061.16,
+								"NumberOfInstallments": 12,
+								"PaymentSystemName": "Visa",
+								"PaymentSystemGroupName": "creditCardPaymentGroup",
+								"Name": "Visa 12 vezes com juros"
+							}, {
+								"Value": 1625.88,
+								"InterestRate": 2.22,
+								"TotalValuePlusInterestRate": 39021.12,
+								"NumberOfInstallments": 24,
+								"PaymentSystemName": "Visa",
+								"PaymentSystemGroupName": "creditCardPaymentGroup",
+								"Name": "Visa 24 vezes com juros"
+							}, {
+								"Value": 1251.91,
+								"InterestRate": 2.39,
+								"TotalValuePlusInterestRate": 45068.76,
+								"NumberOfInstallments": 36,
+								"PaymentSystemName": "Visa",
+								"PaymentSystemGroupName": "creditCardPaymentGroup",
+								"Name": "Visa 36 vezes com juros"
+							}, {
+								"Value": 1074.68,
+								"InterestRate": 2.58,
+								"TotalValuePlusInterestRate": 53734,
+								"NumberOfInstallments": 50,
+								"PaymentSystemName": "Visa",
+								"PaymentSystemGroupName": "creditCardPaymentGroup",
+								"Name": "Visa 50 vezes com juros"
+							}, {
+								"Value": 2838.43,
+								"InterestRate": 2.01,
+								"TotalValuePlusInterestRate": 34061.16,
+								"NumberOfInstallments": 12,
+								"PaymentSystemName": "Mastercard",
+								"PaymentSystemGroupName": "creditCardPaymentGroup",
+								"Name": "Mastercard 12 vezes com juros"
+							}, {
+								"Value": 1625.88,
+								"InterestRate": 2.22,
+								"TotalValuePlusInterestRate": 39021.12,
+								"NumberOfInstallments": 24,
+								"PaymentSystemName": "Mastercard",
+								"PaymentSystemGroupName": "creditCardPaymentGroup",
+								"Name": "Mastercard 24 vezes com juros"
+							}, {
+								"Value": 1251.91,
+								"InterestRate": 2.39,
+								"TotalValuePlusInterestRate": 45068.76,
+								"NumberOfInstallments": 36,
+								"PaymentSystemName": "Mastercard",
+								"PaymentSystemGroupName": "creditCardPaymentGroup",
+								"Name": "Mastercard 36 vezes com juros"
+							}, {
+								"Value": 1074.68,
+								"InterestRate": 2.58,
+								"TotalValuePlusInterestRate": 53734,
+								"NumberOfInstallments": 50,
+								"PaymentSystemName": "Mastercard",
+								"PaymentSystemGroupName": "creditCardPaymentGroup",
+								"Name": "Mastercard 50 vezes com juros"
+							}, {
+								"Value": 29999,
+								"InterestRate": 0,
+								"TotalValuePlusInterestRate": 29999,
+								"NumberOfInstallments": 1,
+								"PaymentSystemName": "Visa Electron",
+								"PaymentSystemGroupName": "debitCardPaymentGroup",
+								"Name": "Visa Electron à vista"
+							}, {
+								"Value": 29999,
+								"InterestRate": 0,
+								"TotalValuePlusInterestRate": 29999,
+								"NumberOfInstallments": 1,
+								"PaymentSystemName": "Mercado Pago",
+								"PaymentSystemGroupName": "MercadoPagoPaymentGroup",
+								"Name": "Mercado Pago à vista"
+							}, {
+								"Value": 4999.83,
+								"InterestRate": 0,
+								"TotalValuePlusInterestRate": 29999,
+								"NumberOfInstallments": 6,
+								"PaymentSystemName": "Naranja",
+								"PaymentSystemGroupName": "creditCardPaymentGroup",
+								"Name": "Naranja 6 vezes sem juros"
+							}, {
+								"Value": 2499.91,
+								"InterestRate": 0,
+								"TotalValuePlusInterestRate": 29999,
+								"NumberOfInstallments": 12,
+								"PaymentSystemName": "Naranja",
+								"PaymentSystemGroupName": "creditCardPaymentGroup",
+								"Name": "Naranja 12 vezes sem juros"
+							}, {
+								"Value": 29999,
+								"InterestRate": 0,
+								"TotalValuePlusInterestRate": 29999,
+								"NumberOfInstallments": 1,
+								"PaymentSystemName": "TodoPago",
+								"PaymentSystemGroupName": "TodoPagoPaymentGroup",
+								"Name": "TodoPago à vista"
+							}, {
+								"Value": 29999,
+								"InterestRate": 0,
+								"TotalValuePlusInterestRate": 29999,
+								"NumberOfInstallments": 1,
+								"PaymentSystemName": "Transferencia Bancaria",
+								"PaymentSystemGroupName": "custom201PaymentGroupPaymentGroup",
+								"Name": "Transferencia Bancaria à vista"
+							}
+						],
+						"DiscountHighLight": [],
+						"GiftSkuIds": [],
+						"Teasers": [],
+						"BuyTogether": [],
+						"Price": 29999,
+						"ListPrice": 29999,
+						"PriceWithoutDiscount": 29999,
+						"RewardValue": 0,
+						"PriceValidUntil": "2018-09-12T16:27:54.6642117Z",
+						"AvailableQuantity": 3,
+						"Tax": 0,
+						"DeliverySlaSamples": [
+							{
+								"DeliverySlaPerTypes": [],
+								"Region": null
+							}, {
+								"DeliverySlaPerTypes": [
+									{
+										"TypeName": "Envío a domicilio OCA",
+										"Price": 0,
+										"EstimatedTimeSpanToDelivery": "00:00:00"
+									}, {
+										"TypeName": "Retiro en sucursal OCA",
+										"Price": 0,
+										"EstimatedTimeSpanToDelivery": "00:00:00"
+									}, {
+										"TypeName": "Sucursal OCA - Retiro - Local",
+										"Price": 0,
+										"EstimatedTimeSpanToDelivery": "00:00:00"
+									}, {
+										"TypeName": "Sucursal OCA - Retiro - Nacional 1",
+										"Price": 0,
+										"EstimatedTimeSpanToDelivery": "00:00:00"
+									}, {
+										"TypeName": "Sucursal OCA - Retiro - Nacional 2",
+										"Price": 0,
+										"EstimatedTimeSpanToDelivery": "00:00:00"
+									}, {
+										"TypeName": "Sucursal OCA - Retiro - Regional",
+										"Price": 0,
+										"EstimatedTimeSpanToDelivery": "00:00:00"
+									}
+								],
+								"Region": {
+									"IsPersisted": true,
+									"IsRemoved": false,
+									"Id": 1,
+									"Name": "ARG",
+									"CountryCode": "ARG",
+									"ZipCode": "2000",
+									"CultureInfoName": "es-AR"
+								}
+							}
+						],
+						"GetInfoErrorMessage": null,
+						"CacheVersionUsedToCallCheckout": "e582a400f1ac275c322bba7ed6ccdba3_geral:B415DE713B10BE079DEAF4544FF574F5"
+					}
+				}
+			]
+		}
+	]
+}
