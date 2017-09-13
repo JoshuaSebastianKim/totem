@@ -33,12 +33,6 @@ class Category extends PureComponent {
 		};
 	}
 
-	componentWillUnmount() {
-		const { compareItems, removeCompareItem } = this.props;
-
-		compareItems.forEach((item) => removeCompareItem(item.id));
-	}
-
 	render() {
 		const { config, query } = this.state;
 		const { categoryTree, compareItems, removeCompareItem } = this.props;
@@ -55,9 +49,8 @@ class Category extends PureComponent {
 					className={styles.productList}
 					query={query}
 					config={config}
-					// NOTE: To enable comparing remove uncomment the next line
-					// canCompare
 					isCompareActive={compareItems.length > 0}
+					canCompare
 				/>
 
 				<CompareBar items={compareItems} handleRemoveItem={removeCompareItem} />

@@ -20,9 +20,11 @@ const EmptyList = ({ query }: Props) => (
 			</div>
 		}
 
-		<div className={styles.tips}>
-			Revisa la ortografía y/o simplificá la búsqueda
-		</div>
+		{query.text &&
+			<div className={styles.tips}>
+				Revisa la ortografía y/o simplificá la búsqueda
+			</div>
+		}
 	</div>
 );
 

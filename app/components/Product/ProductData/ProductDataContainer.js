@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { UnmountClosed } from 'react-collapse';
 import ProductDescription from './ProductDescription';
 import ProductSpecifications from './ProductSpecifications';
-import placeholderData from './placeholderData.json';
 import styles from './ProductDataContainer.scss';
 
 class ProductDataContainer extends PureComponent {
@@ -31,7 +30,7 @@ class ProductDataContainer extends PureComponent {
 
 	render() {
 		const { product, isSpecificationsActive, onToggleSpecifications } = this.props;
-		const specifications = this.getSpecifications(placeholderData);
+		const specifications = this.getSpecifications(product);
 
 		return (
 			<div className={styles.container}>

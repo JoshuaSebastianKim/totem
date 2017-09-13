@@ -76,20 +76,22 @@ class Product extends PureComponent {
 						onToggleSpecifications={this.toggleSpecifications}
 					/>
 
-					<Collapse
-						theme={{
-							collapse: styles.showSpecifications
-						}}
-						isOpened={!activeSpecifications}
-					>
-						<button className={styles.showSpecificationsButton} onClick={this.toggleSpecifications}>
-							<span className={styles.showSpecificationsButtonLabel}>
-								VER DATOS TÉCNICOS
-							</span>
+					{'allSpecifications' in product &&
+						<Collapse
+							theme={{
+								collapse: styles.showSpecifications
+							}}
+							isOpened={!activeSpecifications}
+						>
+							<button className={styles.showSpecificationsButton} onClick={this.toggleSpecifications}>
+								<span className={styles.showSpecificationsButtonLabel}>
+									VER DATOS TÉCNICOS
+								</span>
 
-							<ArrowDownSmallIcon className={styles.showSpecificationsButtonIcon} />
-						</button>
-					</Collapse>
+								<ArrowDownSmallIcon className={styles.showSpecificationsButtonIcon} />
+							</button>
+						</Collapse>
+					}
 				</div>
 
 				{/* PRODUCT MODALS */}

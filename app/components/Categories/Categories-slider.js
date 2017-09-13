@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Slider from 'react-slick';
 import Category from './Category';
 import { Button } from '../UI/Buttons';
 import { ChevronLeftIcon, ChevronRightIcon } from '../UI/Icons';
@@ -76,111 +77,54 @@ const categoryAssets = {
 export default class Categories extends Component {
 	static propTypes = {
 		categoryTree: PropTypes.object.isRequired,
-		match: PropTypes.object.isRequired,
-		compareItems: PropTypes.array,
-		removeCompareItem: PropTypes.func
-	}
-
-	static defaultProps = {
-		compareItems: [],
-		removeCompareItem: () => null
-	}
-
-	state = {
-		currentSlide: 1,
-		slideWidth: 488,
-		translateX: 0,
-		touchStart: 0,
-		isTouching: false
-	}
-
-	componentWillMount() {
-		const { compareItems, removeCompareItem } = this.props;
-
-		compareItems.forEach((item) => removeCompareItem(item.id));
-	}
-
-	componentWillReceiveProps(nextProps) {
-		if (this.props.categoryTree !== nextProps.categoryTree) {
-			this.setState({
-				currentSlide: 1,
-				translateX: 0,
-				isTouching: false
-			});
-		}
-	}
-
-	getSlideTranslateX = (slide) => {
-		const { slideWidth } = this.state;
-
-		return -Math.abs((slide - 1) * slideWidth);
-	}
-
-	getTranslateXSlide = (translateX, minSlide = 0) => {
-		const { children: categories } = this.props.categoryTree;
-		const { slideWidth } = this.state;
-		const lastSlide = categories.length - 2;
-		let slide = Math.abs(Math.ceil(translateX / slideWidth));
-
-		if (slide > lastSlide) {
-			slide = lastSlide;
-		}
-
-		if (slide <= minSlide) {
-			slide = 1;
-		}
-
-		return slide;
-	}
-
-	handlePrevControlClick = () => {
-		const prevSlide = this.state.currentSlide - 1;
-
-		this.setState({
-			currentSlide: prevSlide,
-			translateX: this.getSlideTranslateX(prevSlide)
-		});
-	}
-
-	handleNextControlClick = () => {
-		const nextSlide = this.state.currentSlide + 1;
-
-		this.setState({
-			currentSlide: nextSlide,
-			translateX: this.getSlideTranslateX(nextSlide)
-		});
+		match: PropTypes.object.isRequired
 	}
 
 	render() {
 		const { categoryTree, match } = this.props;
-		const { currentSlide, translateX, isTouching } = this.state;
 		const categories = categoryTree.children;
-		const lastSlide = categories.length - 2;
+		const settings = {
+			dots: true,
+			slidesToShow: 3,
+			slidesToScroll: 1
+		};
 
 		return (
 			<div className={styles.container}>
 				<div
 					className={`${styles.categorySlider} ${categories.length > 3 && styles.categorySliderPager}`}
-					style={{
-						transform: `translateX(${translateX}px)`,
-						transitionProperty: `${isTouching ? 'none' : 'transform'}`
-					}}
 				>
-					{categories.map(category => (
-						<Link
-							key={category.name}
-							to={`${match.url}/${category.id}?path=${category.id}`}
-							className={styles.categoryLink}
-						>
-							<Category
-								name={category.name}
-								bannerSrc={categoryAssets[category.name].banner}
-							/>
-						</Link>
-					))}
+					{categories.length > 3 ?
+						<Slider {...settings} className="categories">
+							{categories.map(category => (
+								<Link
+									key={category.name}
+									to={`${match.url}/${category.id}?path=${category.id}`}
+									className={styles.categoryLink}
+								>
+									<Category
+										name={category.name}
+										bannerSrc={categoryAssets[category.name].banner}
+									/>
+								</Link>
+							))}
+						</Slider> :
+						categories.map(category => (
+							<Link
+								key={category.name}
+								to={`${match.url}/${category.id}?path=${category.id}`}
+								className={styles.categoryLink}
+							>
+								<Category
+									name={category.name}
+									bannerSrc={categoryAssets[category.name].banner}
+								/>
+							</Link>
+						))
+					}
 				</div>
 
-				{categories.length > 3 &&
+				{/* {categories.length > 3 &&
 					<div className={styles.categorySliderControls}>
 						<Button
 							className={styles.listPageControl}
@@ -208,7 +152,7 @@ export default class Categories extends Component {
 							<ChevronRightIcon className={styles.listPageControlIcon} />
 						</Button>
 					</div>
-				}
+				} */}
 			</div>
 		);
 	}
