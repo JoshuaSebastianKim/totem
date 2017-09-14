@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import { routerReducer as router } from 'react-router-redux';
 import { loadingBarReducer } from 'react-redux-loading-bar';
 import { reducer as form } from 'redux-form';
+import app from './app';
 import cart from './cart';
 import catalog from './catalog';
 import checkout from './checkout';
@@ -17,6 +18,7 @@ import search from './search';
 const rootReducer = combineReducers({
 	form,
 	router,
+	app,
 	cart,
 	catalog,
 	checkout,

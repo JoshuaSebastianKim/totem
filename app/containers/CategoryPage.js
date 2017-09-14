@@ -5,7 +5,7 @@ import { getCategoryTree } from '../redux/selectors/catalogSelectors';
 
 function mapStateToProps(state, props) {
 	return {
-		categoryTree: getCategoryTree(state, props),
+		categoryTree: getCategoryTree(state, props)
 	};
 }
 

@@ -77,6 +77,7 @@ async function search(query: string, cache) {
 	const url = 'http://walmartar.vtexcommercestable.com.br/api/catalog_system/pub/products/search/';
 	// const url = 'http://totemwalmartarqa.vtexcommercestable.com.br/api/catalog_system/pub/products/search/';
 	const hash = SHA256(query);
+	const date = new Date();
 
 	if (cancelToken) {
 		cancelToken();
@@ -84,7 +85,12 @@ async function search(query: string, cache) {
 
 	// Cache layer
 	if (hash in cache) {
-		return Promise.resolve(cache[hash]);
+		const ONE_HOUR = 60 * 60 * 1000;
+
+		// Resolve from cache if time diference is within one hour
+		if ((date - cache[hash].date) < ONE_HOUR) {
+			return Promise.resolve(cache[hash]);
+		}
 	}
 
 	return axios.get(`${url}?${query}`, {
@@ -119,11 +125,12 @@ function searchRejected(error) {
 
 function cacheQuery(queryString, response) {
 	const hash = SHA256(queryString);
+	const date = new Date();
 
 	return {
 		type: CACHE_QUERY,
 		payload: {
-			[hash]: response
+			[hash]: Object.assign({}, response, { date })
 		}
 	};
 }
