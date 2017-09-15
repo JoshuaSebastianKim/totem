@@ -1,10 +1,10 @@
 // @flow
 import React from 'react';
-import type { Item } from '../../../types';
+import type { OrderItem } from '../../../types';
 import { Price } from '../../UI';
 import styles from './CartItem.scss';
 
-const CartItem = (item: Item) => (
+const CartItem = (item: OrderItem) => (
 	<div className={styles.item}>
 		<img
 			className={styles.image}

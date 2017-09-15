@@ -30,3 +30,11 @@
 .slick-slider.categories {
 	width: 100%;
 }
+
+.slick-slider.compare {
+	width: 100%;
+
+	.slick-slide {
+		display: flex;
+	}
+}

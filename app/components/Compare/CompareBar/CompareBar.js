@@ -10,15 +10,15 @@ import styles from './CompareBar.scss';
 class CompareBar extends PureComponent {
 	static propTypes = {
 		items: PropTypes.array,
-		handleRemoveItem: PropTypes.func
+		onRemoveItem: PropTypes.func
 	}
 
 	static defaultProps = {
 		items: [],
-		handleRemoveItem: () => null
+		onRemoveItem: () => null
 	}
 
-	handleRemoveItem = (itemId) => this.props.handleRemoveItem(itemId);
+	handleRemoveItem = (itemId) => this.props.onRemoveItem(itemId);
 
 	render() {
 		const { items } = this.props;

@@ -1,4 +1,4 @@
-export type Item = {
+export type OrderItem = {
 	additionalInfo: {
 		brandName: string
 	},
@@ -18,7 +18,7 @@ export type Totalizer = {
 };
 
 export type OrderForm = {
-	items: Array<Item>,
+	items: Array<OrderItem>,
 	totalizers: Array<Totalizer>,
 	value: number
 };

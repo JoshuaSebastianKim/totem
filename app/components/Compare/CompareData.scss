@@ -1,0 +1,161 @@
+@import '../../styles/variables';
+
+.container {
+	display: flex;
+	flex-direction: column;
+	margin-left: 46px;
+	padding-right: 46px;
+	border-top: 2px solid $color-lightblue;
+}
+
+.specificationNames {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.product {
+	display: flex;
+	flex-direction: column;
+	width: 388px;
+	padding: 0 9px;
+	border-bottom: 22px solid #fff;
+
+	&:nth-child(2) {
+		width: 379px;
+		padding-left: 0;
+	}
+
+	&:last-of-type {
+		width: 379px;
+		padding-right: 0;
+	}
+}
+
+.name,
+.value {
+	display: flex;
+	align-items: center;
+	height: 60px;
+	border-bottom: 1px solid $color-gray2;
+}
+
+.name {
+	padding-right: 10px;
+	font-size: 15px;
+	font-weight: 700;
+	color: $color-black;
+	letter-spacing: 1px;
+	line-height: 18px;
+	text-transform: uppercase;
+
+	&:before {
+		content: "";
+		width: 8px;
+		height: 8px;
+		border: 1px solid $color-blue;
+		border-radius: 100%;
+		display: block;
+		margin: 0 10px 0 4px;
+	}
+}
+
+.value {
+	padding: 0 22px;
+	font-size: 15px;
+	color: $color-blue;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	background-color: #fff;
+}
+
+.sliderControls {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 40px;
+}
+
+.listPageControl {
+	width: 88px;
+	height: 88px;
+	border-radius: 100%;
+	border: 1px solid $color-yellow;
+	background-color: $color-gray;
+	transition-property: opacity, background-color, border;
+	transition-duration: $transition-duration;
+	transition-timing-function: $transition-easing;
+
+	&:disabled {
+		background-color: $color-gray2;
+		border-color: $color-gray2;
+
+		.listPageControlIcon {
+			svg {
+				fill: $color-gray;
+			}
+		}
+	}
+
+	.listPageControlIcon {
+		width: 18px;
+		margin: auto;
+
+		svg {
+			fill: $color-yellow;
+		}
+	}
+}
+
+.pager {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.sliderPager {
+	position: relative;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 1010px;
+	height: 6px;
+	margin: 0 165px;
+	border-radius: 10px;
+	overflow: hidden;
+	background-color: $color-gray2;
+	transition: margin $transition-duration $transition-easing;
+
+	.sliderPagerThumb {
+		position: absolute;
+		top: 0;
+		height: 100%;
+		background-color: $color-yellow;
+		transition: left $transition-duration $easing-easeOutQuart;
+	}
+}
+
+.sliderPagerHelp {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 36px;
+
+	.label {
+		font-size: 22px;
+		font-weight: 700;
+		color: $color-yellow;
+		letter-spacing: 1px;
+		margin-right: 22px;
+		text-transform: uppercase;
+	}
+
+	.icon {
+		width: 18px;
+
+		svg {
+			fill: $color-yellow;
+		}
+	}
+}

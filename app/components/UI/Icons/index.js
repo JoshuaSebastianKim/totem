@@ -13,6 +13,7 @@ export CheckIcon from './CheckIcon';
 export ChevronLeftIcon from './ChevronLeftIcon';
 export ChevronRightIcon from './ChevronRightIcon';
 export CloseIcon from './CloseIcon';
+export CompareIcon from './CompareIcon';
 export CuidadoPersonalIcon from './CuidadoPersonalIcon';
 export DetailIcon from './DetailIcon';
 export EmptySearchIcon from './EmptySearchIcon';

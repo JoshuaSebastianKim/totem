@@ -7,7 +7,7 @@ import { removeCompareItem } from '../redux/modules/compare';
 
 function mapStateToProps(state) {
 	return {
-		items: getCompareProducts(state)
+		products: getCompareProducts(state)
 	};
 }
 
