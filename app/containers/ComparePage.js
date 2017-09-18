@@ -7,12 +7,13 @@ import { removeCompareItem } from '../redux/modules/compare';
 
 function mapStateToProps(state) {
 	return {
-		products: getCompareProducts(state)
+		products: getCompareProducts(state),
+		lastLocation: state.history.lastLocation
 	};
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ removeCompareItem }, dispatch);
+	return bindActionCreators({ onRemoveCompareItem: removeCompareItem }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Compare);

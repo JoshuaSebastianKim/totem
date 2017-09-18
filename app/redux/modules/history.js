@@ -1,6 +1,6 @@
 const initialState = {
 	currentLocation: '/',
-	lastLocation: '',
+	lastLocation: '/',
 	locationHistoryStack: []
 };
 

@@ -8,6 +8,11 @@
 @import "styles/datepicker";
 @import "styles/slider";
 
+* {
+	min-height: 0;
+	min-width: 0;
+}
+
 body {
 	position: relative;
 	font-family: "Myriad Pro";

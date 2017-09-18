@@ -1,5 +1,7 @@
 import React from 'react';
-import { CloseButton } from '../UI/Buttons';
+import { Link } from 'react-router-dom';
+import { CloseButton, Button } from '../UI/Buttons';
+import { PlusIcon } from '../UI/Icons';
 import {
 	ProductBrand,
 	ProductDiscountPercent,
@@ -11,25 +13,28 @@ import { calculateDiscountPercent, getProductPrices } from '../Product/Utils';
 import styles from './CompareItems.scss';
 
 type Props = {
-	products: Array<any>
+	products: Array<any>,
+	lastLocation: string,
+	onRemoveCompareItem: () => void
 };
 
-const CompareItems = ({ products }: Props) => (
+const CompareItems = ({ products, lastLocation, onRemoveCompareItem }: Props) => (
 	<div className={styles.container}>
-		{products.map((product, index) => {
+		{products.map(product => {
 			const prices = getProductPrices(product);
 			const bestPrice = prices.find(price => price.type === 'price');
 			const listPrice = prices.find(price => price.type === 'list-price');
 			const discount = (bestPrice && listPrice) ? calculateDiscountPercent(listPrice.value, bestPrice.value) : 0;
 
 			return (
-				<div key={`${product.productId}-${index}`} className={styles.product}>
+				<div key={product.productId} className={styles.product}>
 					<CloseButton
 						className={styles.remove}
 						style={{
 							position: 'absolute'
 						}}
 						iconSize={20}
+						onClick={() => onRemoveCompareItem(product.productId)}
 					/>
 
 					<ProductDiscountPercent
@@ -62,6 +67,21 @@ const CompareItems = ({ products }: Props) => (
 				</div>
 			);
 		})}
+
+		{products.length < 4 &&
+			<div className={styles.addProduct}>
+				<Link to={lastLocation} className={styles.link}>
+					<Button className={styles.button}>
+						<PlusIcon className={styles.icon} />
+					</Button>
+					<div className={styles.label}>
+						Agregar
+						<br />
+						producto
+					</div>
+				</Link>
+			</div>
+		}
 	</div>
 );
 

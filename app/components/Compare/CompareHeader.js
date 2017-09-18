@@ -1,9 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { CloseButton } from '../UI/Buttons';
 import { CompareIcon } from '../UI/Icons';
 import styles from './CompareHeader.scss';
 
-const CompareHeader = ({}) => (
+type Props = {
+	lastLocation: string
+};
+
+const CompareHeader = ({ lastLocation }: Props) => (
 	<div className={styles.container}>
 		<CompareIcon className={styles.icon} />
 
@@ -11,7 +16,9 @@ const CompareHeader = ({}) => (
 			Comparar productos
 		</span>
 
-		<CloseButton className={styles.close} />
+		<Link to={lastLocation}>
+			<CloseButton className={styles.close} />
+		</Link>
 	</div>
 );
 

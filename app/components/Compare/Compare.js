@@ -5,20 +5,31 @@ import CompareItems from './CompareItems';
 import CompareData from './CompareData';
 import styles from './Compare.scss';
 
+type Props = {
+	products: Array<any>,
+	lastLocation: string,
+	onRemoveCompareItem: () => void
+};
+
 class Compare extends Component {
+	props: Props
 
 	render() {
-		const { products } = this.props;
+		const { products, lastLocation, onRemoveCompareItem } = this.props;
 
 		if (products.length === 0) {
-			return <Redirect to="/" />;
+			return <Redirect to={lastLocation} />;
 		}
 
 		return (
 			<div className={styles.container}>
-				<CompareHeader />
+				<CompareHeader lastLocation={lastLocation} />
 
-				<CompareItems products={products} />
+				<CompareItems
+					products={products}
+					onRemoveCompareItem={onRemoveCompareItem}
+					lastLocation={lastLocation}
+				/>
 
 				<CompareData products={products} />
 			</div>

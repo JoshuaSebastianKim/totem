@@ -1,6 +1,7 @@
 @import '../../styles/variables';
 
 .container {
+	flex: 1;
 	display: flex;
 	flex-direction: column;
 	margin-left: 46px;
@@ -9,26 +10,26 @@
 }
 
 .specificationNames {
-	flex: 1;
 	display: flex;
 	flex-direction: column;
+	width: 170px;
 }
 
 .product {
+	flex: 1;
 	display: flex;
 	flex-direction: column;
-	width: 388px;
-	padding: 0 9px;
-	border-bottom: 22px solid #fff;
 
 	&:nth-child(2) {
-		width: 379px;
-		padding-left: 0;
+		.value {
+			padding-left: 0;
+		}
 	}
 
 	&:last-of-type {
-		width: 379px;
-		padding-right: 0;
+		.value {
+			padding-right: 0;
+		}
 	}
 }
 
@@ -61,19 +62,33 @@
 }
 
 .value {
-	padding: 0 22px;
+	padding: 0 9px;
 	font-size: 15px;
 	color: $color-blue;
 	letter-spacing: 1px;
 	text-transform: uppercase;
-	background-color: #fff;
+	background-color: $color-gray;
+
+	.label {
+		padding: 0 22px;
+		display: flex;
+		align-items: center;
+		background-color: #fff;
+		height: 100%;
+		width: 100%;
+	}
+}
+
+.addProductSpace {
+	width: 140px;
 }
 
 .sliderControls {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 40px;
+	padding: 40px 40px 40px 170px;
+	margin-top: auto;
 }
 
 .listPageControl {

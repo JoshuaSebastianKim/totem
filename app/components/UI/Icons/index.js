@@ -23,6 +23,7 @@ export LocationIcon from './LocationIcon';
 export LogoIcon from './LogoIcon';
 export MercadopagoIcon from './MercadopagoIcon';
 export PaymentIcon from './PaymentIcon';
+export PlusIcon from './PlusIcon';
 export PrinterIcon from './PrinterIcon';
 export SearchIcon from './SearchIcon';
 export SecureIcon from './SecureIcon';

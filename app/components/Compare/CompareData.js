@@ -75,8 +75,8 @@ class CompareData extends PureComponent {
 					className="compare"
 					ref={this.setSliderRef}
 				>
-					{chunkedSpecifications.map((specificationNames, i) => (
-						<div key={i} className={styles.slide}>
+					{chunkedSpecifications.map(specificationNames => (
+						<div key={specificationNames} className={styles.slide}>
 							<div className={styles.specificationNames}>
 								{specificationNames.map(specName => (
 									<div key={specName} className={styles.name}>
@@ -85,18 +85,24 @@ class CompareData extends PureComponent {
 								))}
 							</div>
 
-							{products.map((product, ii) => (
-								<div key={`${product.productId}-${ii}`} className={styles.product}>
+							{products.map(product => (
+								<div key={product.productId} className={styles.product}>
 									{specificationNames.map(specName => (
-										<div key={specName} className={styles.value}>
-											{specName in product
-												? product[specName].join(', ')
-												: '-'
-											}
+										<div key={`${product.productId} ${specName}`} className={styles.value}>
+											<div className={styles.label}>
+												{specName in product
+													? product[specName].join(', ')
+													: '-'
+												}
+											</div>
 										</div>
 									))}
 								</div>
 							))}
+
+							{products.length < 4 &&
+								<div className={styles.addProductSpace} />
+							}
 						</div>
 					))}
 				</Slider>
