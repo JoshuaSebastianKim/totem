@@ -6,17 +6,21 @@ import Order from './Order';
 import styles from './OrderPlaced.scss';
 
 type Props = {
-	orders: Array<any>
+	orders: Array<any>,
+	onClearCart: () => void
 };
 
 class OrderPlaced extends Component {
 	props: Props;
 
+	componentWillMount() {
+		this.props.onClearCart();
+	}
+
 	render() {
 		const { orders } = this.props;
 		const [order] = orders;
 
-		console.log(orders);
 		if (orders.length === 0) {
 			return <Redirect to="/" />;
 		}

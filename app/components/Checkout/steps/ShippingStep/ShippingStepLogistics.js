@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
-import { Field, reduxForm, propTypes, change } from 'redux-form';
+import { Field, reduxForm, propTypes } from 'redux-form';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
@@ -40,6 +40,7 @@ class ShippingStepLogistics extends Component {
 	}
 
 	componentWillMount() {
+		console.log('mount');
 		const { logisticsInfo, deliveryWindow } = this.state;
 
 		this.props.change('logisticsInfo', logisticsInfo);
@@ -93,6 +94,8 @@ class ShippingStepLogistics extends Component {
 		const includeDates = Object.keys(deliveryWindows).map((date) => moment(date, 'YYYY/MM/DD'));
 		const dateDeliveryWindows = selectedDate ? selectedSla.deliveryWindows[selectedDate.format('YYYY/M/DD')] : null;
 		const selectedDeliveryWindow = dateDeliveryWindows != null && dateDeliveryWindows.find(dw => dw.isWindowSelected);
+
+		// console.log(selectedDate.format('YYYY/M/DD'), selectedSla.deliveryWindows, dateDeliveryWindows);
 
 		return (
 			<form onSubmit={handleSubmit} className={styles.logisticsInfo}>

@@ -8,7 +8,7 @@ const ProductPrintTicketButton = ({ className, style, onClick }) => (
 		<PrinterIcon />
 
 		<span>
-			IMPRIMIR TICKET
+			PAGAR AHORA EN CAJA
 		</span>
 	</Button>
 );

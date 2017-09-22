@@ -1,6 +1,6 @@
 const START_IDLE_TIMER = 'app/START_IDLE_TIMER';
 const RESET_IDLE_TIMER = 'app/RESET_IDLE_TIMER';
-const END_IDLE_TIMER = 'app/END_IDLE_TIMER';
+export const END_IDLE_TIMER = 'app/END_IDLE_TIMER';
 const CLEAR_IDLE_TIMER = 'app/CLEAR_IDLE_TIMER';
 
 const initialState = {
@@ -28,7 +28,7 @@ export default function reducer(state = initialState, action) {
 
 
 // IDLE TIMER
-const idleTimeLimit = 60; // 1 hour
+const idleTimeLimit = 10; // 10 minutes
 const intervalTick = 60000; // 1 minute
 let idleTimer = 0;
 let idleInterval;

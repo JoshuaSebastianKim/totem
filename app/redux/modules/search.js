@@ -73,9 +73,8 @@ export default function reducer(state = initialState, action) {
 	}
 }
 
-async function search(query: string, cache) {
-	const url = 'http://walmartar.vtexcommercestable.com.br/api/catalog_system/pub/products/search/';
-	// const url = 'http://totemwalmartarqa.vtexcommercestable.com.br/api/catalog_system/pub/products/search/';
+async function search(environment, saleChannel, query: string, cache) {
+	const url = `http://${environment}.vtexcommercestable.com.br/api/catalog_system/pub/products/search/`;
 	const hash = SHA256(query);
 	const date = new Date();
 
@@ -93,7 +92,7 @@ async function search(query: string, cache) {
 		}
 	}
 
-	return axios.get(`${url}?${query}`, {
+	return axios.get(`${url}?${query}&sc=${saleChannel}`, {
 		cancelToken: new CancelToken((token) => {
 			cancelToken = token;
 		})
@@ -159,12 +158,14 @@ export function searchQuery(query, clear = true) {
 	const queryString = queryToString(query);
 
 	return (dispatch, getState) => {
-		const { cache } = getState().search;
+		const { search: searchState, settings: settingsState } = getState();
+		const { cache } = searchState;
+		const { environment, storeData } = settingsState;
 
 		dispatch(showLoading());
 		dispatch(searchStart());
 
-		return search(queryString, cache)
+		return search(environment, storeData.saleChannel, queryString, cache)
 			.then((res) => {
 				const products = clear ? res.data : getState().search.searchResult.concat(res.data);
 

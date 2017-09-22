@@ -23,12 +23,9 @@ const AddedToCartModal = ({ isOpen, onRequestClose }) => (
 			<CartAddIcon className={styles.messageIcon} />
 
 			<div className={styles.messageText}>
-				<div>
-					Producto agregado
-				</div>
-				<div>
-					al carrito
-				</div>
+				Producto agregado
+				<br />
+				al carrito
 			</div>
 		</div>
 

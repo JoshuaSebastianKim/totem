@@ -7,11 +7,12 @@ import CheckoutPage from './containers/CheckoutPage';
 import ComparePage from './containers/ComparePage';
 import DepartmentsPage from './containers/DepartmentsPage';
 import HomePage from './containers/HomePage';
+import Keyboard from './containers/KeyboardContainer';
+import OrderPlacedPage from './containers/OrderPlacedPage';
 import ProductPage from './containers/ProductPage';
 import SearchPage from './containers/SearchPage';
-import OrderPlacedPage from './containers/OrderPlacedPage';
+import SettingsPage from './containers/SettingsPage';
 import { MainSidebar, CategorySidebar } from './components/UI/Sidebar';
-import Keyboard from './containers/KeyboardContainer';
 
 export default() => (
 	<App>
@@ -46,6 +47,7 @@ export default() => (
 				<Route path="/orderPlaced" component={OrderPlacedPage} />
 				<Route path="/product/:productId" component={ProductPage} />
 				<Route path="/search" component={SearchPage} />
+				<Route path="/settings" component={SettingsPage} />
 				<Route path="/" component={HomePage} />
 			</Switch>
 

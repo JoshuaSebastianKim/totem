@@ -12,6 +12,7 @@ class App extends Component {
 		children: Children,
 		currentLocation: string,
 		isIdle: boolean,
+		hasSettings: boolean,
 		onPrinterInit: () => void,
 		onIdleTimerInit: () => void,
 		onResetIdleTimer: () => void,
@@ -23,7 +24,7 @@ class App extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (this.props.currentLocation !== nextProps.currentLocation) {
+		if (this.props.hasSettings && this.props.currentLocation !== nextProps.currentLocation) {
 			this.handleCurrentLocationChange(nextProps.currentLocation);
 		}
 	}
@@ -34,11 +35,11 @@ class App extends Component {
 		if (currentLocation === '/') {
 			onClearIdleTimer();
 
-			document.removeEventListener('touchstart', onResetIdleTimer);
+			document.removeEventListener('click', onResetIdleTimer);
 		} else {
 			onIdleTimerInit();
 
-			document.addEventListener('touchstart', onResetIdleTimer);
+			document.addEventListener('click', onResetIdleTimer);
 		}
 	}
 
@@ -49,6 +50,10 @@ class App extends Component {
 	}
 
 	render() {
+		if (!this.props.hasSettings && this.props.currentLocation !== '/settings') {
+			return <Redirect to="/settings" />;
+		}
+
 		if (this.props.isIdle) {
 			return <Redirect to="/" />;
 		}
@@ -64,7 +69,8 @@ class App extends Component {
 function mapStateToProps(state) {
 	return {
 		currentLocation: state.history.currentLocation,
-		isIdle: state.app.isIdle
+		isIdle: state.app.isIdle,
+		hasSettings: state.settings.hasSettings
 	};
 }
 

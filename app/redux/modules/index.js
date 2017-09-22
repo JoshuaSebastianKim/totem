@@ -11,9 +11,9 @@ import compare from './compare';
 import history from './history';
 import keyboard from './keyboard';
 import modal from './modal';
-import product from './product';
 import printer from './printer';
 import search from './search';
+import settings from './settings';
 
 const rootReducer = combineReducers({
 	form,
@@ -26,9 +26,9 @@ const rootReducer = combineReducers({
 	history,
 	keyboard,
 	modal,
-	product,
 	printer,
 	search,
+	settings,
 	loadingBar: loadingBarReducer
 });
 

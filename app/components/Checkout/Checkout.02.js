@@ -22,7 +22,7 @@ class Checkout extends Component {
 	static defaultProps = {
 		items: ['14', '11', '9', '2'],
 		// items: ['25416'],
-		saleChannel: 25,
+		saleChannel: 1,
 		onFocusInput: () => null,
 		submitForm: () => null,
 		orderPlaced: () => null
@@ -119,7 +119,7 @@ class Checkout extends Component {
 		'clientPreferencesData'
 	]
 
-	hostUrl = 'https://totemwalmartarqa.vtexcommercestable.com.br';
+	hostUrl = 'https://walmartar.vtexcommercestable.com.br';
 
 	changeToAnonymousUser = (orderFormId) => axios.get(`${this.hostUrl}/checkout/changeToAnonymousUser/${orderFormId}`)
 

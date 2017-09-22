@@ -1,0 +1,43 @@
+@import '../../styles/variables';
+
+.container {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.title {
+	font-size: 48px;
+	color: $color-black;
+	letter-spacing: .5;
+	font-weight: 700;
+}
+
+.field {
+	width: 500px;
+	margin-top: 15px;
+
+	.label {
+		font-size: 16px;
+		letter-spacing: 1px;
+	}
+
+	.select {
+		margin-top: 5px;
+	}
+}
+
+.submit {
+	margin-top: 25px;
+	width: 384px;
+	height: 66px;
+	background-color: $color-yellow;
+	font-size: 22px;
+	font-weight: 700;
+	color: #fff;
+	letter-spacing: 1px;
+	border-radius: 5px;
+	text-transform: uppercase;
+}
