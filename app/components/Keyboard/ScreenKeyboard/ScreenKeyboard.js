@@ -217,6 +217,16 @@ export default class ScreenKeyboard extends PureComponent {
 				</div>
 
 				<div className="keyboard-row">
+					<KeyboardButton
+						value={'@'}
+						onClick={this.handleLetterButtonClick}
+						key={'@'}
+					/>
+					<KeyboardButton
+						value={'.'}
+						onClick={this.handleLetterButtonClick}
+						key={'.'}
+					/>
 					{leftButtons}
 					{this.props.layouts.length > 1 ?
 						<KeyboardButton
