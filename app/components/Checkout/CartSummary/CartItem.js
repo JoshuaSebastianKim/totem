@@ -25,12 +25,12 @@ const CartItem = (item: OrderItem) => (
 				<div className={styles.prices}>
 					{item.listPrice !== item.sellingPrice &&
 						<div className={styles.listPrice}>
-							<Price price={item.listPrice} />
+							<Price price={item.listPrice / 100} />
 						</div>
 					}
 
 					<div className={styles.sellingPrice}>
-						<Price price={item.sellingPrice} />
+						<Price price={item.sellingPrice / 100} />
 					</div>
 				</div>
 

@@ -360,8 +360,8 @@ class Checkout extends Component {
 	handlePaymentSubmit = (data) => {
 		const startTransaction = (transactionUrl, transactionData) => axios.post(transactionUrl, transactionData, {
 			headers: {
-				'X-VTEX-API-appKey': 'joshua@fizzmod.com',
-				'X-VTEX-API-appToken': 'Elcano3142'
+				'X-VTEX-API-appKey': 'leonardo@fizzmod.com',
+				'X-VTEX-API-appToken': 'conesa986'
 			}
 		});
 		const sendPayments = (orderForm, groupName, clientDocument) => {
