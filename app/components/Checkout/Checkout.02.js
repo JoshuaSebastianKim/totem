@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { array, number, func } from 'prop-types';
+import { array, number, func, string } from 'prop-types';
 import { Redirect } from 'react-router';
 import axios from 'axios';
 import { Spinner } from '../UI';
@@ -13,7 +13,8 @@ import styles from './Checkout.02.scss';
 class Checkout extends Component {
 	static propTypes = {
 		items: array,
-		saleChannel: number,
+		saleChannel: string,
+		environment: string.isRequired,
 		onFocusInput: func,
 		submitForm: func,
 		orderPlaced: func
@@ -26,6 +27,12 @@ class Checkout extends Component {
 		onFocusInput: () => null,
 		submitForm: () => null,
 		orderPlaced: () => null
+	}
+
+	constructor(props) {
+		super(props);
+
+		this.hostUrl = `https://${props.environment}.vtexcommercestable.com.br`;
 	}
 
 	state = {
@@ -118,8 +125,6 @@ class Checkout extends Component {
 		'sellers',
 		'clientPreferencesData'
 	]
-
-	hostUrl = 'https://walmartar.vtexcommercestable.com.br';
 
 	changeToAnonymousUser = (orderFormId) => axios.get(`${this.hostUrl}/checkout/changeToAnonymousUser/${orderFormId}`)
 

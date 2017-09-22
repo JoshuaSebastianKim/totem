@@ -7,9 +7,11 @@ import { onFocusInput } from '../redux/modules/keyboard';
 import { orderPlaced } from '../redux/modules/checkout';
 import { getCartItems } from '../redux/selectors/cartSelectors';
 
-function mapStateToProps(state, props) {
+function mapStateToProps(state) {
 	return {
-		items: getCartItems(state).map(p => p.items[0].itemId)
+		items: getCartItems(state).map(p => p.items[0].itemId),
+		saleChannel: state.settings.storeData.saleChannel,
+		environment: state.settings.environment
 	};
 }
 
