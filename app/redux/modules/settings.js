@@ -12,6 +12,7 @@ const stores = {
 
 const SET_ENVIRONMENT = 'settings/SET_ENVIRONMENT';
 const SET_STORE = 'settings/SET_STORE';
+const SET_COMPARE = 'settings/SET_COMPARE';
 const SUBMIT_SETTINGS = 'setting/SUBMIT_SETTINGS';
 
 const initialState = {
@@ -20,7 +21,8 @@ const initialState = {
 	availableStores: stores,
 	environment: 'totemwalmartarqa',
 	store: '25',
-	storeData: stores['25']
+	storeData: stores['25'],
+	compare: true
 };
 
 export default function reducer(state = initialState, action) {
@@ -41,6 +43,11 @@ export default function reducer(state = initialState, action) {
 				...state,
 				hasSettings: true
 			};
+		case SET_COMPARE:
+			return {
+				...state,
+				compare: action.payload
+			};
 		default:
 			return state;
 	}
@@ -57,6 +64,13 @@ export function setStore(storeId) {
 	return {
 		type: SET_STORE,
 		payload: storeId
+	};
+}
+
+export function setCompare(isActive) {
+	return {
+		type: SET_COMPARE,
+		payload: isActive
 	};
 }
 

@@ -11,8 +11,10 @@ type Props = {
 	},
 	environment: ?string,
 	store: ?string,
+	compare: ?boolean,
 	setEnvironment: () => void,
 	setStore: () => void,
+	setCompare: () => void,
 	submitSettings: () => void
 };
 
@@ -25,6 +27,9 @@ class Settings extends PureComponent {
 	}, {
 		id: 'store',
 		label: 'Tienda'
+	}, {
+		id: 'compare',
+		label: 'Comparador'
 	}];
 
 	getValue = (field) => this.props[field]
@@ -44,6 +49,15 @@ class Settings extends PureComponent {
 					label: availableStores[key].name
 				}));
 			}
+			case 'compare': {
+				return [{
+					value: true,
+					label: 'Activo'
+				}, {
+					value: false,
+					label: 'Inactivo'
+				}];
+			}
 			default:
 		}
 	}
@@ -55,6 +69,9 @@ class Settings extends PureComponent {
 				break;
 			case 'store':
 				this.props.setStore(option.value);
+				break;
+			case 'compare':
+				this.props.setCompare(option.value);
 				break;
 			default:
 		}
