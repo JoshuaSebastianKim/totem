@@ -172,6 +172,9 @@ class ProductList extends PureComponent {
 
 	handleSearchReject = (err) => {
 		console.error(err);
+		this.setState({
+			loading: false
+		});
 	}
 
 	handlePrevControlClick = () => {
