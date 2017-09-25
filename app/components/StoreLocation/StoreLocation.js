@@ -24,7 +24,7 @@ class StoreModal extends PureComponent {
 				</div>
 
 				<div className={styles.storeName}>
-					{storeName}
+					{storeName.toUpperCase()}
 				</div>
 			</div>
 		);

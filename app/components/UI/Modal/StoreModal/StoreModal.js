@@ -36,7 +36,7 @@ StoreModal.defaultProps = {
 function mapStateToProps(state) {
 	return {
 		isOpen: state.modal.storeModalOpen,
-		storeName: state.modal.storeName
+		storeName: state.settings.storeData.name
 	};
 }
 
