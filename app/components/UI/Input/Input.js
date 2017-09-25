@@ -9,7 +9,8 @@ class Input extends PureComponent {
 		placeholder: PropTypes.string,
 		onChange: PropTypes.func.isRequired,
 		onFocus: PropTypes.func,
-		onBlur: PropTypes.func
+		onBlur: PropTypes.func,
+		autofocus: PropTypes.bool
 	};
 
 	static defaultProps = {
@@ -18,8 +19,15 @@ class Input extends PureComponent {
 		value: '',
 		placeholder: '',
 		onFocus: () => null,
-		onBlur: () => null
+		onBlur: () => null,
+		autofocus: false
 	};
+
+	componentDidMount() {
+		if (this.props.autofocus) {
+			this.inputDOM.focus();
+		}
+	}
 
 	handleInput = (event) => this.props.onChange(event.target.value)
 

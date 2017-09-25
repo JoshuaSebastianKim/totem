@@ -43,6 +43,7 @@ class SearchInput extends PureComponent {
 					placeholder="Escribe aquí tu búsqueda"
 					onChange={this.handleInputChange}
 					onFocus={this.handleInputFocus}
+					autofocus
 				/>
 
 				{value !== '' &&
