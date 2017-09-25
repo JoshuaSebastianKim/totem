@@ -28,7 +28,6 @@ class PaymentStep extends Component {
 		const { paymentData } = orderForm;
 		const paymentGroups = this.updatePaymentGroups(paymentData.paymentSystems);
 		const selectedPaymentGroupName = this.getDefaultPaymentGroup(paymentGroups);
-		console.log(paymentGroups);
 
 		this.state = {
 			paymentGroups,
