@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object } from 'prop-types';
+import { array, func, object } from 'prop-types';
 import { CardIcon, MercadopagoIcon, StoreIcon } from '../../../UI/Icons';
 import PaymentGroups from './PaymentGroups';
 import PaymentStore from './PaymentStore';
@@ -11,12 +11,14 @@ class PaymentStep extends Component {
 		orderForm: object.isRequired,
 		onSelectedPayment: func.isRequired,
 		onSubmit: func,
-		onFocusInput: func
+		onFocusInput: func,
+		disabledPaymentGroups: array
 	}
 
 	static defaultProps = {
 		onSubmit: () => null,
-		onFocusInput: () => null
+		onFocusInput: () => null,
+		disabledPaymentGroups: ['creditCardPaymentGroup', 'MercadoPagoPaymentGroup']
 	}
 
 	constructor(props) {
@@ -26,6 +28,7 @@ class PaymentStep extends Component {
 		const { paymentData } = orderForm;
 		const paymentGroups = this.updatePaymentGroups(paymentData.paymentSystems);
 		const selectedPaymentGroupName = this.getDefaultPaymentGroup(paymentGroups);
+		console.log(paymentGroups);
 
 		this.state = {
 			paymentGroups,
@@ -82,6 +85,10 @@ class PaymentStep extends Component {
 		};
 
 		return paymentSystems.reduce((paymentGroups, ps) => {
+			if (this.props.disabledPaymentGroups.indexOf(ps.groupName) !== -1) {
+				return paymentGroups;
+			}
+
 			const paymentGroupIndex = paymentGroups.findIndex(pg => pg.groupName === ps.groupName);
 
 			if (paymentGroupIndex === -1) {

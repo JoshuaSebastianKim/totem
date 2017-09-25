@@ -7,7 +7,12 @@ type Props = {} & FormProps;
 
 const PaymentStore = ({ handleSubmit }: Props) => (
 	<form onSubmit={handleSubmit} className={styles.container}>
-		Pago en tienda
+		<div className={styles.title}>
+			Finalizá tu compra
+		</div>
+		<div className={styles.message}>
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.
+		</div>
 	</form>
 );
 

@@ -40,7 +40,6 @@ class ShippingStepLogistics extends Component {
 	}
 
 	componentWillMount() {
-		console.log('mount');
 		const { logisticsInfo, deliveryWindow } = this.state;
 
 		this.props.change('logisticsInfo', logisticsInfo);
@@ -92,10 +91,10 @@ class ShippingStepLogistics extends Component {
 		const selectedSla = slas.find(sla => sla.id === defaultShippingOption.selectedSla.id);
 		const { deliveryWindows } = slas.find(sla => sla.id === selectedSla.id);
 		const includeDates = Object.keys(deliveryWindows).map((date) => moment(date, 'YYYY/MM/DD'));
-		const dateDeliveryWindows = selectedDate ? selectedSla.deliveryWindows[selectedDate.format('YYYY/M/DD')] : null;
+		const dateDeliveryWindows = selectedDate ? selectedSla.deliveryWindows[selectedDate.format('YYYY/M/D')] : null;
 		const selectedDeliveryWindow = dateDeliveryWindows != null && dateDeliveryWindows.find(dw => dw.isWindowSelected);
 
-		// console.log(selectedDate.format('YYYY/M/DD'), selectedSla.deliveryWindows, dateDeliveryWindows);
+		console.log(selectedDate, selectedSla.deliveryWindows);
 
 		return (
 			<form onSubmit={handleSubmit} className={styles.logisticsInfo}>
