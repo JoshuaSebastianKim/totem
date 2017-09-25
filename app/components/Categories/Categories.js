@@ -87,10 +87,11 @@ export default class Categories extends Component {
 	}
 
 	state = {
-		currentSlide: 1,
+		currentSlide: 0,
 		slideWidth: 488,
 		translateX: 0,
 		touchStart: 0,
+		touchStartSlide: 0,
 		isTouching: false
 	}
 
@@ -113,7 +114,7 @@ export default class Categories extends Component {
 	getSlideTranslateX = (slide) => {
 		const { slideWidth } = this.state;
 
-		return -Math.abs((slide - 1) * slideWidth);
+		return -(slide * slideWidth);
 	}
 
 	getTranslateXSlide = (translateX, minSlide = 0) => {
@@ -127,7 +128,7 @@ export default class Categories extends Component {
 		}
 
 		if (slide <= minSlide) {
-			slide = 1;
+			slide = 0;
 		}
 
 		return slide;
@@ -151,20 +152,62 @@ export default class Categories extends Component {
 		});
 	}
 
+	handleTouchStart = (event) => {
+		this.setState({
+			isTouching: true,
+			touchStart: Math.round(event.touches[0].clientX).toFixed(2),
+			touchStartSlide: this.state.currentSlide
+		});
+	}
+
+	handleTouchMove = (event) => {
+		const { touchStart, touchStartSlide, slideWidth } = this.state;
+		const distance = (touchStart - Math.round(event.touches[0].clientX)).toFixed(2);
+
+		this.setState({
+			currentSlide: touchStartSlide + (distance / slideWidth)
+		});
+	}
+
+	handleTouchEnd = (event) => {
+		const { children: categories } = this.props.categoryTree;
+		const lastSlide = categories.length - 3;
+		const { currentSlide } = this.state;
+		let slide = Math.round(currentSlide);
+
+		if (slide > lastSlide) {
+			slide = lastSlide;
+		}
+
+		if (slide < 0) {
+			slide = 0;
+		}
+
+		this.setState({
+			isTouching: false,
+			currentSlide: slide
+		});
+	}
+
 	render() {
 		const { categoryTree, match } = this.props;
 		const { currentSlide, translateX, isTouching } = this.state;
 		const categories = categoryTree.children;
 		const lastSlide = categories.length - 2;
 
+		console.log(currentSlide);
+
 		return (
 			<div className={styles.container}>
 				<div
 					className={`${styles.categorySlider} ${categories.length > 3 && styles.categorySliderPager}`}
 					style={{
-						transform: `translateX(${translateX}px)`,
+						transform: `translateX(${this.getSlideTranslateX(currentSlide)}px)`,
 						transitionProperty: `${isTouching ? 'none' : 'transform'}`
 					}}
+					onTouchStart={this.handleTouchStart}
+					onTouchMove={this.handleTouchMove}
+					onTouchEnd={this.handleTouchEnd}
 				>
 					{categories.map(category => (
 						<Link
@@ -184,7 +227,7 @@ export default class Categories extends Component {
 					<div className={styles.categorySliderControls}>
 						<Button
 							className={styles.listPageControl}
-							disabled={currentSlide === 1}
+							disabled={currentSlide <= 0}
 							onClick={this.handlePrevControlClick}
 						>
 							<ChevronLeftIcon className={styles.listPageControlIcon} />
@@ -195,14 +238,15 @@ export default class Categories extends Component {
 								className={styles.sliderPagerThumb}
 								style={{
 									width: `${Math.floor(100 / lastSlide) || 1}%`,
-									left: `${((currentSlide - 1) * 100) / lastSlide}%`
+									left: `${(currentSlide * 100) / lastSlide}%`,
+									transitionProperty: `${isTouching ? 'none' : 'left'}`
 								}}
 							/>
 						</div>
 
 						<Button
 							className={styles.listPageControl}
-							disabled={currentSlide === lastSlide}
+							disabled={currentSlide >= lastSlide - 1}
 							onClick={this.handleNextControlClick}
 						>
 							<ChevronRightIcon className={styles.listPageControlIcon} />

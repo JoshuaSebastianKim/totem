@@ -124,7 +124,7 @@ export default class Categories extends Component {
 					}
 				</div>
 
-				{/* {categories.length > 3 &&
+				{categories.length > 3 &&
 					<div className={styles.categorySliderControls}>
 						<Button
 							className={styles.listPageControl}
@@ -152,7 +152,7 @@ export default class Categories extends Component {
 							<ChevronRightIcon className={styles.listPageControlIcon} />
 						</Button>
 					</div>
-				} */}
+				}
 			</div>
 		);
 	}
