@@ -89,7 +89,6 @@ export default class Categories extends Component {
 	state = {
 		currentSlide: 0,
 		slideWidth: 488,
-		translateX: 0,
 		touchStart: 0,
 		touchStartSlide: 0,
 		isTouching: false
@@ -104,8 +103,7 @@ export default class Categories extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (this.props.categoryTree !== nextProps.categoryTree) {
 			this.setState({
-				currentSlide: 1,
-				translateX: 0,
+				currentSlide: 0,
 				isTouching: false
 			});
 		}
@@ -117,29 +115,11 @@ export default class Categories extends Component {
 		return -(slide * slideWidth);
 	}
 
-	getTranslateXSlide = (translateX, minSlide = 0) => {
-		const { children: categories } = this.props.categoryTree;
-		const { slideWidth } = this.state;
-		const lastSlide = categories.length - 2;
-		let slide = Math.abs(Math.ceil(translateX / slideWidth));
-
-		if (slide > lastSlide) {
-			slide = lastSlide;
-		}
-
-		if (slide <= minSlide) {
-			slide = 0;
-		}
-
-		return slide;
-	}
-
 	handlePrevControlClick = () => {
 		const prevSlide = this.state.currentSlide - 1;
 
 		this.setState({
-			currentSlide: prevSlide,
-			translateX: this.getSlideTranslateX(prevSlide)
+			currentSlide: prevSlide
 		});
 	}
 
@@ -147,8 +127,7 @@ export default class Categories extends Component {
 		const nextSlide = this.state.currentSlide + 1;
 
 		this.setState({
-			currentSlide: nextSlide,
-			translateX: this.getSlideTranslateX(nextSlide)
+			currentSlide: nextSlide
 		});
 	}
 
@@ -169,7 +148,7 @@ export default class Categories extends Component {
 		});
 	}
 
-	handleTouchEnd = (event) => {
+	handleTouchEnd = () => {
 		const { children: categories } = this.props.categoryTree;
 		const lastSlide = categories.length - 3;
 		const { currentSlide } = this.state;
@@ -191,11 +170,9 @@ export default class Categories extends Component {
 
 	render() {
 		const { categoryTree, match } = this.props;
-		const { currentSlide, translateX, isTouching } = this.state;
+		const { currentSlide, isTouching } = this.state;
 		const categories = categoryTree.children;
 		const lastSlide = categories.length - 2;
-
-		console.log(currentSlide);
 
 		return (
 			<div className={styles.container}>
