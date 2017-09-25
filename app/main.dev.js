@@ -48,8 +48,9 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', async () => {
-	let windowSettings = {
+	const windowSettings = {
 		show: false,
+		kiosk: true,
 		fullscreen: true
 	};
 
