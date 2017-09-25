@@ -25,6 +25,7 @@ class ProfileStep extends Component {
 						validate={[required, isEmail]}
 						className={styles.email}
 						onFocusInput={onFocusInput}
+						autofocus
 					/>
 
 					<Field

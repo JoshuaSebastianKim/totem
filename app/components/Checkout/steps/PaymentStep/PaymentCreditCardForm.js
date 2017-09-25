@@ -221,6 +221,7 @@ class PaymentCreditCardForm extends Component {
 					validate={[required, isNumber, exactLength(16)]}
 					onFocusInput={onFocusInput}
 					onChange={this.handleCardNumberChange}
+					autofocus
 				/>
 
 				{selectedInstallmentOption.installments.length > 1 &&

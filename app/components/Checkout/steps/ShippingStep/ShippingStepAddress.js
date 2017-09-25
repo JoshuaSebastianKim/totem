@@ -65,6 +65,7 @@ class ShippingStepAddress extends Component {
 						className={styles.postalCode}
 						onFocusInput={onFocusInput}
 						onChange={(ev, pc) => onPostalCodeChange(pc)}
+						autofocus
 					/>
 
 					<Field
