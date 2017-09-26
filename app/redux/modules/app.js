@@ -1,3 +1,5 @@
+import { destroy } from 'redux-form';
+
 const START_IDLE_TIMER = 'app/START_IDLE_TIMER';
 const RESET_IDLE_TIMER = 'app/RESET_IDLE_TIMER';
 export const END_IDLE_TIMER = 'app/END_IDLE_TIMER';
@@ -55,6 +57,9 @@ export function resetIdleTimer() {
 
 export function endIdleTimer() {
 	clearInterval(idleInterval);
+
+	// Destroy form states
+	destroy('profile', 'shipping', 'payment');
 
 	return { type: END_IDLE_TIMER };
 }

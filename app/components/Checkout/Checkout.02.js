@@ -47,7 +47,13 @@ class Checkout extends Component {
 	}
 
 	componentWillMount() {
-		async function initOrderForm(items, saleChannel) {
+		const init = () => {
+			const { items, saleChannel } = this.props;
+
+			initOrderForm(items, saleChannel)
+				.catch(() => { init(); });
+		};
+		const initOrderForm = async (items, saleChannel) => {
 			const { data: orderForm } = await this.getOrderForm();
 
 			await this.clearMessages(orderForm);
@@ -58,7 +64,7 @@ class Checkout extends Component {
 			return this.getOrderForm()
 				.then(handleOrderFormResolve)
 				.catch(handleOrderFormReject);
-		}
+		};
 		const handleOrderFormResolve = response => {
 			this.setState({
 				activeStep: this.getActiveStep(response.data),
@@ -76,11 +82,10 @@ class Checkout extends Component {
 				loading: false
 			});
 
-			return initOrderForm();
+			return error;
 		};
-		const { items, saleChannel } = this.props;
 
-		initOrderForm.call(this, items, saleChannel);
+		init();
 	}
 
 	steps = [
