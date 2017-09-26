@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import reactTriggerChange from 'react-trigger-change';
 import KeyboardButton from './KeyboardButton';
 
 import LatinLayout from './layouts/LatinLayout';
@@ -62,7 +61,6 @@ export default class ScreenKeyboard extends PureComponent {
 		const { value, selectionStart, selectionEnd } = inputNode;
 		const nextValue = value.substring(0, selectionStart) + key + value.substring(selectionEnd);
 
-
 		// Special case for credit card input
 		switch (inputNode.id) {
 			case 'creditCardpayment-card-0Number':
@@ -83,13 +81,9 @@ export default class ScreenKeyboard extends PureComponent {
 
 		this.setState({ uppercase: this.isUppercase() });
 
-		if (inputNode.id === 'creditCardpayment-card-0Name' || inputNode.id === 'holder-document-0') {
-			reactTriggerChange(inputNode);
-		}
-
 		inputNode.dispatchEvent(new Event('input', { bubbles: true }));
-		inputNode.dispatchEvent(new Event('change', { bubbles: true }));
-		inputNode.dispatchEvent(new Event('blur', { bubbles: true }));
+		// inputNode.dispatchEvent(new Event('change', { bubbles: true }));/
+		// inputNode.dispatchEvent(new Event('blur', { bubbles: true }));
 	}
 
 	handleBackspaceClick = () => {
@@ -122,8 +116,8 @@ export default class ScreenKeyboard extends PureComponent {
 		this.setState({ uppercase: this.isUppercase() });
 
 		inputNode.dispatchEvent(new Event('input', { bubbles: true }));
-		inputNode.dispatchEvent(new Event('change', { bubbles: true }));
-		inputNode.dispatchEvent(new Event('blur', { bubbles: true }));
+		// inputNode.dispatchEvent(new Event('change', { bubbles: true }));
+		// inputNode.dispatchEvent(new Event('blur', { bubbles: true }));
 	}
 
 	isUppercase() {
