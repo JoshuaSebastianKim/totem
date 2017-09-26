@@ -16,6 +16,7 @@
 }
 
 .inputContainer {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 }
@@ -31,11 +32,33 @@
 	color: $color-black;
 }
 
+.menu {
+	position: absolute;
+	top: 100% !important;
+	left: 0 !important;
+	right: 0;
+	max-height: 180px;
+	overflow-y: auto;
+	border: 1px solid $color-gray2;
+	border-radius: 3px;
+	z-index: 10;
+
+	.item {
+		font-size: 19px;
+		color: $color-black;
+		padding: 0 13px;
+	}
+}
+
 .select {
 	background-color: #fff;
 }
 
 .error {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
 	color: $color-red;
 	font-size: 12px;
 	margin-top: 4px;

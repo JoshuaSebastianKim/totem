@@ -2,11 +2,24 @@ import React, { Component } from 'react';
 import { func } from 'prop-types';
 import { Field, reduxForm, propTypes } from 'redux-form';
 import CustomField from '../CustomField';
-import CustomSelect from '../CustomSelect';
+import CustomAutocomplete from '../CustomAutocomplete';
 import { ArrowRightIcon } from '../../../UI/Icons';
 import { required, isNumber } from '../../../../utils/validations';
 import map from './map.json';
 import styles from './ShippingStep.scss';
+
+const capitalizeStateName = stateString => stateString.split(/\s/).map((string) => {
+	const firstLetter = string.charAt(0);
+	const restOfString = string.slice(1).toLowerCase();
+
+	return `${firstLetter}${restOfString}`;
+}).join(' ');
+
+const isValidState = value => ((capitalizeStateName(value) in map) ? undefined : 'Provincia inválida');
+
+const isValidCity = (value, allValues) => (value in map[capitalizeStateName(allValues.state)]
+  ? undefined
+	: 'Ciudad inválida');
 
 class ShippingStepAddress extends Component {
 	static propTypes = {
@@ -17,6 +30,7 @@ class ShippingStepAddress extends Component {
 
 	state = {
 		state: '',
+		states: Object.keys(map).map(state => ({ value: state, label: state })),
 		cities: []
 	}
 
@@ -28,21 +42,19 @@ class ShippingStepAddress extends Component {
 		}
 	}
 
-	handleStateChange = event => {
-		const state = event.target.value;
+	handleStateChange = (event, value) => {
+		const state = value || event.target.value;
+		const capitalizedState = capitalizeStateName(state);
 
-		this.setStateLocation(state);
+		if (capitalizedState in map) {
+			this.setStateLocation(capitalizedState);
+		} else {
+			this.props.change('city', '');
+		}
 	}
 
 	setStateLocation = (state) => {
-		const capitalizeStateName = stateString => stateString.split(/\s/).map((string) => {
-			const firstLetter = string.charAt(0);
-			const restOfString = string.slice(1).toLowerCase();
-
-			return `${firstLetter}${restOfString}`;
-		}).join(' ');
-		const capitalizedState = capitalizeStateName(state);
-		const cities = (capitalizedState in map) ? Object.keys(map[capitalizedState]) : [];
+		const cities = Object.keys(map[state]).map(s => ({ value: s, label: s }));
 
 		this.setState({
 			state,
@@ -51,7 +63,7 @@ class ShippingStepAddress extends Component {
 	}
 
 	render() {
-		const { cities } = this.state;
+		const { state, states, cities } = this.state;
 		const { handleSubmit, submitting, onFocusInput, onPostalCodeChange } = this.props;
 
 		return (
@@ -97,20 +109,22 @@ class ShippingStepAddress extends Component {
 					<Field
 						name="state"
 						label="Provincia"
-						component={CustomSelect}
-						validate={[required]}
-						values={Object.keys(map).map(state => ({ value: state, label: state }))}
+						component={CustomAutocomplete}
+						validate={[required, isValidState]}
+						items={states}
 						onChange={this.handleStateChange}
 						className={styles.state}
+						onFocusInput={onFocusInput}
 					/>
 
 					<Field
 						name="city"
 						label="Ciudad"
-						component={CustomSelect}
-						validate={[required]}
-						values={cities.map(state => ({ value: state, label: state }))}
+						component={CustomAutocomplete}
+						validate={[required, isValidCity]}
+						items={cities}
 						className={styles.city}
+						onFocusInput={onFocusInput}
 					/>
 
 					<Field

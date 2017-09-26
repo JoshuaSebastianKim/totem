@@ -76,7 +76,7 @@ class Checkout extends Component {
 				loading: false
 			});
 
-			return error;
+			return initOrderForm();
 		};
 		const { items, saleChannel } = this.props;
 

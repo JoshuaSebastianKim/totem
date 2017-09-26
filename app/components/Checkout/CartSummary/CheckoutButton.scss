@@ -13,6 +13,7 @@
 
 	&:disabled {
 		background-color: $color-gray3;
+		animation: none;
 	}
 }
 
