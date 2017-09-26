@@ -8,7 +8,7 @@ export default class Home extends Component {
 	render() {
 		return (
 			<div className={styles.container}>
-				<Link to="/category">
+				<Link to="/category" className={styles.link}>
 					<img src={homeImage} alt="Home" />
 				</Link>
 			</div>

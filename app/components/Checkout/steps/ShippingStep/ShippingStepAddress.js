@@ -54,7 +54,7 @@ class ShippingStepAddress extends Component {
 	}
 
 	setStateLocation = (state) => {
-		const cities = Object.keys(map[state]).map(s => ({ value: s, label: s }));
+		const cities = state in map ? Object.keys(map[state]).map(s => ({ value: s, label: s })) : [];
 
 		this.setState({
 			state,
@@ -63,7 +63,7 @@ class ShippingStepAddress extends Component {
 	}
 
 	render() {
-		const { state, states, cities } = this.state;
+		const { states, cities } = this.state;
 		const { handleSubmit, submitting, onFocusInput, onPostalCodeChange } = this.props;
 
 		return (

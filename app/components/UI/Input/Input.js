@@ -29,6 +29,12 @@ class Input extends PureComponent {
 		}
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if (this.props.autofocus === false && nextProps.autofocus === true) {
+			this.inputDOM.focus();
+		}
+	}
+
 	handleInput = (event) => this.props.onChange(event.target.value)
 
 	handleFocus = () => this.props.onFocus(this.inputDOM)

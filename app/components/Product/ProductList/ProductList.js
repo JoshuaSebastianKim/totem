@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { string, object, func, bool, array } from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import { ProductListItem } from '../';
 import { searchQuery, searchFulfilled, storeLastCurrentPageState } from '../../../redux/modules/search';
 import { Spinner } from '../../UI';
@@ -222,6 +223,7 @@ class ProductList extends PureComponent {
 		const pageFirstIndex = (currentPage - 1) * config.productsPerPage;
 		const pageLastIndex = currentPage * config.productsPerPage;
 		const pageProducts = products.slice(pageFirstIndex, pageLastIndex);
+		const placeholderItems = config.productsPerPage - pageProducts.length;
 
 		return (
 			<div className={`${styles.container} ${className}`} style={style}>
@@ -234,6 +236,12 @@ class ProductList extends PureComponent {
 								showCompare={canCompare}
 							/>
 						))}
+
+						{placeholderItems > 0 &&
+							_.range(placeholderItems).map((i) => (
+								<div key={i} className={styles.placeholder} />
+							))
+						}
 					</div> :
 					(!loading &&
 						<EmptyList query={query} />

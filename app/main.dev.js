@@ -50,8 +50,7 @@ app.on('window-all-closed', () => {
 app.on('ready', async () => {
 	const windowSettings = {
 		show: false,
-		kiosk: true,
-		fullscreen: true
+		fullscreen: false
 	};
 
 	if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {

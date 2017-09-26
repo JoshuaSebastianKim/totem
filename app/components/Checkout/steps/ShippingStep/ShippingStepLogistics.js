@@ -11,6 +11,8 @@ import ShippingWindow from './ShippingWindow';
 import { ArrowRightIcon, ArrowLeftIcon } from '../../../UI/Icons';
 import styles from './ShippingStep.scss';
 
+moment.locale('es');
+
 class ShippingStepLogistics extends Component {
 	static propTypes = {
 		...propTypes,
@@ -93,8 +95,6 @@ class ShippingStepLogistics extends Component {
 		const includeDates = Object.keys(deliveryWindows).map((date) => moment(date, 'YYYY/MM/DD'));
 		const dateDeliveryWindows = selectedDate ? selectedSla.deliveryWindows[selectedDate.format('YYYY/M/D')] : null;
 		const selectedDeliveryWindow = dateDeliveryWindows != null && dateDeliveryWindows.find(dw => dw.isWindowSelected);
-
-		console.log(selectedDate, selectedSla.deliveryWindows);
 
 		return (
 			<form onSubmit={handleSubmit} className={styles.logisticsInfo}>
