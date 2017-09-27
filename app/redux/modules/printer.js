@@ -55,9 +55,9 @@ function getPrinterPath() {
 			return '\\\\totem\\EPSON';
 		default: {
 			const usbPath = '/dev/usb/';
-			const files = fs.readdirSync(usbPath);
+			const printerName = fs.readdirSync(usbPath).find(path => /lp/ig.test(path));
 
-			return `${usbPath}${files[0]}`;
+			return `${usbPath}${printerName}`;
 		}
 	}
 }
