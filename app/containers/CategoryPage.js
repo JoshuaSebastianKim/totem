@@ -9,7 +9,8 @@ import { removeCompareItem } from '../redux/modules/compare';
 function mapStateToProps(state, props) {
 	return {
 		categoryTree: getCategoryTree(state, props),
-		compareItems: getCompareItems(state)
+		compareItems: getCompareItems(state),
+		canCompare: state.settings.compare
 	};
 }
 

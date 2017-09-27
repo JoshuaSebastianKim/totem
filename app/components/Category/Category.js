@@ -8,12 +8,14 @@ class Category extends PureComponent {
 	static propTypes = {
 		categoryTree: PropTypes.object.isRequired,
 		compareItems: PropTypes.array,
-		onRemoveCompareItem: PropTypes.func
+		onRemoveCompareItem: PropTypes.func,
+		canCompare: PropTypes.bool
 	}
 
 	static defaultProps = {
 		compareItems: [],
-		onRemoveCompareItem: () => null
+		onRemoveCompareItem: () => null,
+		canCompare: false
 	}
 
 	constructor(props) {
@@ -35,7 +37,7 @@ class Category extends PureComponent {
 
 	render() {
 		const { config, query } = this.state;
-		const { categoryTree, compareItems, onRemoveCompareItem } = this.props;
+		const { categoryTree, compareItems, onRemoveCompareItem, canCompare } = this.props;
 
 		return (
 			<div className={styles.container}>
@@ -50,7 +52,7 @@ class Category extends PureComponent {
 					query={query}
 					config={config}
 					isCompareActive={compareItems.length > 0}
-					canCompare
+					canCompare={canCompare}
 				/>
 
 				<CompareBar items={compareItems} onRemoveItem={onRemoveCompareItem} />

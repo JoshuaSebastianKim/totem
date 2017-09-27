@@ -290,8 +290,7 @@ class ProductList extends PureComponent {
 function mapStateToProps(state) {
 	return {
 		lastCurrentPageState: state.search.lastCurrentPageState,
-		locationHistoryStack: state.history.locationHistoryStack,
-		canCompare: state.settings.compare
+		locationHistoryStack: state.history.locationHistoryStack
 	};
 }
 
