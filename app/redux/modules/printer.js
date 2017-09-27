@@ -232,6 +232,10 @@ function printRealTicket(product, order, resolveTimeout = 5000) {
 }
 
 function printOrder(order, resolveTimeout = 5000) {
+	const { selectedSla, slas } = order.shippingData.logisticsInfo[0];
+	const { deliveryWindow } = slas.find(sla => sla.id === selectedSla);
+	const dateFormatted = moment(deliveryWindow.startDateUtc).format('DD/MM/YYYY');
+
 	return new Promise((resolve, reject) => {
 		printer.alignCenter();
 
@@ -246,17 +250,13 @@ function printOrder(order, resolveTimeout = 5000) {
 		printer.setTextDoubleHeight();
 		printer.drawLine();
 
-		printer.println(`Código de envío: ${order.orderId}`);
+		printer.println(`CODIGO DE ORDEN: ${order.orderId}`);
 		printer.drawLine();
 		printer.newLine();
 
 		printer.setTextNormal();
 
 		order.items.forEach((item) => {
-			const { selectedSla, slas } = order.shippingData.logisticsInfo.find(li => li.itemId === item.id);
-			const { deliveryWindow } = slas.find(sla => sla.id === selectedSla);
-			const dateFormatted = moment(deliveryWindow.startDateUtc).format('DD/MM/YYYY');
-
 			printer.println('ARTICULO');
 			printer.println(item.name.substring(0, 200));
 			printer.newLine();
@@ -265,26 +265,26 @@ function printOrder(order, resolveTimeout = 5000) {
 			printer.println(item.ean);
 			printer.newLine();
 
-			printer.println('PRODUCTO A ABONAR EN CAJA');
-			printer.newLine();
-
-			if (/retiro en tienda/ig.test(selectedSla)) {
-				printer.println('PRODUCTO A RETIRAR EN ESTA');
-				printer.println('SUCURSAL A PARTIR DEL');
-				printer.println(dateFormatted);
-				printer.newLine();
-			}
-
-			if (/envio a domicilio/ig.test(selectedSla)) {
-				printer.println('ENVIO A DOMICILIO ACORDADO');
-				printer.println('PARA EL DIA');
-				printer.println(dateFormatted);
-				printer.newLine();
-			}
-
 			printer.printBarcode(item.ean, 67, { width: 6, height: 168 });
 			printer.newLine();
 		});
+
+		printer.println('PRODUCTO A ABONAR EN CAJA');
+		printer.newLine();
+
+		if (/retiro en tienda/ig.test(selectedSla)) {
+			printer.println('PRODUCTO A RETIRAR EN ESTA');
+			printer.println('SUCURSAL A PARTIR DEL');
+			printer.println(dateFormatted);
+			printer.newLine();
+		}
+
+		if (/envio a domicilio/ig.test(selectedSla)) {
+			printer.println('ENVIO A DOMICILIO ACORDADO');
+			printer.println('PARA EL DIA');
+			printer.println(dateFormatted);
+			printer.newLine();
+		}
 
 		printer.cut();
 		printer.execute((err) => {
