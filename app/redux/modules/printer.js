@@ -1,4 +1,5 @@
 import fs from 'fs';
+import moment from 'moment';
 import { printer } from '../../utils';
 
 const PRINTER_INITIALIZED = 'printer/PRINTER_INITIALIZED';
@@ -183,12 +184,12 @@ function printExampleTicket(resolveTimeout = 5000) {
 	});
 }
 
-function printRealTicket(product, resolveTimeout = 5000) {
+function printRealTicket(product, order, resolveTimeout = 5000) {
 	return new Promise((resolve, reject) => {
 		printer.alignCenter();
 
 		printer.setTextDoubleHeight();
-		printer.println('NO VÁLIDO COMO TICKET FISCAL');
+		printer.println('NO VALIDO COMO TICKET FISCAL');
 
 		printer.drawLine();
 		printer.setTextQuadArea();
@@ -197,19 +198,20 @@ function printRealTicket(product, resolveTimeout = 5000) {
 		printer.newLine();
 
 		printer.setTextNormal();
-		printer.println('CODIGO');
-		printer.println(product.items[0].ean)
-		printer.newLine();
 
 		printer.println('ARTICULO');
-		printer.println(product.productName.substring(0, 200))
+		printer.println(product.productName.substring(0, 200));
+		printer.newLine();
+
+		printer.println('CODIGO');
+		printer.println(product.items[0].ean);
 		printer.newLine();
 
 		printer.println('PRODUCTO A ABONAR EN CAJA');
 		printer.newLine();
 
-		printer.println('ABONADO EL MISMO RETIRÁ EL');
-		printer.println('PRODUCTO POR ATENCIÓN AL CLIENTE');
+		printer.println('ABONADO EL MISMO RETIRA EL');
+		printer.println('PRODUCTO POR ATENCION AL CLIENTE');
 		printer.println('PRESENTANDO EL TICKET DE CAJA');
 		printer.newLine();
 
@@ -226,12 +228,81 @@ function printRealTicket(product, resolveTimeout = 5000) {
 	});
 }
 
+function printOrder(order, resolveTimeout = 5000) {
+	return new Promise((resolve, reject) => {
+		printer.alignCenter();
+
+		printer.setTextDoubleHeight();
+		printer.println('NO VALIDO COMO TICKET FISCAL');
+
+		printer.drawLine();
+		printer.setTextQuadArea();
+		printer.println('GRACIAS POR TU COMPRA');
+		printer.drawLine();
+		printer.newLine();
+
+		printer.setTextNormal();
+
+		order.items.forEach((item) => {
+			const { selectedSla, slas } = order.shippingData.logisticsInfo.find(li => li.itemId === item.id);
+			const { deliveryWindow } = slas.find(sla => sla.id === selectedSla);
+			const dateFormatted = moment(deliveryWindow.startDateUtc).format('DD/MM/YYYY');
+
+			printer.println('ARTICULO');
+			printer.println(item.name.substring(0, 200));
+			printer.newLine();
+
+			printer.println('CODIGO');
+			printer.println(item.ean);
+			printer.newLine();
+
+			printer.println('PRODUCTO A ABONAR EN CAJA');
+			printer.newLine();
+
+			if (/retiro en tienda/ig.test(selectedSla)) {
+				printer.println('PRODUCTO A RETIRAR EN ESTA');
+				printer.println('SUCURSAL A PARTIR DEL');
+				printer.println(dateFormatted);
+				printer.newLine();
+			}
+
+			if (/envio a domicilio/ig.test(selectedSla)) {
+				printer.println('ENVIO A DOMICILIO ACORDADO');
+				printer.println('PARA EL DIA');
+				printer.println(dateFormatted);
+				printer.newLine();
+			}
+
+			printer.printBarcode(item.ean, 67, { width: 6, height: 168 });
+		});
+
+		printer.cut();
+		printer.execute((err) => {
+			if (err) {
+				return reject(err);
+			}
+
+			setTimeout(() => resolve(true), resolveTimeout);
+		});
+	});
+}
+
 export function printTicket(product) {
 	return dispatch => {
 		dispatch(printTicketStart());
 
-		// TODO: Replace example ticket with the real one
 		return printRealTicket(product).then(
+			() => dispatch(printTicketSucces()),
+			(err) => dispatch(printTicketError(err))
+		);
+	};
+}
+
+export function printOrderTicket(order) {
+	return dispatch => {
+		dispatch(printTicketStart());
+
+		return printOrder(order).then(
 			() => dispatch(printTicketSucces()),
 			(err) => dispatch(printTicketError(err))
 		);
