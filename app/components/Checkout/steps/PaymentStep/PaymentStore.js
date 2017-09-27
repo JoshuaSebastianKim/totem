@@ -11,7 +11,7 @@ const PaymentStore = ({ handleSubmit }: Props) => (
 			Finalizá tu compra
 		</div>
 		<div className={styles.message}>
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.
+			Para finalizar tu compra e imprimir tu ticket presioná el boton "Finalizar compra", que se encuentra abajo a la derecha.
 		</div>
 	</form>
 );
