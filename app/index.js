@@ -1,9 +1,15 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import { webFrame } from 'electron';
 import Root from './containers/Root';
 import { configureStore, history } from './redux/configureStore';
 import './app.global.scss';
+
+webFrame.setZoomFactor(1);
+webFrame.setZoomLevelLimits(1, 1);
+webFrame.setVisualZoomLevelLimits(1, 1);
+webFrame.setLayoutZoomLevelLimits(0, 0);
 
 const store = configureStore();
 
