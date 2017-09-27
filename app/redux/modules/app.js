@@ -39,6 +39,8 @@ function startIdleTimer(dispatch) {
 	function timerIncrement() {
 		if (idleTimer >= idleTimeLimit) {
 			dispatch(endIdleTimer());
+			// Destroy form states
+			dispatch(destroy('profile', 'shipping', 'payment'));
 		} else {
 			idleTimer += 1;
 		}
@@ -57,9 +59,6 @@ export function resetIdleTimer() {
 
 export function endIdleTimer() {
 	clearInterval(idleInterval);
-
-	// Destroy form states
-	destroy('profile', 'shipping', 'payment');
 
 	return { type: END_IDLE_TIMER };
 }

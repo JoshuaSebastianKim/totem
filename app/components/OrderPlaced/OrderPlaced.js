@@ -8,18 +8,20 @@ import styles from './OrderPlaced.scss';
 type Props = {
 	orders: Array<any>,
 	onClearCart: () => void,
-	onPrintOrderTicket: (any) => void
+	onPrintOrderTicket: (any) => void,
+	onDestroyForms: () => void
 };
 
 class OrderPlaced extends Component {
 	props: Props;
 
 	componentWillMount() {
-		const { onClearCart, onPrintOrderTicket, orders } = this.props;
+		const { onClearCart, onPrintOrderTicket, onDestroyForms, orders } = this.props;
 		const [order] = orders;
 
 		onClearCart();
 		onPrintOrderTicket(order);
+		onDestroyForms();
 	}
 
 	render() {

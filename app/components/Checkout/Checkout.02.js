@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { array, number, func, string } from 'prop-types';
+import { array, func, string } from 'prop-types';
+import { destroy } from 'redux-form';
 import { Redirect } from 'react-router';
 import axios from 'axios';
 import { Spinner } from '../UI';
