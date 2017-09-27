@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import reactTriggerChange from 'react-trigger-change';
 import KeyboardButton from './KeyboardButton';
 
 import LatinLayout from './layouts/LatinLayout';
@@ -84,6 +85,8 @@ export default class ScreenKeyboard extends PureComponent {
 		inputNode.dispatchEvent(new Event('input', { bubbles: true }));
 		// inputNode.dispatchEvent(new Event('change', { bubbles: true }));/
 		// inputNode.dispatchEvent(new Event('blur', { bubbles: true }));
+
+		reactTriggerChange(inputNode);
 	}
 
 	handleBackspaceClick = () => {
@@ -118,6 +121,8 @@ export default class ScreenKeyboard extends PureComponent {
 		inputNode.dispatchEvent(new Event('input', { bubbles: true }));
 		// inputNode.dispatchEvent(new Event('change', { bubbles: true }));
 		// inputNode.dispatchEvent(new Event('blur', { bubbles: true }));
+
+		reactTriggerChange(inputNode);
 	}
 
 	isUppercase() {
