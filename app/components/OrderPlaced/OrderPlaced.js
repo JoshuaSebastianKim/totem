@@ -20,8 +20,8 @@ class OrderPlaced extends Component {
 		const [order] = orders;
 
 		onClearCart();
+		onDestroyForms('profile', 'shipping', 'payment');
 		onPrintOrderTicket(order);
-		onDestroyForms();
 	}
 
 	render() {

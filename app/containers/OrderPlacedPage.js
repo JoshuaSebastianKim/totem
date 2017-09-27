@@ -15,7 +15,7 @@ function mapDispatchToProps(dispatch) {
 	return bindActionCreators({
 		onClearCart: clearCart,
 		onPrintOrderTicket: printOrderTicket,
-		onDestroyForms: destroy('profile', 'shipping', 'payment')
+		onDestroyForms: (...forms) => destroy(...forms)
 	}, dispatch);
 }
 
