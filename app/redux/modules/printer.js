@@ -192,8 +192,10 @@ function printRealTicket(product, order, resolveTimeout = 5000) {
 		printer.println('NO VALIDO COMO TICKET FISCAL');
 
 		printer.drawLine();
+
 		printer.setTextQuadArea();
 		printer.println('GRACIAS POR TU COMPRA');
+
 		printer.drawLine();
 		printer.newLine();
 
@@ -238,6 +240,9 @@ function printOrder(order, resolveTimeout = 5000) {
 		printer.drawLine();
 		printer.setTextQuadArea();
 		printer.println('GRACIAS POR TU COMPRA');
+		printer.drawLine();
+
+		printer.println(`Código de envío: ${order.orderId}`);
 		printer.drawLine();
 		printer.newLine();
 
