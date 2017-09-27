@@ -274,6 +274,7 @@ function printOrder(order, resolveTimeout = 5000) {
 			}
 
 			printer.printBarcode(item.ean, 67, { width: 6, height: 168 });
+			printer.newLine();
 		});
 
 		printer.cut();
