@@ -188,38 +188,15 @@ function printRealTicket(product, resolveTimeout = 5000) {
 		printer.alignCenter();
 
 		printer.setTextDoubleHeight();
-		printer.println('NO VALIDO COMO TIQUE');
-		printer.setTextNormal();
+		printer.println('NO VÁLIDO COMO TICKET FISCAL');
 
 		printer.drawLine();
-
 		printer.setTextQuadArea();
-		printer.println('CUPON PERSONALIZADO');
-		printer.setTextNormal();
-
-		// Set date
-		const date = new Date();
-		const dateFormatted = `${date.getDate()}/${(date.getMonth() + 1)}/${date.getFullYear()}`;
-
-		printer.println(`VALIDO HASTA EL ${dateFormatted}`);
-
+		printer.println('GRACIAS POR TU COMPRA');
 		printer.drawLine();
 		printer.newLine();
 
-		printer.bold(true);
-		printer.println('SU PRODUCTO SERA ENTREGADO DENTRO DE');
-		printer.println('LOS 15 DIAS');
-		printer.bold(false);
 		printer.setTextNormal();
-
-		printer.newLine();
-
-		// Product info in table
-		// printer.table(['CODIGO', 'ARTICULO']);
-		// printer.table([$scope.product.ean, ($scope.product.productName).substr(0,21)]);
-		// printer.newLine();
-
-		// Product info in lines
 		printer.println('CODIGO');
 		printer.println(product.items[0].ean)
 		printer.newLine();
@@ -228,21 +205,15 @@ function printRealTicket(product, resolveTimeout = 5000) {
 		printer.println(product.productName.substring(0, 200))
 		printer.newLine();
 
-		printer.println('NO VALIDO COMO TIQUE');
+		printer.println('PRODUCTO A ABONAR EN CAJA');
+		printer.newLine();
 
+		printer.println('ABONADO EL MISMO RETIRÁ EL');
+		printer.println('PRODUCTO POR ATENCIÓN AL CLIENTE');
+		printer.println('PRESENTANDO EL TICKET DE CAJA');
 		printer.newLine();
 
 		printer.printBarcode(product.items[0].ean, 67, { width: 6, height: 168 });
-		printer.newLine();
-
-		printer.setTextDoubleHeight();
-		printer.println('GRACIAS');
-		printer.println('POR ELEGIRNOS');
-
-		printer.newLine();
-
-		printer.println('NO VALIDO COMO TIQUE');
-		printer.setTextNormal();
 
 		printer.cut();
 		printer.execute((err) => {
